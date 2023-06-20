@@ -1,0 +1,191 @@
+{
+  "id": "4003443",
+  "name": "wangwang",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "旺旺后台项目",
+  "glyphs": [
+    {
+      "icon_id": "493213",
+      "name": "菜单",
+      "font_class": "caidan",
+      "unicode": "e780",
+      "unicode_decimal": 59264
+    },
+    {
+      "icon_id": "1305461",
+      "name": "表格",
+      "font_class": "biaoge",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "3456455",
+      "name": "首页",
+      "font_class": "shouye",
+      "unicode": "e70e",
+      "unicode_decimal": 59150
+    },
+    {
+      "icon_id": "5944365",
+      "name": "功能",
+      "font_class": "gongneng",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "6851521",
+      "name": "操作",
+      "font_class": "caozuo",
+      "unicode": "e6d7",
+      "unicode_decimal": 59095
+    },
+    {
+      "icon_id": "8039219",
+      "name": "筛选",
+      "font_class": "shaixuan",
+      "unicode": "e65c",
+      "unicode_decimal": 58972
+    },
+    {
+      "icon_id": "8288810",
+      "name": "字典",
+      "font_class": "zidian",
+      "unicode": "e83a",
+      "unicode_decimal": 59450
+    },
+    {
+      "icon_id": "12515461",
+      "name": "权限",
+      "font_class": "quanxian",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "2187",
+      "name": "瀑布流",
+      "font_class": "pubuliu",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "201551",
+      "name": "大图模式",
+      "font_class": "datumoshi",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "577346",
+      "name": "列表形式",
+      "font_class": "liebiaoxingshi",
+      "unicode": "e742",
+      "unicode_decimal": 59202
+    },
+    {
+      "icon_id": "666891",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e695",
+      "unicode_decimal": 59029
+    },
+    {
+      "icon_id": "722465",
+      "name": "系统",
+      "font_class": "xitong",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "1727460",
+      "name": "226角色、群体",
+      "font_class": "jiaosequnti",
+      "unicode": "e8c9",
+      "unicode_decimal": 59593
+    },
+    {
+      "icon_id": "3734438",
+      "name": "44字体",
+      "font_class": "ziti",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "4512400",
+      "name": "水杯",
+      "font_class": "shuibei",
+      "unicode": "e729",
+      "unicode_decimal": 59177
+    },
+    {
+      "icon_id": "6246309",
+      "name": "组件",
+      "font_class": "zujian",
+      "unicode": "e652",
+      "unicode_decimal": 58962
+    },
+    {
+      "icon_id": "12321001",
+      "name": "页面",
+      "font_class": "yemian",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "12331649",
+      "name": "表单",
+      "font_class": "biaodan",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
+      "icon_id": "12732492",
+      "name": "组织",
+      "font_class": "zuzhi",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "12753449",
+      "name": "用户管理",
+      "font_class": "yonghuguanli_huaban",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "16328038",
+      "name": "吉他",
+      "font_class": "jita",
+      "unicode": "e64c",
+      "unicode_decimal": 58956
+    },
+    {
+      "icon_id": "3718747",
+      "name": "水滴",
+      "font_class": "shuidi",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "4878743",
+      "name": "地图",
+      "font_class": "ditu",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "6338161",
+      "name": "音量",
+      "font_class": "yinliang",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "6338086",
+      "name": "点赞",
+      "font_class": "dianzan",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    }
+  ]
+}

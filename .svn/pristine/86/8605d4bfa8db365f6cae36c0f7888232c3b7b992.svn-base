@@ -1,0 +1,15 @@
+<template>
+    <component :is="RouterViwsFD[DataV.KeyCompo]" />
+</template>
+
+<script setup lang="ts" name="/">
+import { defineAsyncComponent, ref } from 'vue';
+import { DataViewState } from '/@/stores/RouterView'
+const DataV = DataViewState()
+const RouterViwsFD = {
+    defaults: defineAsyncComponent(() => import('/@/pages/default/index.vue')),
+}
+
+</script>
+
+<style scoped lang="scss"></style>

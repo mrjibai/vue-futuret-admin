@@ -1,0 +1,9 @@
+/**
+ * 虚拟数据
+ */
+export const MockIndex = []
+
+
+export const rolelist: any = [{
+
+}]

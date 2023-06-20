@@ -1,0 +1,600 @@
+// 折线图
+import * as echarts from 'echarts'
+export const DrawALine = (): any => {
+    const options ={
+        backgroundColor: '#fff',
+        title: [
+          {
+            text: '政府补贴额度',
+            left: '3%',
+            top: '0%',
+    
+            color: '#000',
+            fontSize: 14
+          },
+          {
+            text: '价格',
+            left: '3%',
+            top: '5%',
+    
+            color: '#444',
+            fontSize: 12
+          }
+        ],
+        legend: {
+          data: ['预购队列', '最新成交价'],
+          right: 0
+          // show: true,
+          // icon: 'circle',
+          // top: '13%',
+          // itemWidth: 6,
+          // itemHeight: 6,
+          // itemGap: 25
+        },
+        tooltip: {
+          trigger: 'axis'
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: [
+              '1月',
+              '2月',
+              '3月',
+              '4月',
+              '5月',
+              '6月',
+              '7月',
+              '8月',
+              '9月',
+              '10月',
+              '11月',
+              '12月'
+            ],
+            axisLine: {
+              lineStyle: {
+                color: '#ddd'
+              }
+            },
+            axisTick: {
+              show: false
+            },
+            axisLabel: {
+              interval: 0,
+    
+              color: '#c56790',
+    
+              margin: 15
+            },
+            boundaryGap: false
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            axisTick: {
+              show: false
+            },
+            axisLine: {
+              lineStyle: {
+                color: '#ddd'
+              }
+            },
+            axisLabel: {
+              color: '#c56790'
+            },
+            splitLine: {
+              show: false
+            }
+          }
+        ],
+        series: [
+          {
+            name: '预购队列',
+            type: 'line',
+            data: [0, 41.1, 30.4, 65.1, 53.3, 53.3, 53.3, 41.1, 30.4, 65.1, 53.3, 10],
+            symbolSize: 6,
+            symbol: 'circle',
+            smooth: true,
+            lineStyle: {
+              color: '#fe9a8b'
+            },
+            itemStyle: {
+              color: '#fe9a8b',
+              borderColor: '#fe9a8b'
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#fe9a8bb3'
+                },
+                {
+                  offset: 1,
+                  color: '#fe9a8b03'
+                }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: {
+                  type: 'radial',
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.5,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#fe9a8b'
+                    },
+                    {
+                      offset: 0.4,
+                      color: '#fe9a8b'
+                    },
+                    {
+                      offset: 0.5,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 0.7,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 0.8,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 1,
+                      color: '#fff'
+                    }
+                  ]
+                },
+                borderColor: '#fe9a8b',
+                borderWidth: 2
+              }
+            }
+          },
+          {
+            name: '最新成交价',
+            type: 'line',
+            data: [0, 24.1, 7.2, 15.5, 42.4, 42.4, 42.4, 24.1, 7.2, 15.5, 42.4, 0],
+            symbolSize: 6,
+            symbol: 'circle',
+            smooth: true,
+            lineStyle: {
+              color: '#9E87FF'
+            },
+            itemStyle: {
+              color: '#9E87FF',
+              borderColor: '#9E87FF'
+            },
+            areaStyle: {
+              color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: '#9E87FFb3'
+                },
+                {
+                  offset: 1,
+                  color: '#9E87FF03'
+                }
+              ])
+            },
+            emphasis: {
+              itemStyle: {
+                color: {
+                  type: 'radial',
+                  x: 0.5,
+                  y: 0.5,
+                  r: 0.5,
+                  colorStops: [
+                    {
+                      offset: 0,
+                      color: '#9E87FF'
+                    },
+                    {
+                      offset: 0.4,
+                      color: '#9E87FF'
+                    },
+                    {
+                      offset: 0.5,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 0.7,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 0.8,
+                      color: '#fff'
+                    },
+                    {
+                      offset: 1,
+                      color: '#fff'
+                    }
+                  ]
+                },
+                borderColor: '#9E87FF',
+                borderWidth: 2
+              }
+            }
+          }
+        ]
+    }
+    return options;
+}
+//   饼图
+export const initPie = (): any => { 
+    let Data = [
+        {
+          value: 2459,
+          name: '房屋及结构物'
+        },
+        {
+          value: 2453,
+          name: '专用设备'
+        },
+        {
+          value: 1253,
+          name: '通用设备'
+        },
+        {
+          value: 1865,
+          name: '文物和陈列品'
+        },
+        {
+          value: 1865,
+          name: '图书、档案'
+        }
+      ]
+      const colorList = [
+        new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+          {
+            offset: 0,
+            color: 'rgba(69,233,254,1)'
+          },
+          {
+            offset: 1,
+            color: 'rgba(69,233,254,0.3)'
+          }
+        ]),
+        new echarts.graphic.LinearGradient(1, 0, 0, 0, [
+          {
+            offset: 0,
+            color: 'rgba(255,181,111,1)'
+          },
+          {
+            offset: 1,
+            color: 'rgba(255,181,111,0.3)'
+          }
+        ]),
+        new echarts.graphic.LinearGradient(0, 1, 0, 0, [
+          {
+            offset: 0,
+            color: 'rgba(101,122,250,1)'
+          },
+          {
+            offset: 1,
+            color: 'rgba(101,122,250,0.3)'
+          }
+        ]),
+        new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+          {
+            offset: 0,
+            color: 'rgba(45,190,146,1)'
+          },
+          {
+            offset: 1,
+            color: 'rgba(45,190,146,0.3)'
+          }
+        ]),
+        new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+          {
+            offset: 0,
+            color: 'rgba(45,190,6,1)'
+          },
+          {
+            offset: 1,
+            color: 'rgba(45,190,6,0.3)'
+          }
+        ])
+      ]
+      const option = {
+        title: {
+          text: '房屋建筑工程',
+          left: '3%',
+          top: '0%',
+    
+          color: '#000',
+          fontSize: 14
+        },
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          type: 'plain',
+          orient: 'vertical',
+          left: '80%',
+          top: 'center',
+          align: 'left',
+          itemGap: 10,
+          itemWidth: 20, // 设置宽度
+          itemHeight: 20, // 设置高度]
+          symbolKeepAspect: false,
+          selectedMode: false,
+    
+          color: '#333333',
+          fontSize: 14
+        },
+        series: [
+          {
+            type: 'pie',
+            hoverOffset: 25,
+            startAngle: 180, //起始角度
+            clockwise: false, //是否顺时针
+            radius: [window.window.screen.width>1300?'30%':'45%', window.window.screen.width>1300?'55%':'66%'],
+            center: ['30%', '50%'],
+            avoidLabelOverlap: false,
+            itemStyle: {
+              color: (params) => {
+                return colorList[params.dataIndex]
+              }
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: window.window.screen.width*0.006
+                ,
+                fontWeight: 'bold',
+                formatter: ['{a|占比 \n{d}%}'].join('\n'),
+                rich: {
+                  a: {
+                    fontSize: 20,
+                    lineHeight: 36,
+                    color: '#333'
+                  },
+                  b: {
+                    color: '#a7a9c7',
+                    fontSize: 16,
+                    lineHeight: 24,
+                    color: '#333'
+                  }
+                }
+              }
+            },
+            label: {
+              show: false,
+              position: 'center',
+              color: 'rgba(13, 17, 29,0)'
+            },
+            labelLine: {
+              show: false
+            },
+            data: Data,
+            zlevel: 30
+          }
+        ]
+      }
+    return option;
+}
+// 柱形图
+export const histogram = (): any => { 
+    const option = {
+        backgroundColor: '#fff',
+        title: {
+          //   text: `{a|年度毛利及增速图}`,
+    
+          rich: {
+            a: {
+              fontSize: 16,
+              fontWeight: 600
+            }
+          },
+          top: '3%',
+          left: '2%'
+        },
+        legend: {
+          data: ['供温度', '回温', '压力值'],
+    
+          align: 'right',
+          top: '2%',
+          right: '2%'
+        },
+        tooltip: {
+          show: true,
+          trigger: 'item',
+          backgroundColor: 'rgba(255,255,255)',
+          axisPointer: {
+            lineStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#A7D6FF'
+                  },
+                  {
+                    offset: 0.5,
+                    color: '#fff'
+                  },
+                  {
+                    offset: 1,
+                    color: '#A7D6FF'
+                  }
+                ],
+                global: false
+              }
+            }
+          }
+        },
+        grid: { top: 70, right: 80, bottom: 30, left: 80 },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['1km', ' 2km', '3km', '4km', '5km'],
+            axisTick: {
+              show: false // 是否显示坐标轴轴线
+            },
+            axisLabel: {
+              color: '#282828',
+              fontSize: 14
+            },
+            splitLine: {
+              show: false
+            },
+            boundaryGap: true,
+            axisLine: {
+              //坐标轴轴线相关设置。
+              show: true,
+              inside: false,
+              lineStyle: {
+                color: '#000'
+              }
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value',
+            min: 0,
+            splitNumber: 6,
+    
+           
+            axisLabel: {
+              //坐标轴刻度标签的相关设置。
+              show: true,
+    
+              color: '#737373',
+              fontSize: 14
+            },
+            axisLine: {
+              show: true
+            },
+            axisTick: {
+              show: false
+            },
+            splitLine: {
+              lineStyle: {
+                color: 'rgba(131,101,101,0.2)',
+                type: 'dashed',
+                show: true
+              }
+            },
+            show: true
+          },
+    
+          {
+            type: 'value',
+            max: 50,
+            nameTextStyle: {
+              color: '#666666'
+            },
+            position: 'right',
+            axisLine: {
+              lineStyle: {
+                color: '#cdd5e2'
+              }
+            },
+            splitLine: {
+              show: false
+            },
+            axisLabel: {
+              show: true,
+              formatter: '{value}', //右侧Y轴文字显示
+    
+              color: '#666666',
+              fontSize: 14
+            }
+          }
+        ],
+        series: [
+          {
+            name: '供温度',
+            type: 'bar',
+            barMaxWidth: 20,
+            zlevel: 10,
+            // barGap: '100%',
+            data: [844.99, 1169.25, 1421.2, 1675.33, 2215.32, 2459.44],
+            itemStyle: {
+              color: {
+                type: 'linear',
+                x: 0,
+                y: 0,
+                x2: 0,
+                y2: 1,
+                colorStops: [
+                  {
+                    offset: 0,
+                    color: '#4F93FE'
+                  },
+                  {
+                    offset: 1,
+                    color: '#A7D6FF'
+                  }
+                ]
+              },
+              // barBorderRadius: [30, 30, 0, 0],
+              label: {
+                show: true, //开启显示
+                position: 'top', //在上方显示
+    
+                //数值样式
+                color: '#3b6ebf',
+                fontSize: 12,
+                fontWeight: 400
+              }
+            }
+          },
+          {
+            name: '回温',
+            type: 'line',
+            zlevel: 11,
+            yAxisIndex: 1, //使用的 y 轴的 index，在单个图表实例中存在多个 y轴的时候有用
+            smooth: true, //平滑曲线显示
+            symbol: 'circle', //标记的图形为实心圆
+            symbolSize: 8, //标记的大小
+            itemStyle: {
+              color: '#ffa43a',
+              borderColor: 'rgba(255, 234, 0, 0.5)', //圆点透明 边框
+              borderWidth: 7,
+              label: {
+                show: true, //开启显示
+                position: 'top', //在上方显示
+    
+                //数值样式
+                color: '#915c1e',
+                fontSize: 12,
+                fontWeight: 400,
+                formatter: function (res) {
+                  if (res.value) {
+                    return res.value + '%'
+                  } else {
+                    return 0
+                  }
+                }
+              }
+            },
+            lineStyle: {
+              color: '#ffa43a'
+            },
+            data: [null, 38.37, 21.55, 17.88, 32.23, 11.02]
+          },
+          {
+            name: '压力值',
+            type: 'bar',
+            itemStyle: {
+              color: '#E9E9E9'
+            },
+            silent: true,
+            barWidth: 30,
+            barGap: '-125%',
+            data: [875, 1200, 1450, 1700, 2240, 2485]
+          }
+        ]
+      }
+    return option;
+}

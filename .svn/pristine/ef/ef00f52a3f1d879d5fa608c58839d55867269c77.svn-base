@@ -1,0 +1,37 @@
+/**
+ * 虚拟数据
+ */
+export const MockIndex = []
+
+
+/**
+ * 角色管理
+ */
+export const rolelist: Array<RoleList> = [{
+    id: 1001,
+    roleName: '超级管理员',
+    roleIdentification: 'admin',
+    sort: 1,
+    roleState: '启用',
+    roleDescription: '测试角色1',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+}, {
+    id: 1002,
+    roleName: '普通用户',
+    roleIdentification: 'common',
+    sort: 2,
+    roleState: '启用',
+    roleDescription: '测试角色2',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+}, {
+    id: 1003,
+    roleName: '普通用户',
+    roleIdentification: 'common',
+    sort: 3,
+    roleState: '启用',
+    roleDescription: '测试角色3',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+},]

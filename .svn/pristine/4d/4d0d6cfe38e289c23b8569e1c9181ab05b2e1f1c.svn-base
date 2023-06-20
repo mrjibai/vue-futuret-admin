@@ -1,0 +1,146 @@
+:root[theme='light'] {
+    // html的样式
+    // 背景颜色
+    --wang-bgcolor: #000;
+    // 菜单字体颜色
+    --wang-menu-color: #fffff;
+    // 所有字体颜色
+    --wang-text-color: #fff;
+    // 菜单悬浮颜色
+    --wang-meun-hover-color: rgb(190, 186, 186);
+
+    // 菜单背景颜色
+    --wang-menu-bgcolor: #292424;
+
+
+    // 缓存路由颜色
+    --wang_router-color: rgba(255, 255, 255, 0.1);
+
+    // 菜单选中颜色
+    --wang-menu-active: rgba(0, 0, 0, 1);
+    --wang-menu-activetext: #0792f6;
+
+    // 边框颜色
+    --wangwang-border: rgba(152, 146, 146, 0.7);
+
+    // 主题抽屉栏颜色
+    --wangwang-drwer-bgcolor: #1b1a1a;
+
+    // 首页背景颜色
+    --wang-home-container-bg: rgba(0, 0, 0, 0.7);
+    // 首页大组件背景颜色
+    --wang-home-card-item-bg: #050505;
+    //      // 首页大组件鼠标悬浮背景阴影
+    --wang-home-card-item-hover-boxShdow: 0px 0px 20px 0px rgb(188, 179, 179);
+    //      // 首页快捷导航工具背景颜色
+    --wang-home-ShortcutTool-bg: #e6edf5;
+    --wang-home-ShortcutTool-bg-hover: #cbd3e0;
+
+    .css-dev-only-do-not-override-i3mqvl.ant-breadcrumb .ant-breadcrumb-separator {
+        color: var(--wang-text-color) !important;
+    }
+
+    :deep(.css-dev-only-do-not-override-i3mqvl.ant-breadcrumb) {
+        .ant-breadcrumb-separator {
+            color: var(--wang-text-color) !important;
+        }
+    }
+
+    .a-divider {
+        color: var(--wang-text-color);
+    }
+
+    .rightsUSer {
+        display: flex;
+        align-items: center;
+
+        .rigUserBtns {
+            display: flex;
+            align-items: center;
+            height: 100%;
+
+            li {
+                color: var(--wang-text-color);
+                filter: drop-shadow(2px 2px 1px var(--wang-text-color));
+            }
+        }
+
+        .dropdmon {
+            color: var(--wang-text-color);
+        }
+    }
+
+    // 右侧边栏
+    .css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-title {
+        color: var(--wang-text-color);
+    }
+
+    .css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-close {
+        color: var(--wang-text-color);
+    }
+
+    .css-dev-only-do-not-override-i3mqvl.ant-divider-horizontal.ant-divider-with-text {
+        color: var(--wang-text-color);
+        border-block-start: 0 var(--wangwang-border)
+    }
+
+    .vxe-table {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .vxe-table--header-wrapper {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+
+            .vxe-header--row {
+                border-color: var(--wangwang-border);
+                border-top: 1px solid var(--wang-border);
+
+                .vxe-header--column {
+                    background-image: linear-gradient(var(--wang-bgcolor)) !important;
+                }
+            }
+        }
+
+
+        .vxe-body--row {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+            border: 1px solid var(--wangwang-border);
+        }
+    }
+
+    .vxe-toolbar {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+    }
+
+    .el-input {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .el-input__wrapper {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+
+            .el-input__inner {
+                background-color: var(--wang-bgcolor);
+                color: var(--wang-text-color);
+            }
+        }
+
+    }
+
+
+    .menus {
+        &:hover {
+            box-shadow: 0 0 0px;
+        }
+    }
+
+    .roles {
+        &:hover {
+            box-shadow: 0 0 0px;
+        }
+    }
+}

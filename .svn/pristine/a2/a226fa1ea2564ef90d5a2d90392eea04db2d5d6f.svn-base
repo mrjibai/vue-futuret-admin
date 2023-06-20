@@ -1,0 +1,17 @@
+import { defineStore } from 'pinia'
+
+export const RouterStore = defineStore('RouterStore', {
+    state: (): RoutesListState => ({
+        routesList: [],
+        isColumnsMenuHover: false,
+        isColumnsNavHover: false,
+    }),
+    // 处置事件的
+    actions: {
+        // 赋值获取路由列表
+        MutionsactionSetRouterlist(data: Array<string>) {
+            this.routesList = data
+        }
+    }
+
+})

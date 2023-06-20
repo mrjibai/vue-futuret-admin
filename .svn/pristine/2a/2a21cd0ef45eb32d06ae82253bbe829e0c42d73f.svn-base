@@ -1,0 +1,166 @@
+import { RouteRecordRaw } from 'vue-router';
+
+
+
+export const staterouter: Array<RouteRecordRaw> = [
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('/@/views/login/index.vue'),
+        meta: {
+            title: '登录'
+        }
+    }
+]
+
+/**
+ * 动态路由
+ */
+export const dynamic_routing: Array<RouteRecordRaw> = [
+    {
+        path: '/',
+        component: () => import('/@/pages/index.vue'),
+        redirect: '/home',
+        children: [
+            {
+                path: '/home',
+                name: 'home',
+                component: () => import('/@/views/home/index.vue'),
+                meta: {
+                    title: '首页',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-shouye',
+                    type: '菜单',
+                    sort: 1
+                }
+            },
+            {
+                path: '/sysmen',
+                name: 'sysmen',
+                component: () => import('/@/pages/sysmen/index.vue'),
+                redirect: '/sysmen/menus',
+                meta: {
+                    title: '系统设置',
+                    icon: 'iconfont icon-xitong',
+                    roles: ['admin'],
+                    type: '菜单',
+                    sort: 1
+                },
+                children: [
+                    {
+                        // 菜单管理
+                        path: '/sysmen/menus',
+                        name: 'menus',
+                        component: () => import('/@/views/menus/index.vue'),
+                        meta: {
+                            title: '菜单管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-caidan',
+                            type: '菜单',
+                            sort: 1
+                        },
+                    },
+                    {
+                        path: '/sysmen/roles',
+                        name: 'roles',
+                        component: () => import('/@/views/roles/index.vue'),
+                        meta: {
+                            title: '角色管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-jiaosequnti',
+                            type: '菜单',
+                            sort: 1
+                        },
+                    },
+                    {
+                        path: '/sysmen/UserControl',
+                        name: 'UserControl',
+                        component: () => import('/@/views/userControl/index.vue'),
+                        meta: {
+                            title: '用户管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-yonghuguanli_huaban',
+                            type: '菜单',//类型
+                            sort: 1
+                        },
+                    }
+                ]
+            },
+            {
+                path: '/jurisdiction',
+                name: 'jurisdiction',
+                meta: {
+                    title: '权限管理',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-quanxian',
+                    type: '菜单',
+                    sort: 1
+                },
+                redirect: '/jurisdiction/leading_end',
+                children: [{
+                    path: '/jurisdiction/leading_end',
+                    name: 'leading_end',
+                    redirect: '/jurisdiction/leading_end/leading_end_page',
+                    meta: {
+                        title: '前端权限',
+                        roles: ['admin', 'common'],
+                        icon: '',
+                        type: '菜单',
+                        sort: 1
+                    },
+                    children: [{
+                        path: '/jurisdiction/leading_end/leading_end_page',
+                        name: 'leading_end_page',
+                        component: () => import('/@/views/leading_end_page/index.vue'),
+                        meta: {
+                            title: '页面权限',
+                            roles: ['admin', 'common'],
+                            icon: '',
+                            type: '菜单',
+                            sort: 1
+                        },
+
+                    }]
+                },
+                {
+                    path: '/jurisdiction/after_end',
+                    name: 'after_end',
+                    redirect: '/page',
+                    meta: {
+                        title: '后端权限',
+                        roles: ['admin'],
+                        icon: '',
+                        type: '菜单',
+                        sort: 1
+                    }
+                }
+                ]
+
+            }
+        ]
+    }
+]
+/**
+ * 定义404、401界面
+ * @link 参考：https://next.router.vuejs.org/zh/guide/essentials/history-mode.html#netlify
+ */
+export const notFoundAndNoPower = [
+    {
+        path: '/:path(.*)*',
+        name: 'notFound',
+        component: () => import('/@/views/error/404.vue'),
+        meta: {
+            title: '404',
+            isHide: true,
+        },
+    },
+    {
+        path: '/401',
+        name: 'noPower',
+        component: () => import('/@/views/error/401.vue'),
+        meta: {
+            title: '401',
+            isHide: true,
+        },
+    },
+];

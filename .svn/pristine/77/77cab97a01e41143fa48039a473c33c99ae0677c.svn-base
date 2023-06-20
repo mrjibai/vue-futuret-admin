@@ -1,0 +1,246 @@
+<template>
+    <div class="login">
+        <div class="bglogin">
+            <div class="setitle">
+                <img :src="iconbgimg" alt="" class="imgstitle">
+                <div class="titlelogo">
+                    Vue-Wangwang
+                </div>
+            </div>
+        </div>
+        <div class="formlofgin">
+            <div class="loginsan">
+                <span class="light">
+                </span>
+                <span class="light"></span>
+                <span class="light"></span>
+                <span class="light"></span>
+                <h3 class="login_title">Vue-Wangwang 欢迎您到来 ！</h3>
+                <div class="qresmall" @click="keyloginboolqr = !keyloginboolqr">
+                    <img src="../../assets/qrcode-302.png" alt="" style="width: 100%;height: 100%;" v-if="keyloginboolqr">
+                    <a-space v-else>
+                        <wallet-two-tone style="font-size: 50px;" />
+                    </a-space>
+
+                </div>
+                <div class="loginsuer">
+                    <a-tabs v-model:activeKey="activeKey" v-if="keyloginboolqr">
+                        <a-tab-pane key="1" tab="账号登录">
+                            <Auform />
+                        </a-tab-pane>
+                        <a-tab-pane key="2" tab="手机号登录" force-render>
+                            <mobile />
+                        </a-tab-pane>
+                    </a-tabs>
+                    <div class="qrer" v-else>
+                        <Scqr />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts" name="login">
+
+/**
+ * login
+ */
+import iconbgimg from '/@/assets/Snipastebg.png'
+import { EyeTwoTone, WalletTwoTone } from '@ant-design/icons-vue'
+import { defineAsyncComponent, ref } from 'vue'
+
+
+
+const Auform = defineAsyncComponent(() => import('./component/formlogin.vue'))
+const mobile = defineAsyncComponent(() => import('./component/mobile.vue'))
+const Scqr = defineAsyncComponent(() => import('./component/screeqr.vue'))
+
+const activeKey = ref('1')
+
+const keyloginboolqr = ref(true)
+
+</script>
+
+<style scoped lang="scss">
+.login {
+    height: 100vmin;
+    background-color: var(--wang-bgcolor);
+    display: grid;
+    grid-template-columns: repeat(2, 50%);
+    filter: hue-rotate(1);
+
+    .bglogin {
+        // background: url('/@/assets/bglogin.svg') no-repeat;
+        // height: 100%;
+        // background-size: 100%;
+        background-color: var(--wang-bglefts);
+        position: relative;
+
+        .setitle {
+            position: absolute;
+            left: 20%;
+            top: 10%;
+            transform: translateX(-20%);
+            font-size: 22px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .titlelogo {
+                color: var(--wang-text-color);
+            }
+
+            .imgstitle {
+                width: 52px;
+                height: 52px;
+            }
+        }
+    }
+
+    .formlofgin {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .loginsan {
+            border: 2px solid #79bbff;
+            overflow: hidden;
+            aspect-ratio: 1 / 1;
+            width: 70%;
+            height: 70%;
+            position: relative;
+
+            .light {
+                position: absolute;
+
+                &:nth-child(1) {
+                    filter: hue-rotate(0deg);
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 3px;
+                    background: linear-gradient(90deg, transparent, #3a86ff);
+                    animation: animate1 8s linear infinite;
+                }
+
+                @keyframes animate1 {
+                    0% {
+                        left: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        left: 100%;
+                    }
+                }
+
+                &:nth-child(2) {
+                    filter: hue-rotate(60deg);
+                    top: -100%;
+                    right: 0;
+                    width: 3px;
+                    height: 100%;
+                    background: linear-gradient(180deg, transparent, #3a86ff);
+                    animation: animate2 8s linear infinite;
+                    animation-delay: 2s;
+                }
+
+                @keyframes animate2 {
+                    0% {
+                        top: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        top: 100%;
+                    }
+                }
+
+                &:nth-child(3) {
+                    filter: hue-rotate(120deg);
+                    bottom: 0;
+                    right: 0;
+                    width: 100%;
+                    background: linear-gradient(270deg, transparent, #3a86ff);
+                    animation: animate3 8s linear infinite;
+                    animation-delay: 4s;
+                }
+
+                @keyframes animate3 {
+                    0% {
+                        right: -100%;
+                        height: 3px;
+                    }
+
+                    50%,
+                    100% {
+                        height: 2px;
+                        right: 100%;
+                    }
+                }
+
+                &:nth-child(4) {
+                    filter: hue-rotate(300deg);
+                    bottom: -100%;
+                    left: 0;
+                    width: 3px;
+                    height: 100%;
+                    background: linear-gradient(360deg, transparent, #3a86ff);
+                    animation: animate4 8s linear infinite;
+                    animation-delay: 6s;
+                }
+
+                @keyframes animate4 {
+                    0% {
+                        bottom: -100%;
+                    }
+
+                    50%,
+                    100% {
+                        bottom: 100%;
+                    }
+                }
+            }
+
+            .login_title {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 150px;
+                width: 100%;
+                font-size: 22px;
+            }
+
+            .qresmall {
+                height: 50px;
+                width: 50px;
+                position: absolute;
+                right: 0px;
+                top: 0px;
+                cursor: pointer;
+
+                &::before {
+                    position: absolute;
+                    content: '';
+                    display: block;
+                    bottom: -12px;
+                    left: -25px;
+                    height: 50px;
+                    width: 78px;
+                    z-index: 10;
+                    background-color: var(--wang-bgcolor);
+                    transform: rotate(45deg);
+                }
+
+
+            }
+
+            .loginsuer {
+                padding: 0 30px;
+            }
+        }
+    }
+}
+</style>

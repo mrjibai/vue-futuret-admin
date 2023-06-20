@@ -1,0 +1,274 @@
+import { RouteRecordRaw } from 'vue-router';
+/**
+ * 建议：路由 path 路径与文件夹名称相同，找文件可浏览器地址找，方便定位文件位置
+ *
+ * 路由meta对象参数说明
+ * meta: {
+ *      title:          菜单栏及 tagsView 栏、菜单搜索名称（国际化）
+ *      isLink：        是否超链接菜单，开启外链条件，`1、isLink: 链接地址不为空 2、isIframe:false`
+ *      isHide：        是否隐藏此路由
+ *      isKeepAlive：   是否缓存组件状态
+ *      isAffix：       是否固定在 tagsView 栏上
+ *      isIframe：      是否内嵌窗口，开启条件，`1、isIframe:true 2、isLink：链接地址不为空`
+ *      roles：         当前路由权限标识，取角色管理。控制路由显示、隐藏。超级管理员：admin 普通角色：common
+ *      icon：          菜单、tagsView 图标，阿里：加 `iconfont xxx`，fontawesome：加 `fa xxx`
+ * }
+ */
+
+
+
+export const staterouter: Array<RouteRecordRaw> = [
+    {
+        path: '/login',
+        name: 'login',
+        component: () => import('/@/views/login/index.vue'),
+        meta: {
+            title: '登录'
+        }
+    },
+    /**
+     * 这里为全屏展示界面
+     * 添加需要的页面请在dynamic_routing 菜单页面中添加
+     */
+    {
+        path: '/DataViewDemo1',
+        name: 'DataViewDemo1',
+        component: () => import('/@/views/Datavis_1View/index.vue')
+    }
+]
+
+/**
+ * 动态路由
+ * 请按照格式进行添加
+ */
+export const dynamic_routing: Array<RouteRecordRaw> = [
+    {
+        path: '/',
+        component: () => import('/@/MainPage/index.vue'),
+        redirect: '/home',
+        children: [
+            {
+                path: '/home',
+                name: 'home',
+                component: () => import('/@/views/home/index.vue'),
+                meta: {
+                    title: '首页',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-shouye',
+                    type: '菜单',
+                    sort: 1
+                }
+            },
+            {
+                path: '/sysmen',
+                name: 'sysmen',
+                component: () => import('/@/views/sysmen/index.vue'),
+                redirect: '/sysmen/menus',
+                meta: {
+                    title: '系统设置',
+                    icon: 'iconfont icon-xitong',
+                    roles: ['admin'],
+                    type: '菜单',
+                    sort: 1
+                },
+                children: [
+                    {
+                        path: '/sysmen/menus',
+                        name: 'menus',
+                        component: () => import('/@/views/sysmen/menus/index.vue'),
+                        meta: {
+                            title: '菜单管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-caidan',
+                            type: '菜单',
+                            sort: 1
+                        },
+                    },
+                    {
+                        path: '/sysmen/roles',
+                        name: 'roles',
+                        component: () => import('/@/views/sysmen/roles/index.vue'),
+                        meta: {
+                            title: '角色管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-jiaose',
+                            type: '菜单',
+                            sort: 1
+                        },
+                    },
+                    {
+                        path: '/sysmen/UserControl',
+                        name: 'UserControl',
+                        component: () => import('/@/views/sysmen/userControl/index.vue'),
+                        meta: {
+                            title: '用户管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-yonghu',
+                            type: '菜单',//类型
+                            sort: 1
+                        },
+                    },
+                    {
+                        path: '/sysmen/DepManagement',
+                        name: 'DepManagement',
+                        component: () => import('/@/views/sysmen/DepManagement/index.vue'),
+                        meta: {
+                            title: '部门管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-yonghu',
+                            type: '菜单',//类型
+                            sort: 1
+                        },
+                    }, {
+                        path: '/sysmen/DicManagement',
+                        name: 'DicManagement',
+                        component: () => import('/@/views/sysmen/DicManagement/index.vue'),
+                        meta: {
+                            title: '字典管理',
+                            roles: ['admin'],
+                            icon: 'iconfont icon-yonghu',
+                            type: '菜单',//类型
+                            sort: 1
+                        },
+                    },
+                ]
+            },
+            {
+                path: '/jurisdiction',
+                name: 'jurisdiction',
+                meta: {
+                    title: '权限管理',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-quanxian',
+                    type: '菜单',
+                    sort: 1
+                },
+                redirect: '/jurisdiction/leading_end',
+                children: [{
+                    path: '/jurisdiction/leading_end',
+                    name: 'leading_end',
+                    redirect: '/jurisdiction/leading_end/leading_end_page',
+                    meta: {
+                        title: '前端权限',
+                        roles: ['admin', 'common'],
+                        icon: '',
+                        type: '菜单',
+                        sort: 1
+                    },
+                    children: [{
+                        path: '/jurisdiction/leading_end/leading_end_page',
+                        name: 'leading_end_page',
+                        component: () => import('/@/views/jurisdiction/leading_end_page/index.vue'),
+                        meta: {
+                            title: '页面权限',
+                            roles: ['admin', 'common'],
+                            icon: '',
+                            type: '菜单',
+                            sort: 1
+                        },
+
+                    }]
+                },
+                {
+                    path: '/jurisdiction/after_end',
+                    name: 'after_end',
+                    redirect: '/page',
+                    meta: {
+                        title: '后端权限',
+                        roles: ['admin'],
+                        icon: '',
+                        type: '菜单',
+                        sort: 1
+                    },
+                    children: [{
+                        path: '/jurisdiction/after_end/back_end_page',
+                        name: 'back_end_page',
+                        component: () => import('/@/views/jurisdiction/back_end_page/index.vue'),
+                        meta: {
+                            title: '页面权限',
+                            roles: ['admin', 'common'],
+                            icon: '',
+                            type: '菜单',
+                            sort: 1
+                        },
+
+                    }]
+                }
+                ]
+
+            },
+            {
+                path: '/function',
+                name: 'function',
+                meta: {
+                    title: '功能',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-gongneng',
+                    type: '菜单',
+                    sort: 1
+                },
+                redirect: '/function/tagsView',
+                children: [{
+                    path: '/function/tagsView',
+                    name: 'tagsView',
+                    component: () => import('/@/views/tagsView/index.vue'),
+                    meta: {
+                        title: 'tagsView页面操作',
+                        roles: ['admin', 'common'],
+                        icon: 'iconfont icon-yemiancaozuo',
+                        type: '菜单',
+                        sort: 1
+                    },
+                }]
+            },
+            {
+                path: '/Data_visualization',
+                name: 'Data_visualization',
+                meta: {
+                    title: '数据图表可视化',
+                    roles: ['admin', 'common'],
+                    icon: 'iconfont icon-shuju',
+                    type: '菜单',
+                    sort: 1
+                },
+                redirect: '/Data_visualization/Datavis_1',
+                children: [{
+                    path: '/Data_visualization/Datavis_1',
+                    name: 'Datavis_1',
+                    meta: {
+                        title: '大数据可视化演示1',
+                        roles: ['admin', 'common'],
+                        icon: 'iconfont icon-keshihuakanban',
+                        type: '菜单',
+                        sort: 1
+                    },
+                    component: () => import('/@/MainPage/RouterView/Datavis_1/index.vue')
+                }]
+            },
+        ]
+    }
+]
+/**
+ * 定义404、401界面
+ * @link 参考：https://next.router.vuejs.org/zh/guide/essentials/history-mode.html#netlify
+ */
+export const notFoundAndNoPower = [
+    {
+        path: '/:path(.*)*',
+        name: 'notFound',
+        component: () => import('/@/views/error/404.vue'),
+        meta: {
+            title: '404',
+            isHide: true,
+        },
+    },
+    {
+        path: '/401',
+        name: 'noPower',
+        component: () => import('/@/views/error/401.vue'),
+        meta: {
+            title: '401',
+            isHide: true,
+        },
+    },
+];

@@ -1,0 +1,40 @@
+import { RouteRecordRaw } from 'vue-router';
+// 声明一个模块，防止引入文件时报错
+declare module '*.json';
+declare module '*.png';
+declare module '*.jpg';
+declare module '*.scss';
+declare module '*.ts';
+declare module '*.js';
+declare module '*.svg';
+
+
+// declare module '*.json' {
+//     const value: any;
+//     export default value;
+// }
+// 声明文件，*.vue 后缀的文件交给 vue 模块来处理
+declare module "*.vue" {
+    import { DefineComponent } from "vue"
+    const component: DefineComponent<{}, {}, any>
+    export default component
+}
+
+declare module 'nprogress'
+
+// 声明文件，定义全局变量
+/* eslint-disable */
+declare interface Window {
+    nextLoading: boolean;
+}
+
+declare type Jsons<T> = DataJson<T>
+
+// 标准返回前端json格式
+interface DataJson<T> {
+    code: Number,
+    data: T,
+    msg: String
+}
+// 路由类型
+declare type ROUARR = RouteRecordRaw

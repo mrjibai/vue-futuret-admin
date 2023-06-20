@@ -1,0 +1,227 @@
+<template>
+  <div class="DepManagement">
+    <vxe-toolbar>
+      <template #buttons>
+        <div class="sercarINput">
+          <a-input v-model="SerInput.filterName" type="search" placeholder="请输入字典名称" @keyup="searchEvent2"></a-input>
+          <a-button type="primary" ghost @click="searchEvent2">查询</a-button>
+          <a-button type="primary" @click="AddDialogVisible">新增字典</a-button>
+        </div>
+      </template>
+    </vxe-toolbar>
+    <a-spin :spinning="loadings">
+      <vxe-table border=none ref="xTree" max-height="700" :tree-config="{}" :data="state.depManagementsList" align="left">
+        <vxe-column field="departmentName" title="账户名称" tree-node>
+          <template #default="{ row }">
+            <div>
+              {{ row.departmentName }}
+            </div>
+          </template>
+        </vxe-column>
+        <vxe-column field="sort" title="排序"></vxe-column>
+        <vxe-column field="departmentStatus" title="部门状态">
+          <template #default="{ row }">
+            <a-tag :title="row.DicStatus" type="success">{{ row.departmentStatus }}</a-tag>
+          </template>
+        </vxe-column>
+        <vxe-column field="departmentDescription" title="部门描述"></vxe-column>
+
+        <vxe-column field="createTime" title="创建时间"></vxe-column>
+
+        <vxe-column field="" title="操作" width="15%">
+          <template #default="{ row }">
+            <a-button link type="primary" @click="DicManagementEdit(row)">新增</a-button>
+            <a-button link type="primary" @click="DicManagementEdit(row)">修改</a-button>
+            <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delDicManagement(row)" confirm-button-text="确认"
+              cancel-button-text="取消">
+              <template #reference>
+                <a-button link type="primary">删除</a-button>
+              </template>
+            </a-popconfirm>
+          </template>
+        </vxe-column>
+
+
+      </vxe-table>
+    </a-spin>
+    <a-pagination :show-total="(total: string) => `总数 ${total} 条`" @showSizeChange="handleSizeChange"
+      @change="handleCurrentChange" v-model:current="page.currentPage" :page-sizes="[10, 20, 30, 40]"
+      v-model:pageSize="page.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="page.total"
+      show-size-changer>
+    </a-pagination>
+    <!-- 弹框 -->
+    <a-modal v-model:open="dialogVisible" :title="state.Tips" :afterClose="handleClose" draggable width="47%">
+      <a-form :model="DepManagementObj" label-width="120px">
+        <a-row :gutter="20">
+          <a-col :span="24" :offset="0">
+            <a-form-item label="上级部门">
+              <a-tree-select v-model:value="DepManagementObj.ParentDep" style="width: 100%" :field-names="{
+                label: 'label',
+                value: 'path',
+                children: 'children',
+                key: 'path'
+              }" :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" placeholder="" allow-clear
+                tree-default-expand-all :tree-data="[]">
+              </a-tree-select>
+            </a-form-item>
+          </a-col>
+          <a-col :span="12" :offset="0">
+            <a-form-item label="部门名称">
+              <a-input v-model="DepManagementObj.departmentName" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12" :offset="0">
+            <a-form-item label="负责人">
+              <a-input v-model="DepManagementObj.personInCharge" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12" :offset="0">
+            <a-form-item label="手机号">
+              <a-input v-model="DepManagementObj.phone" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="12" :offset="0">
+            <a-form-item label="邮箱">
+              <a-input v-model="DepManagementObj.phone" />
+            </a-form-item>
+          </a-col>
+
+
+          <a-col :span="12" :offset="0">
+            <a-form-item label="排序">
+              <a-input-number v-model="DepManagementObj.sort" :min="1" :max="10" />
+            </a-form-item>
+          </a-col>
+          <a-col :span="24" :offset="0">
+            <a-form-item label="部门状态">
+              <a-tooltip :title="'Switch value: ' + DepManagementObj.departmentStatus" placement="top"> <a-switch
+                  v-model:checked="DepManagementObj.departmentStatus"> </a-switch>
+              </a-tooltip>
+            </a-form-item>
+          </a-col>
+          <a-col :span="24" :offset="0">
+            <a-form-item label="部门描述">
+              <a-input v-model="DepManagementObj.departmentDescription" type="textarea" />
+            </a-form-item>
+          </a-col>
+        </a-row>
+      </a-form>
+      <template #footer>
+        <span class="dialog-footer">
+          <a-button @click="dialogVisible = false">取消</a-button>
+          <a-button type="primary" @click="onSubmit">
+            保存
+          </a-button>
+        </span>
+      </template>
+    </a-modal>
+  </div>
+</template>
+<script setup lang="ts" name="DepManagement">
+import { reactive, ref } from 'vue'
+import { depManagementsList } from '/@/mock/index'
+
+let data = depManagementsList
+const loadings = ref(false)
+const dialogVisible = ref(false)
+
+const SerInput = reactive<inputDepManagement>({
+  filterName: ''
+})
+const state = reactive<any>({
+  depManagementsList: [],
+  Tips: '添加部门'
+})
+const getDepManagement = () => {
+  loadings.value = false
+  state.depManagementsList = data
+
+}
+getDepManagement()
+// 搜索
+const searchEvent2 = () => {
+  loadings.value = true
+  setTimeout(() => {
+    getDepManagement()
+  }, 1000)
+}
+// 
+const DicManagementEdit = (row: any) => {
+  dialogVisible.value = true
+  state.Tips = '编辑部门'
+  DepManagementObj.ParentDep = row.ParentDep
+  DepManagementObj.departmentName = row.departmentName
+  DepManagementObj.personInCharge = row.personInCharge
+  DepManagementObj.phone = row.phone
+  DepManagementObj.email = row.email
+  DepManagementObj.sort = row.sort
+  DepManagementObj.departmentStatus = row.departmentStatus
+  DepManagementObj.departmentDescription = row.departmentDescription
+}
+// 删除
+const delDicManagement = (row: any) => {
+  loadings.value = true
+  setTimeout(() => {
+    getDepManagement()
+  }, 1000)
+}
+// 分页
+const page = reactive({
+  currentPage: 1,
+  total: depManagementsList.length,
+  pageSize: 10
+})
+// 切换条数
+const handleSizeChange = (val: number) => {
+  page.pageSize = val
+
+  getDepManagement()
+}
+// 切换当前页
+const handleCurrentChange = (val: number) => {
+  page.currentPage = val
+
+  getDepManagement
+}
+const handleClose = () => {
+  dialogVisible.value = false
+}
+const DepManagementObj = reactive({
+  ParentDep: '', //上级部门
+  departmentName: '', //部门名称
+  personInCharge: '',//负责人
+  phone: '',         //手机号
+  email: '',         //邮箱
+  sort: 0,      //排序
+  departmentStatus: '',//部门状态
+  departmentDescription: '',//部门描述
+  createTime: new Date().toLocaleString(),
+  children: []
+})
+const onSubmit = () => {
+  loadings.value = true
+  dialogVisible.value = false
+}
+
+const AddDialogVisible = () => {
+  dialogVisible.value = true
+  state.Tips = '新增部门'
+}
+
+</script>
+<style scoped lang="scss">
+.DepManagement {
+  border: 0.7px solid var(--wangwang-border);
+  width: 100%;
+  padding: 5px;
+
+  &:hover {
+    box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+  }
+
+
+  .sercarINput {
+    display: flex;
+  }
+}
+</style>

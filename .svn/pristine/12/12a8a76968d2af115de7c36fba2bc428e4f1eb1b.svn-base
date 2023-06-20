@@ -1,0 +1,59 @@
+<template>
+    <div class="pages">
+        <el-container class="contenPages">
+            <el-aside width="255px">
+                <navTabar />
+            </el-aside>
+            <el-container>
+                <el-header>
+                    <HeaderTabar />
+                </el-header>
+                <el-main>
+                    <RouterView />
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+</template>
+
+<script setup lang="ts" name="/">
+import { onMounted, defineAsyncComponent } from 'vue';
+const navTabar = defineAsyncComponent(() => import('/@/pages/navTabar/index.vue'))
+const HeaderTabar = defineAsyncComponent(() => import('/@/pages/HeaderTabar/index.vue'))
+
+onMounted(() => {
+})
+</script>
+
+<style scoped lang="scss">
+.pages {
+    width: 98vw;
+    box-sizing: border-box;
+
+
+    .contenPages {
+        width: 100%;
+
+        .el-main {
+            box-sizing: border-box;
+
+        }
+
+        .el-header {
+            --el-header-padding: 0px;
+            --el-header-height: 70px;
+        }
+
+        .ant-layout-sider {
+            background: var(--wang-menu-bgcolor);
+            margin-right: 20px;
+        }
+
+        .ant-layout-header {
+            background: var(--wang-bgcolor);
+        }
+    }
+
+
+}
+</style>

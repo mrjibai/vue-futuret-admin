@@ -1,0 +1,32 @@
+// import { fileURLToPath, URL } from 'node:url'
+import { resolve } from 'path';
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx'
+import vueSetupExtend from 'vite-plugin-vue-setup-extend';
+
+
+const pathResolve = (dir: string) => {
+  return resolve(__dirname, '.', dir);
+};
+
+const alias: Record<string, string> = {
+  '/@': pathResolve('./src/'),
+};
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [vue(), vueJsx(), vueSetupExtend()
+  ],
+  resolve: {
+    alias,
+    extensions: ['.js', '.ts', '.vue'] // 使用路径别名时想要省略的后缀名，可以自己 增减
+  },
+  base: './',
+  server: {
+    host: '0.0.0.0',
+    port: 5117,
+    // 是否开启 https
+    https: false,
+  },
+})

@@ -1,0 +1,233 @@
+<template>
+    <div class="DicManagement">
+        <vxe-toolbar>
+            <template #buttons>
+                <div class="sercarINput">
+                    <a-input v-model="SerInput.filterName" type="search" placeholder="请输入字典名称"
+                        @keyup="searchEvent2"></a-input>
+                    <a-button type="primary" ghost @click="searchEvent2">查询</a-button>
+                    <a-button type="primary" @click="AddDialogVisible">新增字典</a-button>
+                </div>
+            </template>
+        </vxe-toolbar>
+        <a-spin :spinning="loadings">
+            <vxe-table border=none show-header-overflow show-overflow :row-config="{ isHover: true }"
+                :data="state.dicManagementList" :tree-config="{}">
+                <vxe-column type="seq" title="序号" width="60"></vxe-column>
+                <vxe-column field="DicName" title="字典名称"></vxe-column>
+                <vxe-column field="column" title="字段名"></vxe-column>
+                <vxe-column field="DicStatus" title="字典状态">
+                    <template #default="{ row }">
+                        <a-tag :title="row.DicStatus" type="success">{{ row.DicStatus }}</a-tag>
+                    </template>
+                </vxe-column>
+                <vxe-column field="DicDescription" title="字典描述"></vxe-column>
+
+                <vxe-column field="createTime" title="创建时间"></vxe-column>
+
+                <vxe-column field="" title="操作" width="20%">
+                    <template #default="{ row }">
+                        <a-button type="link" @click="DicManagementEdit(row)">新增</a-button>
+                        <a-button type="link" @click="DicManagementEdit(row)">修改</a-button>
+                        <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delDicManagement(row)" ok-text="确认" cancel-text="取消">
+                            <a-button type="link">删除</a-button>
+                        </a-popconfirm>
+                    </template>
+                </vxe-column>
+            </vxe-table>
+        </a-spin>
+        <a-pagination :show-total="(total: string) => `总数 ${total} 条`" @showSizeChange="handleSizeChange"
+            @change="handleCurrentChange" v-model:current="page.currentPage" :page-sizes="[10, 20, 30, 40]"
+            v-model:pageSize="page.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="page.total"
+            show-size-changer>
+        </a-pagination>
+        <!-- 弹框 -->
+        <a-modal v-model:open="dialogVisible" :title="state.Tips" width="47%" :before-close="handleClose" draggable>
+            <a-form :model="DicManagement" label-width="120px">
+                <a-row :gutter="20">
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="字典名称">
+                            <a-input v-model="DicManagement.DicName"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="字段名">
+                            <a-input v-model="DicManagement.column"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="24" :offset="0">
+                        <a-form-item label="字典状态">
+                            <a-tooltip :titile="'Switch value: ' + DicManagement.DicStatus" placement="top"> <a-switch
+                                    v-model:checked="DicManagement.DicStatus"> </a-switch> </a-tooltip>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20" :span="12" :offset="0">
+                        <a-row :gutter="35" v-for="(v, k) in state.dicManagementList.list">
+                            <a-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
+                                <a-form-item :prop="`list[${k}.label]`">
+                                    <template #label>
+                                        <a-button type="primary" circle size="small" @click="onAddRow" v-if="k === 0">
+                                        </a-button>
+                                        <a-button type="danger" circle size="small" @click="onDelRow(k)" v-else>
+                                        </a-button>
+                                        <span class="ml10">字段</span>
+                                    </template>
+                                    <a-input v-model="v.label" style="width: 100%" placeholder="请输入字段名"> </a-input>
+                                </a-form-item>
+                            </a-col>
+                            <a-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12" class="mb20">
+                                <a-form-item label="属性" :prop="`list[${k}].value`">
+                                    <a-input v-model="v.value" style="width: 100%" placeholder="请输入属性值"> </a-input>
+                                </a-form-item>
+                            </a-col>
+                        </a-row>
+                    </a-col>
+                    <a-col :span="24" :offset="0">
+                        <a-form-item label="字典描述">
+                            <a-input type="textarea" v-model="DicManagement.DicDescription"></a-input>
+                        </a-form-item>
+                    </a-col>
+                </a-row>
+
+            </a-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <a-button @click="dialogVisible = false">取消</a-button>
+                    <a-button type="primary" @click="onSubmit">
+                        保存
+                    </a-button>
+                </span>
+            </template>
+        </a-modal>
+    </div>
+</template>
+<script setup lang="ts" name="DicManagement">
+import { reactive, ref } from 'vue'
+import { dicManaList } from '/@/mock/index'
+let data = dicManaList
+const SerInput = reactive<inputDicManagement>({
+    filterName: ''
+})
+const state = reactive<any>({
+    dicManagementList: [],
+    Tips: '添加字典'
+})
+// 加载动画
+const loadings = ref(false)
+// 弹框
+const dialogVisible = ref(false)
+const DicManagement = reactive({
+    DicName: '',//字典名称
+    column: '',//字段名
+    DicStatus: '',//字典状态
+    DicDescription: '',//字典描述
+    createTime: new Date().toLocaleString(),//创建时间
+    list: []
+});
+// 获取状态数据
+const getDicManagementList = () => {
+    loadings.value = false;
+    state.dicManagementList = data
+}
+getDicManagementList()
+
+const searchEvent2 = () => {
+    loadings.value = true
+    setTimeout(() => {
+        getDicManagementList()
+    }, 1000);
+}
+// 编辑
+const DicManagementEdit = (row: DicManagementList) => {
+    state.Tips = '修改字典'
+    openDialog()
+    dialogVisible.value = true;
+}
+// 删除
+const delDicManagement = (row: DicManagementList) => {
+    loadings.value = true
+    setTimeout(() => {
+        getDicManagementList()
+    }, 1000);
+}
+// 分页
+const page = reactive({
+    currentPage: 1,
+    total: data.length,
+    pageSize: 10
+})
+const handleSizeChange = (e: number) => {
+    page.pageSize = e
+}
+const handleCurrentChange = (e: number) => {
+    page.currentPage = e
+}
+// 关闭弹框
+const handleClose = () => {
+    dialogVisible.value = false
+    for (const key in DicManagement) {
+        (<any>DicManagement)[key] = ''
+    }
+}
+
+const openDialog = () => {
+    if (state.Tips === '修改字典') {
+        if (state.dicManagementList.column === 'SYS_UERINFO') {
+            // row.list = [
+            //     { id: Math.random(), label: 'sex', value: '1' },
+            //     { id: Math.random(), label: 'sex', value: '0' },
+            // ];
+        } else {
+            state.dicManagementList.list = [
+                { id: Math.random(), label: 'role', value: 'admin' },
+                { id: Math.random(), label: 'role', value: 'common' },
+                { id: Math.random(), label: 'roleName', value: '超级管理员' },
+                { id: Math.random(), label: 'roleName', value: '普通用户' },
+            ];
+        }
+    }
+}// 新增行
+const onAddRow = () => {
+    state.dicManagementList.list.push({
+        id: Math.random(),
+        label: '',
+        value: '',
+    });
+};
+// 删除行
+const onDelRow = (k: number) => {
+    state.dicManagementList.list.splice(k, 1);
+};
+const onSubmit = () => {
+    loadings.value = true
+    dialogVisible.value = false
+    setTimeout(() => {
+        getDicManagementList()
+    }, 1000)
+}
+
+// // 暴露变量
+// defineExpose({
+// 	openDialog,
+// });
+const AddDialogVisible = () => {
+    dialogVisible.value = true
+    state.Tips = '新增部门'
+}
+</script>
+<style scoped lang="scss">
+.DicManagement {
+    border: 0.7px solid var(--wangwang-border);
+    width: 100%;
+    padding: 5px;
+
+    &:hover {
+        box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+    }
+
+
+    .sercarINput {
+        display: flex;
+    }
+}
+</style>

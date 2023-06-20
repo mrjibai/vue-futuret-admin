@@ -1,0 +1,24 @@
+import type { App, DirectiveBinding } from 'vue';
+// import loadingimg from '@/assets/images/2021090708410877.gif'
+export default function DOMFdirective(app: App) {
+    // DOM自定义指令1 
+    //    图片懒加载
+    app.directive('lazyload', (el: any, binding: DirectiveBinding<any>) => {
+        // console.log(el.dataset);
+        // 是否需要懒加载
+        const { nolazy } = binding.value
+        if (nolazy) return el.src = el.dataset.src
+        // 懒加载暂时没有显示出来的图片，显示正在加载中的图片
+        const placeload = 'loadingimg'
+        el.src = placeload
+        // 判断目标是否出现在可视化上面
+        const obServer = new IntersectionObserver(entries => {
+            // 如果intersectionRatio 为0 ，则目标在视野外
+            //我们不做任何事情
+            if (entries[0].intersectionRatio <= 0) return;
+            el.src = el.dataset.src
+            obServer.unobserve(el)
+        })
+        obServer.observe(el)
+    })
+}

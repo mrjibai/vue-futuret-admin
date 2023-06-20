@@ -1,0 +1,97 @@
+<template>
+    <div class="loadings" v-show="props.msg.show">
+        <div class="load_">
+            {{ props.msg.title }}
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+const TEMPLATELoadings = ref('10%')
+interface msg {
+    show: Boolean | null,
+    title: String | null
+}
+const props = defineProps<{ msg: msg }>()
+const num = ref(10)
+watch(() => props.msg.show, (newvalue) => {
+    if (newvalue) showTimer()
+})
+
+const showTimer = (): void => {
+    const timer: NodeJS.Timer = setInterval(() => {
+        num.value++
+        TEMPLATELoadings.value = `${num.value}%`
+        if (num.value >= 100) {
+            clearInterval(timer)
+            num.value = 10
+        }
+    }, 10)
+}
+
+
+</script>
+
+<style scoped lang="scss">
+.loadings {
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(255, 255, 255);
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    z-index: 99;
+
+    .load_ {
+        margin: 0;
+        padding: 0;
+        height: 100px;
+        width: 100px;
+        background-color: rgb(118, 218, 255);
+        overflow: hidden;
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--wang-text-color);
+        left: 50%;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+
+        &::before,
+        &::after {
+            content: '';
+            // display: block;
+            position: absolute;
+            bottom: v-bind(TEMPLATELoadings);
+            min-width: 200px;
+            min-height: 200px;
+            background-color: #FFFFFF;
+            animation: rote 5s linear infinite;
+        }
+
+        &::before {
+            left: -55%;
+            border-radius: 55%;
+            opacity: .5;
+        }
+
+        &::after {
+            left: -55%;
+            border-radius: 36%;
+        }
+
+        @keyframes rote {
+            from {
+                transform: rotateZ(0deg);
+            }
+
+            to {
+                transform: rotateZ(360deg);
+            }
+        }
+    }
+}
+</style>

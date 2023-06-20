@@ -1,0 +1,6 @@
+// 路由列表
+declare interface RoutesListState<T = any> {
+    routesList: T[];
+    isColumnsMenuHover: Boolean;
+    isColumnsNavHover: Boolean;
+}

@@ -1,0 +1,10 @@
+<template>
+    <div>
+        用户管理123
+    </div>
+</template>
+
+<script setup lang="ts" name="UserControl">
+</script>
+
+<style scoped lang="scss"></style>

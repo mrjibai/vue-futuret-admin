@@ -1,0 +1,53 @@
+import { createApp, defineAsyncComponent } from 'vue'
+import pinia from '/@/stores'
+import Antd from 'ant-design-vue';
+import App from './App.vue'
+import router from './router'
+import 'ant-design-vue/dist/antd.css';
+import Direacives from '/@/directives/index'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import './Theme/app.scss'
+import 'nprogress/nprogress.css'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
+import '/@/assets/icons/fontsicon/iconfont.css'
+import '/@/assets/icons/fontsicon/demo.css'
+import 'default-passive-events';
+// import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+
+
+
+
+const app = createApp(App)
+// for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+//     app.component(key, component)
+// }
+function useTable(app) {
+    app.use(VXETable)
+
+    // 给 vue 实例挂载内部对象，例如：
+    // app.config.globalProperties.$XModal = VXETable.modal
+    // app.config.globalProperties.$XPrint = VXETable.print
+    // app.config.globalProperties.$XSaveFile = VXETable.saveFile
+    // app.config.globalProperties.$XReadFile = VXETable.readFile
+}
+
+// 自定义指令
+Direacives(app)
+
+
+// 全局组件
+app.component('navTabar_chilren', defineAsyncComponent(() => import('/@/pages/navTabar/navTabar_children/index.vue')))
+
+app.use(useTable)
+app.use(ElementPlus, {
+    locale: zhCn
+})
+app.use(Antd)
+app.use(pinia)
+app.use(router)
+
+app.mount('#app')

@@ -1,0 +1,30 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { ElConfigProvider } from 'element-plus'
+
+import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
+import { RouterLink, RouterView } from 'vue-router'
+import { getmark } from '/@/units/watermark'
+const { watermark } = getmark()
+
+const locale = zhCn
+onMounted(() => {
+  watermark('Vue-Wangwang-admin')
+})
+</script>
+
+<template>
+  <el-config-provider :locale="locale">
+    <a-style-provider hash-priority="high">
+      <RouterView />
+    </a-style-provider>
+  </el-config-provider>
+</template>
+
+<style scoped lang="scss">
+.wrapper {
+  .cs {
+    font-size: 44px;
+  }
+}
+</style>

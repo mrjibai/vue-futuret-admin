@@ -1,0 +1,199 @@
+<template>
+  <div class="HeaderTabar">
+    <i class="iconfont icon-shouye"></i>
+    <transition name="el-fade-in-linear">
+      <a-breadcrumb class="transition-box">
+        <a-breadcrumb-item v-for="routes in list" :key="routes.path">
+          <router-link :to="routes.path">
+            {{ routes.meta.title }}
+          </router-link>
+        </a-breadcrumb-item>
+      </a-breadcrumb>
+    </transition>
+    <div class="rightsUSer">
+      <!--  右侧内容 -->
+    </div>
+  </div>
+  <!-- 路由缓存 -->
+  <div class="wangwang_ulTaView">
+    <el-scrollbar>
+      <ul class="Tates">
+        <li @click="getNavgater(i.path)" :class="isRouters(i.path)" v-for="i in listRouter" :key="i.name">{{
+          i.meta.title }}
+          <close-outlined v-if="i.meta.title !== '首页'" class="tetxsiocn" @click.stop="delRouterSession(i)" />
+        </li>
+      </ul>
+    </el-scrollbar>
+  </div>
+</template>
+
+<script setup lang="ts" name="HeaderTabar">
+import { useRoute, RouteRecordRaw, useRouter } from 'vue-router'
+import { RouterStore, RouterSession } from '/@/stores/RouterSrore'
+import { ref, onMounted, computed, watch } from 'vue'
+import { Session } from '/@/units/Store'
+import { AppstoreTwoTone, CloseOutlined } from '@ant-design/icons-vue'
+const rouSTore = RouterStore()
+
+const router = useRouter()
+
+// 获取缓存路由
+const rouSession = RouterSession()
+
+const list = ref([
+  {
+    path: '/',
+    redirect: '/home',
+    meta: {
+      title: '首页'
+    }
+  }
+])
+// 跳转路由
+const getNavgater = (path: string): void => {
+  router.push(path)
+}
+
+const isRouters = (roupath: string): string => {
+  if (roupath === route.fullPath) {
+    return 'actives'
+  }
+}
+// 删除
+const delRouterSession = (row: any): void => {
+  let lisRouterS = Session.get('RouterslistSeeion') || []
+  lisRouterS = lisRouterS.filter((v) => v.path !== row.path)
+  rouSession.RouterSessionlist = lisRouterS
+  Session.set('RouterslistSeeion', lisRouterS)
+}
+
+const route = useRoute()
+
+// 缓存路由
+const listRouter = computed(() => {
+  return rouSession.RouterSessionlist
+})
+
+watch(
+  () => route.fullPath,
+  (newvalue) => {
+    isRoutersPansR()
+  }
+)
+
+// 判断路由导航
+const isRoutersPansR = (): void => {
+  list.value = [
+    {
+      path: '/',
+      redirect: '/home',
+      meta: {
+        title: '首页'
+      }
+    }
+  ]
+  judge_is_dnag(rouSTore.routesList)
+}
+
+onMounted(() => {
+  isRoutersPansR()
+})
+
+// 获取循环匹配当前路由下的值
+const judge_is_dnag = (aRRs: RouteRecordRaw[]): void => {
+  aRRs.forEach((element: any) => {
+    if (element.children) {
+      if (element.children.some((v) => v.path === route.fullPath)) {
+        list.value.push(element)
+        const indexs = element.children.findIndex((p) => p.path === route.fullPath)
+        list.value.push(element.children[indexs])
+      } else {
+        judge_is_dnag(element.children)
+      }
+    } else if (element.path === route.fullPath && element.meta.title !== '首页') {
+      list.value.push(element)
+    }
+  })
+}
+</script>
+
+<style scoped lang="scss">
+/* Breadcrumb 面包屑过渡动画
+------------------------------- */
+.breadcrumb-enter-active,
+.breadcrumb-leave-active {
+  transition: all 0.5s ease;
+}
+
+.breadcrumb-enter-from,
+.breadcrumb-leave-active {
+  opacity: 0;
+  transform: translateX(20px);
+}
+
+.breadcrumb-leave-active {
+  position: absolute;
+  z-index: -1;
+}
+
+.HeaderTabar {
+  height: 35px;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.wangwang_ulTaView {
+  height: 40px;
+  width: 100%;
+  line-height: 40px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: var(--wang-bgcolor);
+  width: calc(100vw - 251px);
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+
+  .Tates {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: 4px;
+
+    li {
+      flex-shrink: 0;
+      justify-content: center;
+      width: 100px;
+      display: flex;
+      color: var(--wang-text-color);
+      align-items: center;
+      height: 25px;
+      transition: all 0.4s;
+      cursor: pointer;
+      border-radius: 20px 0;
+      margin: 0 2px;
+      background-color: var(--wang-menu-bgcolor);
+
+      .tetxsiocn {
+        margin-left: 10px;
+
+        &:hover {
+          background-color: var(--wang-color-primary-lighter);
+          color: white;
+          border-radius: 50%;
+        }
+      }
+
+      &:hover {
+        background-color: var(--wang-color--parimary-bg);
+      }
+    }
+
+    .actives {
+      background-color: var(--wang-color--parimary-bg);
+      color: var(--wang-color-primary-lighter);
+    }
+  }
+}
+</style>

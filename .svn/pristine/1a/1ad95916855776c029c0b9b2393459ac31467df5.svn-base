@@ -1,0 +1,82 @@
+import avavr from '/@/assets/images/OIP-C.jpg'
+/**
+ * 虚拟数据
+ * 个人数据
+ */
+export const MockUser: any = {
+    avavr
+}
+
+// role虚拟数据
+/**
+ * 角色管理
+ */
+export const rolelist: Array<RoleList> = [{
+    id: 1001,
+    roleName: '超级管理员',
+    roleIdentification: 'admin',
+    sort: 1,
+    roleState: '启用',
+    roleDescription: '测试角色1',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+}, {
+    id: 1002,
+    roleName: '普通用户',
+    roleIdentification: 'common',
+    sort: 2,
+    roleState: '启用',
+    roleDescription: '测试角色2',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+}, {
+    id: 1003,
+    roleName: '普通用户',
+    roleIdentification: 'common',
+    sort: 3,
+    roleState: '启用',
+    roleDescription: '测试角色3',
+    roles: [],
+    createTime: '2023/5/20 11:12:13',
+},]
+// userControl虚拟数据
+export const userControlList: Array<UserControlList> = [{
+    id: 1001,
+    accountName: 'admin',
+    userNickname: '我是管理员',
+    associatedRole: 'admin',
+    department: 'vueName',
+    phone: '1232',
+    email: 'vue@vue.com',
+    sex: '男',
+    password: '123',
+    userStatus: '启用',
+    userDescription: '不可删除',
+    createTime: '2023/5/20 12:12:12',
+}, {
+    id: 1002,
+    accountName: 'common',
+    userNickname: '我是普通用户',
+    associatedRole: 'common',
+    department: 'vueName',
+    phone: '1232',
+    email: 'vue@vue.com',
+    sex: '男',
+    password: '123',
+    userStatus: '启用',
+    userDescription: '测试用户',
+    createTime: '2023/5/20 12:12:12',
+}, {
+    id: 1002,
+    accountName: 'common',
+    userNickname: '我是普通用户',
+    associatedRole: 'common',
+    department: 'vueName',
+    phone: '1232',
+    email: 'vue@vue.com',
+    sex: '男',
+    password: '123',
+    userStatus: '启用',
+    userDescription: '测试用户',
+    createTime: '2023/5/20 12:12:12',
+}]

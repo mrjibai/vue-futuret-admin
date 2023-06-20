@@ -1,0 +1,22 @@
+<script setup lang="ts">
+import { onMounted } from 'vue'
+import { RouterLink, RouterView } from 'vue-router'
+import { getmark } from '/@/units/watermark'
+const { watermark } = getmark()
+onMounted(() => {
+  watermark('Vue-Wangwang')
+})
+</script>
+
+<template>
+  <h2>怎么可能</h2>
+  <RouterView />
+</template>
+
+<style scoped lang="scss">
+.wrapper {
+  .cs {
+    font-size: 44px;
+  }
+}
+</style>

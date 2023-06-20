@@ -1,0 +1,339 @@
+<template>
+  <div class="home-container">
+
+    <!-- 头部小组件 -->
+    <a-row class="home-card-one" type="flex" :gutter="15">
+      <a-col :span="6" :xs="{ order: 24 }" :sm="{ order: 12 }" :md="{ order: 12 }" :lg="{ order: 6 }"
+        v-for="(v, k) in state.homeone" :key="k">
+        <div class="home-card-item flex">
+          <!-- 文字 -->
+          <div class="hom-card-item-num flex">
+            <span class="hom-card-item-num1">{{ v.num1 }}</span>
+            <span class="hom-card-item-num2 ">{{ v.num2 }}</span><br>
+            <span class="hom-card-item-num3 ">{{ v.num3 }}</span>
+          </div>
+          <!-- 图片 -->
+          <div class="hom-card-item-icon flex" :style="v.bg">
+            <img :src="getAssetsFile(v.img)">
+
+          </div>
+
+        </div>
+      </a-col>
+      <a-col :span="6" :xs="{ order: 24 }" :sm="{ order: 12 }" :md="{ order: 12 }" :lg="{ order: 6 }">
+      </a-col>
+      <a-col :span="6" :xs="{ order: 24 }" :sm="{ order: 12 }" :md="{ order: 12 }" :lg="{ order: 6 }">
+      </a-col>
+      <a-col :span="6" :xs="{ order: 24 }" :sm="{ order: 12 }" :md="{ order: 12 }" :lg="{ order: 6 }">
+      </a-col>
+    </a-row>
+
+    <!-- 折线图和饼图 -->
+    <a-row class="home-card-two">
+      <!-- 折线图 -->
+      <a-col :span="14">
+        <div ref="homeLineRef" style=" height:500px" class="home-card-item">
+          <div></div>
+        </div>
+      </a-col>
+      <!-- 饼图 -->
+      <a-col :span="10">
+        <div ref="pieDiagrams" style=" height:500px;margin-left: 10px;" class="home-card-item"></div>
+      </a-col>
+    </a-row>
+
+    <!-- 小组件和柱形图 -->
+    <a-row class="home-card-three">
+
+      <a-col :span="24" :xs="24" :sm="10" :md="10" :lg="8" :xl="8">
+
+        <div class="home-card-item" style=" height:500px;">
+          <div class="home-monitor">
+            <div style="margin">快捷导航工具</div>
+            <!-- :xs="6" :sm="6" :md="6" :lg="6" :xl="6" -->
+
+            <div class="flex-warp-item">
+              <div class="flex-warp-item-box" v-for="(v, k) in state.hoverAnimationData" :key="k">
+
+                <div>
+                  <img :src="getAssetsFile(v.img)" style="width:50px;height:50px">
+                  {{ v.title }}
+                </div>
+                <div>{{ v.content }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a-col>
+      <!-- 柱形图 -->
+      <a-col :xs="24" :sm="14" :md="14" :lg="16" :xl="16">
+        <div ref="histograms" class="home-card-item" style=" height:500px;margin-left: 10px;">
+        </div>
+      </a-col>
+    </a-row>
+
+  </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, markRaw, ref, watch, onMounted, onBeforeMount } from 'vue'
+import { MehFilled, GitlabOutlined } from '@ant-design/icons-vue'
+import * as echarts from 'echarts'
+import { DrawALine, initPie, histogram } from './module/echars.ts'
+
+// 获取assets静态资源
+const getAssetsFile = (url: any) => {
+  return new URL(`../../assets/${url}`, import.meta.url).href
+}
+
+// 定义变量内容
+
+const state = reactive({
+  global: {
+    homeChartOne: null,
+    homeChartTwo: null,
+    homeCharThree: null,
+    dispose: ['', null, undefined]
+  },
+  homeone: [
+    {
+      num1: '125, 12',
+      num2: '-12 32%',
+      num3: '订单统计信息',
+      img: 'icon_smfqtk9f97c/dianzan.png',
+      bg: { 'background-color': 'lightpink' }
+    },
+    {
+      num1: '125, 12',
+      num2: '-12 32%',
+      num3: '订单统计信息',
+      img: 'icon_smfqtk9f97c/shuidi.png',
+      bg: { 'background-color': 'lightblue' }
+    },
+    {
+      num1: '125, 12',
+      num2: '-12 32%',
+      num3: '订单统计信息',
+      img: 'icon_smfqtk9f97c/jita.png',
+      bg: { 'background-color': 'lightpink' }
+    },
+    {
+      num1: '125, 12',
+      num2: '-12 32%',
+      num3: '订单统计信息',
+      img: 'icon_smfqtk9f97c/ditu.png',
+      bg: { 'background-color': 'lightblue' }
+    }
+  ],
+  charts: {
+    theme: '',
+    bgColor: '',
+    color: '#303133'
+  },
+  hoverAnimationData: [
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '浅粉红',
+      content: '2.1%OBS/M'
+    },
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '粉红',
+      content: '2.0%OBS/L'
+    },
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '绿色',
+      content: '6.1%OBS/M'
+    },
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '浅粉红',
+      content: '2.1%OBS/M'
+    },
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '浅粉红',
+      content: '2.1%OBS/M'
+    },
+    {
+      img: 'icon_smfqtk9f97c/ditu.png',
+      title: '浅粉红',
+      content: '2.1%OBS/M'
+    }
+  ]
+})
+// 定义图的变量
+const homeLineRef = ref()
+const pieDiagrams = ref()
+const histograms = ref()
+// 折线图
+const DrawALineChart = () => {
+  if (!state.global.dispose.some((b: any) => b === state.global.homeChartOne)) {
+    state.global.homeChartOne.dispose()
+  }
+  state.global.homeChartOne = echarts.init(homeLineRef.value, state.charts.theme)
+  const option = DrawALine()
+  state.global.homeChartOne.setOption(option)
+}
+// 饼图
+const initPieChart = () => {
+  if (!state.global.dispose.some((b: any) => b === state.global.homeChartTwo)) {
+    state.global.homeChartTwo.dispose()
+  }
+  state.global.homeChartTwo = echarts.init(pieDiagrams.value, state.charts.theme)
+
+  const option = initPie()
+  state.global.homeChartTwo.setOption(option)
+}
+// 柱形图
+const histogramChart = () => {
+  if (!state.global.dispose.some((b: any) => b === state.global.homeCharThree)) {
+    state.global.homeCharThree.dispose()
+  }
+  state.global.homeCharThree = echarts.init(histograms.value, state.charts.theme)
+  const option = histogram()
+
+  state.global.homeCharThree.setOption(option)
+}
+// 调用
+onMounted(() => {
+  // alert(1)
+  DrawALineChart()
+  initPieChart()
+  histogramChart()
+  window.addEventListener('resize', () => {
+    DrawALineChart()
+    initPieChart()
+    histogramChart()
+  })
+})
+// 注销
+onBeforeMount(() => {
+  window.removeEventListener('resize', () => {
+    DrawALineChart()
+    initPieChart()
+    histogramChart()
+  })
+})
+</script>
+
+<style scoped lang="scss">
+.home-container {
+  // overflow: hidden;
+  margin: auto;
+  padding: 5px;
+  // width: 1000px;
+  background-color: var(--wang-home-container-bg);
+  border-radius: 5px;
+
+  .home-card-one,
+  .home-card-two,
+  .home-card-three {
+    .home-card-item {
+      margin: 5px;
+      background-color: var(--wang-home-card-item-bg);
+      width: 100%;
+      height: 130px;
+      border-radius: 4px;
+      padding: 20px;
+      overflow: hidden;
+      border: 2px solid var(--wang-bgcolor);
+      color: var(--wang-text-color);
+      display: flex;
+      justify-content: span-between;
+      flex-wrap: nowrap;
+      transition: all ease 0.3s;
+      // display: inline-block;
+
+      .flex {
+        flex-direction: row;
+      }
+
+      .hom-card-item-num {
+        flex: 1;
+        min-width: 125px;
+
+        // background-color: red;
+        .hom-card-item-num1 {
+          font-size: 20px;
+        }
+
+        .hom-card-item-num2 {
+          font-size: 12px;
+          color: red;
+        }
+
+        .hom-card-item-num3 {
+          font-size: 12px;
+        }
+      }
+
+      .hom-card-item-icon {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+
+        img {
+          width: 50%;
+          height: 50%;
+        }
+      }
+
+      .home-card-item-hoverAnimationItem {
+        height: 80px;
+        line-height: 30px;
+
+        background-color: var(--wang-home-ShortcutTool-bg);
+        margin: 5px;
+        transition: all 0.3s ease;
+        color: var(--wang-text-color);
+
+        &:hover {
+          background-color: var(--wang-home-ShortcutTool-bg-hover);
+          color: var(--wang-text-color);
+        }
+      }
+
+      .home-monitor {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+
+        .flex-warp-item {
+          display: flex;
+          flex-wrap: wrap;
+
+          .flex-warp-item-box {
+            overflow: hidden;
+            width: 25%;
+            height: 111px;
+            line-height: 50px;
+            margin: 5px;
+            flex-wrap: wrap;
+            text-align: center;
+            // display: flex;
+            border-radius: 5px;
+            background: var(--wang-home-ShortcutTool-bg);
+            cursor: pointer;
+            transition: all 0.3s ease;
+
+            &:hover {
+              background: var(--wang-home-ShortcutTool-bg-hover);
+              transition: all 0.3s ease;
+            }
+          }
+        }
+      }
+
+      &:hover {
+        box-shadow: var(--wang-home-card-item-hover-boxShdow);
+      }
+    }
+  }
+}
+</style>

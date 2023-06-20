@@ -1,0 +1,23 @@
+import router from './index'
+import { dynamic_routing } from './routes'
+import { RouteRecordRaw } from 'vue-router';
+import { load } from '/@/units/loading'
+
+/**
+ * 前端控制路由 获取路由
+ */
+export const initFormEndContranRouter = async (): Promise<void | Boolean> => {
+    // 添加动态路由
+    await initEndAddRouter(dynamic_routing)
+    // 水杯动态加载动画
+    await load.show('')
+}
+
+/**
+ * 添加路由
+ */
+function initEndAddRouter(Router: RouteRecordRaw[]) {
+    Router.forEach((route) => {
+        router.addRoute(route)
+    })
+}

@@ -1,0 +1,86 @@
+<template>
+    <div class="pages">
+        <el-container class="contenPages">
+            <el-aside width="240px" class="wangwangSide">
+                <navTabar />
+            </el-aside>
+            <el-container>
+                <el-header>
+                    <HeaderTabar />
+                </el-header>
+                <el-main>
+                    <router-view v-slot="{ Component }">
+                        <transition name="slide-fade" mode="out-in" :duration="{ enter: 500, leave: 300 }">
+                            <component :is="Component" :key="Component" />
+                        </transition>
+                    </router-view>
+                </el-main>
+            </el-container>
+        </el-container>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { onMounted, defineAsyncComponent } from 'vue';
+const navTabar = defineAsyncComponent(() => import('/@/pages/navTabar/index.vue'))
+const HeaderTabar = defineAsyncComponent(() => import('/@/pages/HeaderTabar/index.vue'))
+onMounted(() => {
+})
+</script>
+
+<style scoped lang="scss">
+.pages {
+    width: 98vw;
+    box-sizing: border-box;
+
+
+    .contenPages {
+        width: 100%;
+
+        .wangwangSide {
+            height: 100vh;
+        }
+
+        .el-main {
+            box-sizing: border-box;
+
+        }
+
+        .el-header {
+            --el-header-padding: 0px;
+            --el-header-height: 70px;
+        }
+
+        .ant-layout-sider {
+            background: var(--wang-menu-bgcolor);
+            margin-right: 20px;
+        }
+
+        .ant-layout-header {
+            background: var(--wang-bgcolor);
+        }
+    }
+}
+
+/*
+  进入和离开动画可以使用不同
+  持续时间和速度曲线。
+*/
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.5s;
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    opacity: 0.3;
+}
+
+.slide-fade-enter-to,
+.slide-fade-leave-from {
+    opacity: 1;
+}
+</style>

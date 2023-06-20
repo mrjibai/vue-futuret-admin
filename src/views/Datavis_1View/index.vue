@@ -1,0 +1,541 @@
+<template>
+    <div class="bodyContarns">
+        <header class="heders">
+            <h1>IT行业就业发展数据表</h1>
+            <div class="showTime">当前时间：2020年3月17-0时54分14秒</div>
+        </header>
+        <section class="mainbox">
+            <div class="column">
+                <div class="panel bar">
+                    <h2>
+                        柱状图-就业行业 <a href="javascript:;">2019</a>
+                        <a href="javacript:;"> 2020</a>
+                    </h2>
+                    <div class="chart" ref="char1"></div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel line">
+                    <h2>折线图-人员变化</h2>
+                    <div class="chart" ref="char2"></div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel pie">
+                    <h2>饼形图-年龄分布</h2>
+                    <div class="chart" ref="bin1"></div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="no">
+                    <div class="no-hd">
+                        <ul>
+                            <li>125811</li>
+                            <li>104563</li>
+                        </ul>
+                    </div>
+                    <div class="no-bd">
+                        <ul>
+                            <li>前端需求人数</li>
+                            <li>市场供应人数</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="map" ref="MapsS">
+                    <div class="chart"></div>
+                    <div class="map1"></div>
+                    <div class="map2"></div>
+                    <div class="map3"></div>
+                </div>
+            </div>
+            <div class="column">
+                <div class="panel bar1">
+                    <h2>柱状图-技能掌握</h2>
+                    <div class="chart" ref="jindains"></div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel line1">
+                    <h2>折线图-播放量</h2>
+                    <div class="chart" ref="pofangs"></div>
+                    <div class="panel-footer"></div>
+                </div>
+                <div class="panel pie1">
+                    <h2>饼形图-地区分布</h2>
+                    <div class="chart" ref="dain"></div>
+                    <div class="panel-footer"></div>
+                </div>
+            </div>
+        </section>
+    </div>
+</template>
+
+<script setup lang="ts">
+import * as echarts from 'echarts'
+import { nextTick, ref, computed } from 'vue'
+import { DrawALinets, zhexiants, binxiants, jinduts, zhexian2ts, dainweits, chinamapts } from '/@/views/Datavis_1View/modules/index'
+import * as chinaMap from "/@/views/Datavis_1View/json/china.json";
+
+let t = null;
+t = setTimeout(time, 1000); //開始运行
+function time() {
+    clearTimeout(t); //清除定时器
+    let dt = new Date();
+    var y = dt.getFullYear();
+    var mt = dt.getMonth() + 1;
+    var day = dt.getDate();
+    var h = dt.getHours(); //获取时
+    var m = dt.getMinutes(); //获取分
+    var s = dt.getSeconds(); //获取秒
+    document.querySelector(".showTime").innerHTML =
+        "当前时间：" +
+        y +
+        "年" +
+        mt +
+        "月" +
+        day +
+        "-" +
+        h +
+        "时" +
+        m +
+        "分" +
+        s +
+        "秒";
+    t = setTimeout(time, 1000); //设定定时器，循环运行
+}
+const char1 = ref<any>();
+const char2 = ref<any>();
+const bin1 = ref<any>();
+const jindains = ref<any>();
+const pofangs = ref<any>();
+const dain = ref<any>();
+const MapsS = ref<any>();
+
+
+const MapsJSon: echarts.DataZoomComponentOption | any = computed(() => {
+    return chinaMap
+})
+
+nextTick(() => {
+    zhuget()
+    zhexian()
+    binxian()
+    jindu()
+    zhexian2()
+    dainwei()
+    diqiuzhans()
+})
+// 柱状图1模块
+const zhuget = () => {
+    // 实例化对象
+    var myChart = echarts.init(char1.value);
+    // 指定配置和数据
+    var option = DrawALinets()
+
+    // 把配置给实例对象
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+
+
+
+    // $(".bar h2 ").on("click", "a", function () {
+    //     option.series[0].data = dataAll[$(this).index()].data;
+    //     myChart.setOption(option);
+    // });
+}
+
+const zhexian = () => {
+    // 折线图定制
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(char2.value);
+
+
+
+    // 2. 指定配置和数据
+    var option = zhexiants()
+    // 3. 把配置和数据给实例对象
+    myChart.setOption(option);
+
+    // 重新把配置好的新数据给实例对象
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+// 饼形图定制
+// 折线图定制
+const binxian = () => {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(bin1.value);
+
+    let option = binxiants()
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+// 学习进度柱状图模块
+const jindu = () => {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(jindains.value);
+
+
+    let option = jinduts()
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+// 折线图 优秀作品
+const zhexian2 = () => {
+    // 基于准备好的dom，初始化echarts实例
+    var myChart = echarts.init(pofangs.value);
+
+    let option = zhexian2ts()
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        myChart.resize();
+    });
+}
+
+// 点位分布统计模块
+const dainwei = () => {
+    // 1. 实例化对象
+    var myChart = echarts.init(dain.value);
+    // 2. 指定配置项和数据
+    var option = dainweits()
+
+    // 3. 配置项和数据给我们的实例化对象
+    myChart.setOption(option);
+    // 4. 当我们浏览器缩放的时候，图表也等比例缩放
+    window.addEventListener("resize", function () {
+        // 让我们的图表调用 resize这个方法
+        myChart.resize();
+    });
+}
+
+/**
+ * 地图展示
+ */
+const diqiuzhans = () => {
+    // 实例化对象
+    echarts.registerMap("china", (<any>{ geoJSON: MapsJSon.value }));
+    var myChart = echarts.init(MapsS.value);
+
+    const option = chinamapts()
+    myChart.setOption(option);
+    window.addEventListener("resize", function () {
+        // 让我们的图表调用 resize这个方法
+        myChart.resize();
+    }, { passive: false });
+}
+
+</script>
+
+<style scoped lang="scss">
+@font-face {
+    font-family: electronicFont;
+    src: url(../font/DS-DIGIT.TTF);
+}
+
+.bodyContarns {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    /*  背景图定位 / 背景图尺寸  cover 完全铺满容器  contain 完整显示在容器内 */
+    background: url(./images/bg.jpg) no-repeat #000;
+    background-size: cover;
+    /* 行高是字体1.15倍 */
+    line-height: 1.15;
+
+    .heders {
+        position: relative;
+        height: 50px;
+        background: url(./images/head_bg.png) no-repeat top center;
+        background-size: 100% 100%;
+
+        h1 {
+            font-size: 28px;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .showTime {
+            position: absolute;
+            top: 0;
+            right: 20px;
+            line-height: 40px;
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    }
+
+
+    .mainbox {
+
+        padding: 6px 6px 0;
+        display: flex;
+
+        .column {
+            flex: 3;
+
+            &:nth-child(2) {
+                flex: 5;
+                margin: 0 6px 10px;
+                overflow: hidden;
+            }
+
+            .no {
+                background: rgba(101, 132, 226, 0.1);
+                padding: 10px;
+
+                .no-bd {
+                    ul {
+                        display: flex;
+
+                        li {
+                            flex: 1;
+                            height: 25px;
+                            line-height: 25px;
+                            text-align: center;
+                            font-size: 12px;
+                            color: rgba(255, 255, 255, 0.7);
+                            padding-top: 6px;
+                        }
+                    }
+                }
+
+                .no-hd {
+                    position: relative;
+                    border: 1px solid rgba(25, 186, 139, 0.17);
+
+                    ul {
+                        display: flex;
+
+                        li {
+                            position: relative;
+                            flex: 1;
+                            text-align: center;
+                            height: 50px;
+                            line-height: 50px;
+                            font-size: 45px;
+                            color: #ffeb7b;
+                            padding: 2px 0;
+                            font-family: electronicFont;
+                            font-weight: bold;
+
+                            &:first-child::after {
+                                content: "";
+                                position: absolute;
+                                height: 50%;
+                                width: 1px;
+                                background: rgba(255, 255, 255, 0.2);
+                                right: 0;
+                                top: 25%;
+                            }
+                        }
+                    }
+                }
+
+                .no-hd::before {
+                    content: "";
+                    position: absolute;
+                    width: 30px;
+                    height: 10px;
+                    border-top: 2px solid #02a6b5;
+                    border-left: 2px solid #02a6b5;
+                    top: 0;
+                    left: 0;
+                }
+
+                .no-hd::after {
+                    content: "";
+                    position: absolute;
+                    width: 30px;
+                    height: 10px;
+                    border-bottom: 2px solid #02a6b5;
+                    border-right: 2px solid #02a6b5;
+                    right: 0;
+                    bottom: 0;
+                }
+
+            }
+        }
+
+        .panel {
+            position: relative;
+            height: 200px;
+            border: 1px solid rgba(25, 186, 139, 0.17);
+            background: rgba(255, 255, 255, 0.04) url(./images/line.png);
+            padding: 0 10px 25px;
+            margin-bottom: 10px;
+
+            h2 {
+                height: 30px;
+                line-height: 30px;
+                text-align: center;
+                color: #fff;
+                font-size: 12px;
+                font-weight: 400;
+
+                a {
+                    margin: 0 10px;
+                    color: #fff;
+                    text-decoration: underline;
+                }
+            }
+
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-top: 2px solid #02a6b5;
+                border-left: 2px solid #02a6b5;
+            }
+
+            &::after {
+                position: absolute;
+                top: 0;
+                right: 0;
+                content: "";
+                width: 10px;
+                height: 10px;
+                border-top: 2px solid #02a6b5;
+                border-right: 2px solid #02a6b5;
+            }
+
+            .chart {
+                height: 150px;
+            }
+
+
+
+            .panel-footer {
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+
+                &::before {
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    border-bottom: 2px solid #02a6b5;
+                    border-left: 2px solid #02a6b5;
+                }
+
+                &::after {
+                    position: absolute;
+                    bottom: 0;
+                    right: 0;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    border-bottom: 2px solid #02a6b5;
+                    border-right: 2px solid #02a6b5;
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+}
+
+
+.map {
+    position: relative;
+    height: 506px;
+}
+
+.map .chart {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    height: 506px;
+    width: 100%;
+}
+
+.map .map1,
+.map .map2,
+.map .map3 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 373px;
+    height: 323px;
+    background: url(./images/map.png) no-repeat;
+    background-size: 100% 100%;
+    opacity: 0.3;
+}
+
+.map .map2 {
+    width: 400px;
+    height: 400px;
+    background-image: url(./images/lbx.png);
+    opacity: 0.6;
+    animation: rotate 15s linear infinite;
+    z-index: 2;
+}
+
+.map .map3 {
+    width: 353px;
+    height: 353px;
+    background-image: url(./images/jt.png);
+    animation: rotate1 10s linear infinite;
+}
+
+@keyframes rotate {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+@keyframes rotate1 {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(-360deg);
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    html {
+        font-size: 42px !important;
+    }
+}
+
+@media screen and (min-width: 1920) {
+    html {
+        font-size: 80px !important;
+    }
+}
+</style>

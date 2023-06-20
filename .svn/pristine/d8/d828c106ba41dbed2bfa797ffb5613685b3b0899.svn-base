@@ -1,0 +1,34 @@
+// 菜单页面的搜索
+type inputMenus = {
+    filterName: String | null
+}
+
+// 角色页面的搜索
+type inputRoles = {
+    filterName: String | null
+}
+// 角色状态数据
+type RoleList = {
+    id: number,
+    roleName: string|undefined|null,
+    roleIdentification: string|undefined|null,
+    sort: number,
+    roleState: '启用',
+    roleDescription: string | undefined | null,
+    roles: Array,
+    createTime:string|undefined|null,
+}
+// 用户管理状态数据
+type UserControl = {
+    id: number,
+    accountName: string | undefined | null,
+    userNickname: string | undefined | null,
+    associatedRole:string | undefined | null,
+    department: string | undefined | null,
+    phone: string | undefined | null,
+    email: string | undefined | null,
+    userStatus: string | undefined | null,
+    userDescription: string | undefined | null,
+    createTime: string | undefined | null,
+    
+}

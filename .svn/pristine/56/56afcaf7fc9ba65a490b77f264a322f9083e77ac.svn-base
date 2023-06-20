@@ -1,0 +1,233 @@
+<template>
+    <div class="DepManagement">
+        <vxe-toolbar>
+            <template #buttons>
+                <div class="sercarINput">
+                    <el-input v-model="SerInput.filterName" type="search" placeholder="请输入字典名称" @keyup="searchEvent2"></el-input>
+                    <el-button type="success" @click="searchEvent2">查询</el-button>
+                    <el-button type="primary" @click="AddDialogVisible">新增字典</el-button>
+                </div>
+            </template>
+        </vxe-toolbar>
+        <vxe-table border=none ref="xTree" max-height="700" :tree-config="{}" :data="state.depManagementsList" align="left" :border="false" v-loading="loadings">
+             <vxe-column field="departmentName" title="账户名称"  tree-node>
+                <template #default="{ row }">
+          <div>
+            {{ row.departmentName  }}
+          </div>
+        </template>
+             </vxe-column>
+            <vxe-column field="sort" title="排序"></vxe-column>
+            <vxe-column field="departmentStatus" title="部门状态">
+                <template #default="{ row }">
+                    <el-tag :title="row.DicStatus" type="success">{{ row.departmentStatus }}</el-tag>
+                </template>
+            </vxe-column>
+            <vxe-column field="departmentDescription" title="部门描述"></vxe-column>
+            
+            <vxe-column field="createTime" title="创建时间"></vxe-column>
+
+            <vxe-column field="" title="操作" width="15%">
+                <template #default="{ row }">
+                    <el-button link type="primary" @click="DicManagementEdit(row)">新增</el-button>
+                    <el-button link type="primary" @click="DicManagementEdit(row)">修改</el-button>
+                    <el-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delDicManagement(row)" confirm-button-text="确认" cancel-button-text="取消">
+                        <template #reference>
+                            <el-button link type="primary">删除</el-button>
+                        </template>
+                    </el-popconfirm>
+                </template>
+            </vxe-column>
+
+          
+        </vxe-table>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.currentPage"
+      :page-sizes="[10, 20, 3, 40]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+      :total="page.total">
+    </el-pagination>
+    <!-- 弹框 -->
+    <el-dialog v-model="dialogVisible" :title="state.Tips" width="47%" :before-close="handleClose" draggable>
+    <el-form :model="DepManagementObj" label-width="120px">
+      <el-row :gutter="20">
+        <el-col :span="24" :offset="0">
+          <el-form-item label="上级部门">
+            <el-cascader placeholder="请选择上级菜单" v-model="DepManagementObj.ParentDep" style="width: 100%;"
+              :options="cascaderList()"   :props="{ label: 'departmentName',value:'id',  children:'children',multiply:true }"/>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="部门名称">
+            <el-input v-model="DepManagementObj.departmentName" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="负责人">
+            <el-input v-model="DepManagementObj.personInCharge" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="手机号">
+            <el-input v-model="DepManagementObj.phone" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="邮箱">
+            <el-input v-model="DepManagementObj.phone" />
+          </el-form-item>
+        </el-col>
+        
+        
+        <el-col :span="12" :offset="0">
+          <el-form-item label="排序">
+            <el-input-number v-model="DepManagementObj.sort" :min="1" :max="10" />
+          </el-form-item>
+        </el-col>
+        <el-col  :span="24" :offset="0">
+            <el-form-item label="部门状态">
+                <el-tooltip :content="'Switch value: ' + DepManagementObj.departmentStatus" placement="top"> <el-switch v-model="DepManagementObj.departmentStatus" active-color="#13ce66" inactive-color="#ff4949" active-text="启用" inactive-text="关闭"> </el-switch> </el-tooltip>
+            </el-form-item>
+        </el-col>
+        <el-col :span="24" :offset="0">
+          <el-form-item label="部门描述">
+            <el-input v-model="DepManagementObj.departmentDescription"  type="textarea" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="onSubmit">
+          保存
+        </el-button>
+      </span>
+    </template>
+
+  </el-dialog>
+    </div>
+</template>
+<script setup lang="ts" name="DepManagement">
+import { multiply } from 'lodash'
+import { reactive, ref } from 'vue'
+import { depManagementsList } from '/@/mock/index'
+
+let data=depManagementsList
+const loadings=ref(false)
+const dialogVisible=ref(false)
+
+const SerInput=reactive<inputDepManagement>({
+    filterName:''
+})
+const state=reactive({
+    depManagementsList:[],
+    Tips:'添加部门'
+})
+const getDepManagement=()=>{
+    loadings.value=false
+    state.depManagementsList=data
+
+}
+getDepManagement()
+// 搜索
+const searchEvent2=()=>{
+    loadings.value=true
+    setTimeout(()=>{
+        getDepManagement()
+    },1000)
+}
+// 
+const DicManagementEdit=(row)=>{
+    dialogVisible.value = true
+    state.Tips = '编辑部门'
+    DepManagementObj.ParentDep=row.ParentDep
+    DepManagementObj.departmentName=row.departmentName
+    DepManagementObj.personInCharge=row.personInCharge
+    DepManagementObj.phone=row.phone
+    DepManagementObj.email=row.email
+    DepManagementObj.sort=row.sort
+    DepManagementObj.departmentStatus=row.departmentStatus
+    DepManagementObj.departmentDescription=row.departmentDescription
+}
+// 删除
+const delDicManagement=(row)=>{
+    loadings.value=true
+    setTimeout(()=>{
+        getDepManagement()
+    },1000)
+}
+// 分页
+const page = reactive({
+  currentPage: 1,
+  total:depManagementsList.length,
+  pageSize: 10
+})
+// 切换条数
+const handleSizeChange = (val: number) => {
+  page.pageSize = val
+   
+  getDepManagement()
+}
+// 切换当前页
+const handleCurrentChange = (val: number) => {
+    page.currentPage = val
+     
+    getDepManagement
+}
+const handleClose=() => { 
+    dialogVisible.value=false
+}
+const DepManagementObj = reactive({ 
+    ParentDep:'', //上级部门
+    departmentName: '', //部门名称
+    personInCharge: '',//负责人
+    phone: '',         //手机号
+    email:'' ,         //邮箱
+    sort: 0,      //排序
+    departmentStatus: '',//部门状态
+    departmentDescription: '',//部门描述
+    createTime: new Date().toLocaleString(),
+    children: []
+})
+const onSubmit = () => { 
+    loadings.value = true
+    dialogVisible.value=false
+}
+const cascaderList = () => { 
+  let Arrlist=[]
+  depManagementsList.forEach((p) => { 
+    let obk = { ...p }
+    console.log(p);
+    
+    // obk.label = obk.departmentName
+    // if (obk.children && obk.children.length > 0) {
+    //   obk.children = obk.children.map((e) => {
+    //     e.label = e.departmentName
+    //     return e
+    //   })
+    // }
+    Arrlist.push(obk);
+  })
+    return Arrlist
+}
+const AddDialogVisible = () => {
+  dialogVisible.value = true
+  state.Tips='新增部门'
+ }
+
+</script>
+<style scoped lang="scss">
+.DepManagement {
+  border: 0.7px solid var(--wangwang-border);
+  width: 100%;
+  padding: 5px;
+
+  &:hover {
+    box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+  }
+ 
+
+  .sercarINput {
+    display: flex;
+  }
+}
+</style>

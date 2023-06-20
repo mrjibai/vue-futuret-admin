@@ -1,0 +1,9 @@
+<template>
+    <a-empty description="没有此路由" />
+</template>
+
+<script setup lang="ts">
+
+</script>
+
+<style scoped></style>

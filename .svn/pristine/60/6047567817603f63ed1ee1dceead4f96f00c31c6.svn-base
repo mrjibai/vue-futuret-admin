@@ -1,0 +1,116 @@
+<template>
+  <div class="leading_end_page">
+    <!-- 警告提示 -->
+    <!-- <a-alert message="温馨提示" :description="wangText" type="warning" /> -->
+    <div class="item">
+      <a-alert :message="wangText" type="warning" show-icon />
+    </div>
+    <!-- 提示 -->
+    <div class="item">
+      <a-alert :message="UserTextAdmin" type="success"> </a-alert>
+    </div>
+
+    <!-- 按钮权限 -->
+    <el-radio-group v-model="radio2" @change="handchanges">
+      <el-radio-button label="admin" />
+      <el-radio-button label="common" />
+    </el-radio-group>
+  </div>
+</template>
+
+<script setup lang="ts" name="leading_end_page">
+import { ref, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { RouteRecordRaw } from 'vue-router'
+import { RouterStore, RouterSession } from '/@/stores/RouterSrore'
+import { Session, Local } from '/@/units/Store'
+import { dynamic_routing } from '/@/router/routes'
+import { initEndAddRouter } from '/@/router/befformtart'
+import { UserStoredefinedStore } from '/@/stores/userinfo'
+const wangText: string =
+  '温馨提示： 此权限页面代码及效果只作为演示使用，若出现不可逆转的bug，请尝试 `F5` 刷新页面。'
+
+const UserTextAdmin = ref<string>('')
+onMounted(() => {
+  getAdmins()
+})
+
+// 用户权限数据
+const AdminsCommones = UserStoredefinedStore()
+
+// 动态路由数据
+const StoreRouter = RouterStore()
+
+// 缓存路由数据
+const sessionRouter = RouterSession()
+
+const radio2 = ref('admin')
+
+const route = useRoute()
+
+const getAdmins = (): void => {
+  const useAdminsCommon = Session.get('userName')
+  UserTextAdmin.value = `当前用户的页面权限是：${route.meta.roles}`
+  if (useAdminsCommon) radio2.value = useAdminsCommon.username
+}
+
+// 权限判断
+const handchanges = (dataPagre: string): void => {
+  if (dataPagre === 'admin') {
+    setAdmin_Router()
+  } else if (dataPagre === 'common') {
+    AdminsCommones.Update_userinfoRouter(dataPagre)
+    //  修改用户信息的权限
+    let useAdminsCommon = Session.get('userName')
+    useAdminsCommon.username = 'common'
+    Session.set('userName', useAdminsCommon)
+    // 修改左侧路由菜单权限
+    let listRouters = setCommon_Router(StoreRouter.routesList)
+    let Arrs: Array<ROUARR> = [
+      {
+        path: '/',
+        children: []
+      }
+    ]
+    Arrs[0].children = listRouters
+    Local.set('RouterStoreLIST', Arrs)
+    StoreRouter.MutionsactionSetRouterlist(listRouters as any)
+    // 处理缓存数据
+    let listR = [...sessionRouter.RouterSessionlist]
+    listR = listR.filter((e) => e.fullPath == route.fullPath || e.fullPath === '/home')
+    sessionRouter.setlist(listR)
+    Session.set('RouterslistSeeion', listR)
+  }
+}
+
+// admin的页面权限操作
+const setAdmin_Router = (): void => {
+  //  修改用户信息的权限
+  let useAdminsCommon = Session.get('userName')
+  useAdminsCommon.username = 'admin'
+  Session.set('userName', useAdminsCommon)
+  // 存储路由数据
+  Local.set('RouterStoreLIST', dynamic_routing)
+  initEndAddRouter(dynamic_routing)
+}
+
+// 普通用户的操作
+const setCommon_Router = (roulist: Array<RouteRecordRaw>) => {
+  roulist = roulist.filter((p) => (<any>p.meta.roles).includes('common'))
+  roulist.forEach((e) => {
+    if (e.children) {
+      e.children = e.children.filter((p) => (<any>p.meta.roles).includes('common'))
+      setCommon_Router(e.children)
+    }
+  })
+  return roulist
+}
+</script>
+
+<style scoped lang="scss">
+.leading_end_page {
+  .item {
+    margin: 10px 0;
+  }
+}
+</style>

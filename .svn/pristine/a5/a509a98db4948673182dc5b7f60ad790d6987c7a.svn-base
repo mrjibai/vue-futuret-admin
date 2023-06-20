@@ -1,0 +1,45 @@
+<template>
+    <div class="pages">
+        <a-layout>
+            <!-- 左侧侧边栏 -->
+            <a-layout-sider>
+                <navTabar />
+            </a-layout-sider>
+            <!-- 首页 -->
+            <a-layout>
+                <a-layout-header>Header</a-layout-header>
+                <a-layout-content>
+                    <RouterView />
+                </a-layout-content>
+                <!-- <a-layout-footer>Footer</a-layout-footer> -->
+            </a-layout>
+        </a-layout>
+    </div>
+</template>
+
+<script setup lang="ts" name="/">
+import { onMounted, defineAsyncComponent } from 'vue';
+
+
+const navTabar = defineAsyncComponent(() => import('/@/pages/navTabar/index.vue'))
+
+onMounted(() => {
+})
+</script>
+
+<style scoped lang="scss">
+.pages {
+    width: 100vw;
+
+    .ant-layout-sider {
+        background: var(--wang-menu-bgcolor);
+        margin-right: 10px;
+    }
+
+    .ant-layout-header {
+        background: var(--wang-bgcolor);
+    }
+
+
+}
+</style>

@@ -1,0 +1,272 @@
+<template>
+    <div class="userControl">
+        <vxe-toolbar>
+            <template #buttons>
+                <div class="sercarINput">
+                    <a-input v-model:value="SerInput.filterName" type="search" placeholder="请输入角色名称，搜索"
+                        @keyup="searchEvent2"></a-input>
+                    <a-button type="primary" ghost @click="searchEvent2">查询</a-button>
+                    <a-button type="primary" @click="AddDialogVisible">新增用户</a-button>
+                </div>
+            </template>
+        </vxe-toolbar>
+        <a-spin :spinning="loadings">
+            <vxe-table border=none show-header-overflow show-overflow :row-config="{ isHover: true }"
+                :data="state.userControlRouterList">
+                <vxe-column type="seq" title="序号" width="60"></vxe-column>
+                <vxe-column field="accountName" title="账户名称"></vxe-column>
+                <vxe-column field="userNickname" title="用户昵称"></vxe-column>
+                <vxe-column field="associatedRole" title="关联角色"></vxe-column>
+                <vxe-column field="department" title="部门"></vxe-column>
+                <vxe-column field="phone" title="手机号"></vxe-column>
+                <vxe-column field="email" title="邮箱"></vxe-column>
+                <vxe-column field="userStatus" title="用户状态"></vxe-column>
+                <vxe-column field="userDescription" title="用户描述"></vxe-column>
+                <vxe-column field="createTime" title="创建时间"></vxe-column>
+
+                <vxe-column field="" title="操作" width="20%">
+                    <template #default="{ row }">
+                        <a-button type="link" @click="UserControlEdit(row)">新增</a-button>
+                        <a-button type="link" @click="UserControlEdit(row)">修改</a-button>
+                        <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delRouteUserControl(row)" ok-text="确认"
+                            cancel-text="取消">
+                            <a-button type="link">删除</a-button>
+                        </a-popconfirm>
+                    </template>
+                </vxe-column>
+            </vxe-table>
+        </a-spin>
+        <a-pagination :show-total="(total: string) => `总数 ${total} 条`" @showSizeChange="handleSizeChange"
+            @change="handleCurrentChange" v-model:current="page.currentPage" :page-sizes="[10, 20, 30, 40]"
+            v-model:pageSize="page.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="page.total"
+            show-size-changer>
+        </a-pagination>
+        <!-- 弹框 -->
+        <a-modal v-model:open="dialogVisible" :title="state.Tips" :afterClose="handleClose" draggable>
+            <a-form :model="userControlObj">
+                <a-row :gutter="20">
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="账户名称">
+                            <a-input v-model="userControlObj.accountName"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="用户昵称">
+                            <a-input v-model="userControlObj.userNickname"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="关联角色">
+                            <a-select v-model="userControlObj.associatedRole" value-key="" placeholder="请选择">
+                                <a-select-option value="普通用户">
+                                    普通用户
+                                </a-select-option>
+                                <a-select-option value="超级管理员">
+                                    超级管理员
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="部门">
+                            <a-tree-select v-model:value="userControlObj.department" style="width: 100%" :field-names="{
+                                label: 'label',
+                                value: 'path',
+                                children: 'children',
+                                key: 'path'
+                            }" :dropdown-style="{ maxHeight: '400px', overflow: 'auto' }" placeholder="" allow-clear
+                                tree-default-expand-all :tree-data="cascaderList([])">
+                            </a-tree-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="手机号">
+                            <a-input v-model="userControlObj.phone"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="邮箱">
+                            <a-input v-model="userControlObj.email"></a-input>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="性别">
+                            <a-select v-model="userControlObj.sex" value-key="1" placeholder="请选择">
+                                <a-select-option value="男">
+                                    男
+                                </a-select-option>
+                                <a-select-option value="女">
+                                    女
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="账户密码">
+                            <a-input-password v-model="userControlObj.password" placeholder="请输入"></a-input-password>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="账户过期">
+                            <a-input type="date" v-model="userControlObj.createTime"></a-input>
+                        </a-form-item>
+                    </a-col>
+
+                    <a-col :span="12" :offset="0">
+                        <a-form-item label="角色状态">
+                            <a-tooltip :content="'Switch value: ' + userControlObj.userStatus" placement="top"> <a-switch
+                                    v-model:checked="userControlObj.userStatus">
+                                </a-switch> </a-tooltip>
+                        </a-form-item>
+                    </a-col>
+                    <a-col :span="24" :offset="0">
+                        <a-form-item label="用户描述">
+                            <a-textarea type="textarea" :rows="2" placeholder="请输入内容"
+                                v-model="userControlObj.userDescription">
+                            </a-textarea>
+                        </a-form-item>
+                    </a-col>
+
+                </a-row>
+            </a-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <a-button @click="dialogVisible = false">取消</a-button>
+                    <a-button type="primary" @click="onSubmit">
+                        保存
+                    </a-button>
+                </span>
+            </template>
+        </a-modal>
+    </div>
+</template>
+
+<script setup lang="ts" name="UserControl">
+import { ref, reactive } from 'vue'
+import { userConList } from '/@/mock/index'
+let userInfo = userConList
+const SerInput = reactive<inputUser>({
+    filterName: ''
+})
+const state = reactive<any>({
+    userControlRouterList: [],
+    Tips: '添加用户'
+})
+// 加载动画
+const loadings = ref(false)
+// 分页
+const page = reactive({
+    currentPage: 1,
+    total: userConList.length,
+    pageSize: 10
+})
+// 状态数据
+const getUserRouterList = () => {
+    loadings.value = false
+    userInfo = userConList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+
+    state.userControlRouterList = userInfo
+}
+getUserRouterList()
+// 搜索的方法
+const searchEvent2 = () => {
+    loadings.value = true
+    // 重新调用
+
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+//
+// 对话框
+const dialogVisible = ref(false)
+const userControlObj = reactive<UserControlList>({
+    id: 1001,
+    accountName: '',
+    userNickname: '',
+    associatedRole: '',
+    department: '',
+    phone: '',
+    email: '',
+    sex: '',
+    password: '',
+    userStatus: '',
+    userDescription: '',
+    createTime: (new Date()).toDateString()
+})
+const handleClose = () => {
+    dialogVisible.value = false
+    for (const key in userControlObj) {
+        (<any>userControlObj)[key] = ''
+    }
+}
+// 修改方法
+const UserControlEdit = (row: UserControlList) => {
+    userControlObj.id = row.id
+    userControlObj.accountName = row.accountName
+    userControlObj.userNickname = row.userNickname
+    userControlObj.associatedRole = row.associatedRole
+    userControlObj.department = row.department
+    userControlObj.phone = row.phone
+    userControlObj.email = row.email
+    userControlObj.sex = row.sex
+    userControlObj.password = row.password
+
+    userControlObj.userStatus = row.userStatus
+    userControlObj.userDescription = row.userDescription
+    userControlObj.createTime = row.createTime
+    dialogVisible.value = true
+    state.Tips = '修改用户'
+}
+// 添加/修改方法
+const onSubmit = () => {
+    loadings.value = true
+    dialogVisible.value = false
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+// 删除
+const delRouteUserControl = (row: UserControlList) => {
+    loadings.value = true
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+
+// 切换条数
+const handleSizeChange = (val: number) => {
+    page.pageSize = val
+    userInfo = userConList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+    getUserRouterList()
+}
+// 切换当前页
+const handleCurrentChange = (val: number) => {
+    page.currentPage = val
+    userInfo = userConList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+    getUserRouterList()
+}
+const cascaderList = (val: any) => {
+    return val
+}
+const AddDialogVisible = () => {
+    dialogVisible.value = true
+    state.Tips = '新增部门'
+}
+</script>
+
+<style scoped lang="scss">
+.userControl {
+    border: 0.7px solid var(--wangwang-border);
+    width: 100%;
+    padding: 5px;
+
+    &:hover {
+        box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+    }
+
+    .sercarINput {
+        display: flex;
+    }
+}
+</style>

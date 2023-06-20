@@ -1,0 +1,334 @@
+<template>
+  <div class="menus">
+    <vxe-toolbar>
+      <template #buttons>
+        <div class="sercarINput">
+          <el-input v-model="SerInput.filterName" type="search" placeholder="请输入菜单名称，搜索" @keyup="searchEvent2"></el-input>
+          <el-button type="success" @click="searchEvent2">查询</el-button>
+          <el-button type="primary" @click="EditDialogVisible">新增菜单</el-button>
+        </div>
+      </template>
+    </vxe-toolbar>
+    <vxe-table ref="xTree" max-height="700" :tree-config="{}" :data="state.MenusRouterList" align="left" :border="false"
+      v-loading="loadings">
+      <vxe-column title="菜单名称" tree-node>
+        <template #default="{ row }">
+          <div>
+            {{ row.meta.title }}
+          </div>
+        </template>
+      </vxe-column>
+      <vxe-column field="path" title="路由" width="20%"></vxe-column>
+      <vxe-column field="" title="组件路径" show-overflow show-footer-overflow>
+        <template #default="{ row }">
+          {{ row.component }}
+        </template>
+      </vxe-column>
+      <vxe-column field="roles" title="权限" width="14%" show-overflow show-footer-overflow>
+        <template #default="{ row }">
+          <div style="display: flex;
+                   "> {{ row.meta.roles }}</div>
+        </template>
+      </vxe-column>
+      <vxe-column field="sort" title="排序">
+        <template #default="{ row }">
+          {{ row.meta.sort }}
+        </template>
+      </vxe-column>
+      <vxe-column field="type" title="类型">
+        <template #default="{ row }">
+          <el-tag :title="row.meta.type" type="success">{{ row.meta.type }}</el-tag>
+        </template>
+      </vxe-column>
+      <vxe-column field="" title="操作">
+        <template #default="{ row }">
+          <el-button link type="primary" @click="MenisEdit(row)">新增</el-button>
+          <el-button link type="primary" @click="MenisEdit(row)">修改</el-button>
+          <el-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delRouteMens(row)" confirm-button-text="确认"
+            cancel-button-text="取消">
+            <template #reference>
+              <el-button link type="primary">删除</el-button>
+            </template>
+          </el-popconfirm>
+        </template>
+      </vxe-column>
+    </vxe-table>
+    <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="page.currentPage"
+      :page-sizes="[10, 20, 3, 40]" :page-size="page.pageSize" layout="total, sizes, prev, pager, next, jumper"
+      :total="page.total">
+    </el-pagination>
+  </div>
+
+  <!-- 弹框 -->
+  <el-dialog v-model="dialogVisible" :title="state.Tips" width="47%" :before-close="handleClose" draggable>
+    <el-form :model="MEnsObj" label-width="120px">
+      <el-row :gutter="20">
+        <el-col :span="24" :offset="0">
+          <el-form-item label="上级菜单">
+            <el-cascader placeholder="请选择上级菜单" v-model="MEnsObj.ParentPath" style="width: 100%;"
+              :options="cascaderList(useRoultSess.routesList)" :CascaderProps="{
+                label: 'label',
+                value: 'path'
+              }" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="菜单名称">
+            <el-input v-model="MEnsObj.title" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="路由名称">
+            <el-input v-model="MEnsObj.name" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="菜单图标">
+            <el-popover placement="bottom" :width="400" trigger="click">
+              <template #reference>
+                <el-input v-model="MEnsObj.icon" />
+              </template>
+
+              <div class="my-dropdown4">
+                <el-scrollbar height="200px">
+                  <div @click="MEnsObj.icon = getfions(i)" v-for="i in iconlist.glyphs" :key="i.icon_id" class="iocnntn">
+                    <i :class="getfions(i)"></i>
+                  </div>
+                </el-scrollbar>
+              </div>
+            </el-popover>
+
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="重定向">
+            <el-input v-model="MEnsObj.redirect" />
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="类型">
+            <el-radio-group v-model="MEnsObj.type">
+              <el-radio label="菜单">菜单</el-radio>
+              <el-radio label="按钮">按钮</el-radio>
+            </el-radio-group>
+          </el-form-item>
+        </el-col>
+        <el-col :span="12" :offset="0">
+          <el-form-item label="菜单权限">
+            <el-select v-model="MEnsObj.roles" value-key="" placeholder="请选择" clearable filterable multiple>
+              <el-option label="admin" value="admin">
+              </el-option>
+              <el-option label="common" value="common">
+              </el-option>
+            </el-select>
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="12" :offset="0">
+          <el-form-item label="排序">
+            <el-input-number v-model="MEnsObj.sort" :min="1" :max="10" />
+          </el-form-item>
+        </el-col>
+      </el-row>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogVisible = false">取消</el-button>
+        <el-button type="primary" @click="onSubmit">
+          保存
+        </el-button>
+      </span>
+    </template>
+
+  </el-dialog>
+</template>
+
+<script setup lang="ts" name="roles">
+import { reactive, ref } from 'vue'
+import { RouterStore } from '/@/stores/RouterSrore'
+import { VxeTableInstance } from 'vxe-table'
+import { RouteRecordRaw } from 'vue-router'
+import iconlist from '/@/assets/icons/fontsicon/iconfont.json'
+
+const useRoultSess = RouterStore()
+// 定义搜索
+const SerInput = reactive<inputMenus>({
+  filterName: ''
+})
+// 状态数据
+const state = reactive({
+  MenusRouterList: [], //数据
+  Tips: '新增菜单'
+})
+// 分页
+const page = reactive({
+  currentPage: 1,
+  total: useRoultSess.routesList.length,
+  pageSize: 10
+})
+const cascaderList = (routerChiled: any) => {
+  let Arrlist = []
+  routerChiled.forEach((p) => {
+    let obk = { ...p }
+    obk.label = obk.meta.title
+    if (obk.children && obk.children.length > 0) {
+      obk.children = obk.children.map((e) => {
+        e.label = e.meta.title
+        return e
+      })
+    }
+    Arrlist.push(obk)
+  })
+  return Arrlist
+}
+
+// 点击新增
+const EditDialogVisible = () => {
+  dialogVisible.value = true
+  state.Tips = '新增菜单'
+}
+
+const xDown4 = ref()
+// 玄幻icon
+function getfions(row: any): string {
+  return `iconfont icon-${row.font_class}`
+}
+
+// 菜单新增和编辑的数据
+const MEnsObj = reactive({
+  ParentPath: '', //父级组件
+  path: '', //路由路径
+  name: '', //路由名称
+  component: '', //组件路径
+  title: '', //菜单名称
+  roles: [], //权限
+  icon: '', //图标
+  sort: 1, //排序
+  redirect: '', //重定向
+  type: '' //类型
+})
+
+// 编辑赋值
+const MenisEdit = (row: RouteRecordRaw): void => {
+  console.log(row)
+
+  MEnsObj.path = row.path
+  MEnsObj.name = row.name.toString()
+  MEnsObj.component = row.component + ''
+  MEnsObj.title = row.meta.title.toString()
+  MEnsObj.roles = [row.meta.roles].flat()
+  MEnsObj.icon = row.meta.icon.toString()
+  MEnsObj.sort = parseInt(row.meta.sort.toString())
+  if (row.redirect) MEnsObj.redirect = row.redirect.toString()
+  MEnsObj.type = row.meta.type.toString()
+  dialogVisible.value = true
+  state.Tips = '编辑菜单'
+}
+
+const xTree = ref<VxeTableInstance>()
+
+const loadings = ref(false)
+
+// 添加/修改的方法
+const onSubmit = (): void => {
+  loadings.value = true
+  dialogVisible.value = false
+  // 重新调用
+  setTimeout(() => {
+    getMenusRouterList()
+  }, 1000)
+}
+
+// 弹框弹出
+const dialogVisible = ref(false)
+
+// 菜单的数据
+const getMenusRouterList = () => {
+  loadings.value = false
+  state.MenusRouterList = useRoultSess.routesList
+}
+
+// 关闭弹框的方法
+const handleClose = (): void => {
+  dialogVisible.value = false
+  for (const key in MEnsObj) {
+    MEnsObj[key] = ''
+  }
+  MEnsObj.roles = []
+  MEnsObj.sort = 1
+}
+
+getMenusRouterList()
+
+// 搜索的方法
+const searchEvent2 = (): void => {
+  loadings.value = true
+  // 重新调用
+  setTimeout(() => {
+    getMenusRouterList()
+  }, 1000)
+}
+
+// 删除的方法
+const delRouteMens = (RouterRow: RouteRecordRaw): void => {
+  loadings.value = true
+  // 重新调用
+  setTimeout(() => {
+    getMenusRouterList()
+  }, 1000)
+}
+// 切换条数
+const handleSizeChange = (val: number) => {
+  page.pageSize = val
+  state.MenusRouterList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+  getMenusRouterList()
+}
+// 切换当前页
+const handleCurrentChange = (val: number) => {
+  page.currentPage = val
+  state.MenusRouterList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+  getMenusRouterList()
+}
+</script>
+
+<style scoped lang="scss">
+.menus {
+  border: 0.7px solid var(--wangwang-border);
+  width: 100%;
+  padding: 5px;
+
+  &:hover {
+    box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+  }
+
+  .sercarINput {
+    display: flex;
+  }
+}
+
+.my-dropdown4 {
+  :deep(.el-scrollbar) {
+    .el-scrollbar__view {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+
+      .iocnntn {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--wangwang-border);
+        cursor: pointer;
+        transition: all 0.2s;
+
+        &:hover {
+          box-shadow: 0 0 8px var(--wang-color--parimary-bg);
+          background-color: var(--wang-color--parimary-bg);
+        }
+      }
+    }
+  }
+}
+</style>

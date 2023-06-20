@@ -1,0 +1,68 @@
+<template>
+    <div class="navTabar">
+        <!-- theme="dark" -->
+        <a-menu v-model:openKeys="openKeys" style="height: 100vh;width: 251px;" v-model:selectedKeys="selectedKeys"
+            mode="inline" :inline-collapsed="collapsed">
+
+            <template v-for="chi in RouterListchi" :key="chi.path">
+                <a-menu-item v-if="!chi.children" :key="chi.path">
+                    <template #icon>
+                        <component :is="BankTwoTone"></component>
+                    </template>
+                    <span>{{ chi.meta.title }}</span>
+                </a-menu-item>
+                <a-sub-menu v-else>
+                    <template #icon>
+                        <MailOutlined />
+                    </template>
+                    <template #title>Navigation One</template>
+                </a-sub-menu>
+            </template>
+        </a-menu>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, toRefs, computed } from 'vue';
+import { RouterStore } from '/@/stores/RouterSrore'
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    PieChartOutlined,
+    MailOutlined,
+    DesktopOutlined,
+    InboxOutlined,
+    AppstoreOutlined,
+    BankTwoTone
+} from '@ant-design/icons-vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
+const Rout = RouterStore()
+
+const state = reactive({
+    collapsed: false,
+    selectedKeys: [route.fullPath],
+    openKeys: ['sub1'],
+    preOpenKeys: ['sub1'],
+});
+
+const RouterListchi = computed(() => {
+    return (<Array<any>>Rout.routesList)
+})
+
+const { collapsed,
+    selectedKeys,
+    openKeys,
+    preOpenKeys } = toRefs(state)
+</script>
+
+<style scoped lang="scss">
+.navTabar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 11;
+    height: 100vh;
+}
+</style>

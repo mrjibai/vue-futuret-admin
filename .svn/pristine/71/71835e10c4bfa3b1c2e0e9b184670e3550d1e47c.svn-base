@@ -1,0 +1,56 @@
+<template>
+    <a-drawer v-model:open="draW.opendrawer" class="custom-class" root-class-name="root-class-name"
+        :headerStyle="{ color: 'var(--wang-text-color)' }"
+        style="color: var(--wang-text-color);background-color: var(--wangwang-drwer-bgcolor)" title="主题配置" placement="right"
+        @after-open-change="afterOpenChange" width="300">
+        <a-divider>全局</a-divider>
+        <div class="drawerItem">
+            <span>
+                夜间模式
+            </span>
+            <a-switch v-model:checked="checked" @change="handleThemeChange" />
+        </div>
+    </a-drawer>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+import { drawerStore } from '/@/stores/drawer'
+
+
+const draW = drawerStore()
+
+const checked = ref<Boolean>(false)
+const afterOpenChange = (bool: boolean) => {
+};
+
+// 切换主题
+const handleThemeChange = (val: Boolean) => {
+    // console.log(val);
+    draW.setchecked(val)
+    if (val) {
+        document.documentElement.setAttribute('theme', 'light')
+    } else {
+        document.documentElement.removeAttribute('theme')
+    }
+}
+</script>
+
+<style scoped lang="scss">
+.ant-divider {
+    margin: 0;
+}
+
+:deep(.css-dev-only-do-not-override-i3mqvl.ant-drawer) {
+
+    .ant-drawer-title {
+        color: var(--wang-text-color);
+    }
+}
+
+.drawerItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+</style>

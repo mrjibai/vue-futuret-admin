@@ -1,0 +1,12 @@
+:root{
+     // 首页背景颜色
+     --wang-home-container-bg:rgba(220, 223, 227, 0.3)
+     
+     // 首页大组件背景颜色
+     --wang-home-card-item-bg:white
+     // 首页大组件鼠标悬浮背景阴影
+     --wang-home-card-item-hover-boxShdow:0px 0px 20px 0px rgb(188, 179, 179)
+     // 首页快捷导航工具背景颜色
+     --wang-home-ShortcutTool-bg: #bdd7f4;
+     --wang-home-ShortcutTool-bg-hover: #6886a9;
+}

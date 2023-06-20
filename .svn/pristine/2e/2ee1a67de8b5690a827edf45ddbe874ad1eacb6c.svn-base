@@ -1,0 +1,272 @@
+<template>
+    <div class="userControl">
+        <vxe-toolbar>
+            <template #buttons>
+                <div class="sercarINput">
+                    <el-input v-model="SerInput.filterName" type="search" placeholder="请输入角色名称，搜索"
+                        @keyup="searchEvent2"></el-input>
+                    <el-button type="success" @click="searchEvent2">查询</el-button>
+                    <el-button type="primary" @click="dialogVisible = true">新增用户</el-button>
+                </div>
+            </template>
+        </vxe-toolbar>
+        <vxe-table show-header-overflow show-overflow :row-config="{ isHover: true }" :data="state.userControlRouterList"
+            v-loading="loadings">
+            <vxe-column type="seq" title="序号" width="60"></vxe-column>
+            <vxe-column field="accountName" title="账户名称"></vxe-column>
+            <vxe-column field="userNickname" title="用户昵称"></vxe-column>
+            <vxe-column field="associatedRole" title="关联角色"></vxe-column>
+            <vxe-column field="department" title="部门"></vxe-column>
+            <vxe-column field="phone" title="手机号"></vxe-column>
+            <vxe-column field="email" title="邮箱"></vxe-column>
+            <vxe-column field="userStatus" title="用户状态"></vxe-column>
+            <vxe-column field="userDescription" title="用户描述"></vxe-column>
+            <vxe-column field="createTime" title="创建时间"></vxe-column>
+
+            <vxe-column field="" title="操作" width="15%">
+                <template #default="{ row }">
+                    <el-button link type="primary" @click="UserControlEdit(row)">新增</el-button>
+                    <el-button link type="primary" @click="UserControlEdit(row)">修改</el-button>
+                    <el-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delRouteUserControl(row)" confirm-button-text="确认"
+                        cancel-button-text="取消">
+                        <template #reference>
+                            <el-button link type="primary">删除</el-button>
+                        </template>
+                    </el-popconfirm>
+                </template>
+            </vxe-column>
+        </vxe-table>
+        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange"
+            :current-page="page.currentPage" :page-sizes="[1, 2, 5, 10]" :page-size="page.pageSize"
+            layout="total, sizes, prev, pager, next, jumper" :total="page.total">
+        </el-pagination>
+        <!-- 弹框 -->
+        <el-dialog v-model="dialogVisible" :title="state.Tips" :before-close="handleClose">
+            <el-form v-model="userControlObj">
+                <el-row :gutter="20">
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="账户名称">
+                            <el-input v-model="userControlObj.accountName"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="用户昵称">
+                            <el-input v-model="userControlObj.userNickname"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="关联角色">
+                            <el-select v-model="userControlObj.associatedRole" value-key="" placeholder="请选择">
+                                <el-option label="普通用户" value="普通用户">
+                                </el-option>
+                                <el-option label="超级管理员" value="超级管理员">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="部门">
+                            <el-cascader placeholder="请选择上级部门" v-model="userControlObj.department"
+                                :options="cascaderList(userControlObj.department)" style="width: 100%;" :CascaderProps="{
+                                    label: 'label',
+                                    value: 'path'
+                                }" />
+                            <!-- <el-select v-model="userControlObj.department" value-key="" placeholder="请选择">
+                                <el-option label="vueNextAdmin/资本控股" value="admin">
+                                </el-option>
+                                <el-option label="common" value="common">
+                                </el-option>
+                            </el-select> -->
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="手机号">
+                            <el-input v-model="userControlObj.phone"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="邮箱">
+                            <el-input v-model="userControlObj.email"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="性别">
+                            <el-select v-model="userControlObj.sex" value-key="1" placeholder="请选择">
+                                <el-option label="男" value="男">
+                                </el-option>
+                                <el-option label="女" value="女">
+                                </el-option>
+                            </el-select>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="账户密码">
+                            <el-input type="password" v-model="userControlObj.password"></el-input>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="账户过期">
+                            <el-input type="date" v-model="userControlObj.createTime"></el-input>
+                        </el-form-item>
+                    </el-col>
+
+                    <el-col :span="12" :offset="0">
+                        <el-form-item label="角色状态">
+                            <el-tooltip :content="'Switch value: ' + userControlObj.userStatus" placement="top"> <el-switch
+                                    v-model="userControlObj.userStatus" active-color="#13ce66" inactive-color="#ff4949"
+                                    active-text="启用" inactive-text="关闭"> </el-switch> </el-tooltip>
+                        </el-form-item>
+                    </el-col>
+                    <el-col :span="24" :offset="0">
+                        <el-form-item label="用户描述">
+                            <el-input type="textarea" :rows="2" placeholder="请输入内容"
+                                v-model="userControlObj.userDescription">
+                            </el-input>
+                        </el-form-item>
+                    </el-col>
+
+                </el-row>
+            </el-form>
+            <template #footer>
+                <span class="dialog-footer">
+                    <el-button @click="dialogVisible = false">取消</el-button>
+                    <el-button type="primary" @click="onSubmit">
+                        保存
+                    </el-button>
+                </span>
+            </template>
+        </el-dialog>
+    </div>
+</template>
+
+<script setup lang="ts" name="UserControl">
+import { ref, reactive } from 'vue'
+import { userControlList } from '/@/mock/index'
+let userInfo = userControlList
+const SerInput = reactive<inputUser>({
+    filterName: ''
+})
+const state = reactive({
+    userControlRouterList: [],
+    Tips: '添加用户'
+})
+// 加载动画
+const loadings = ref(false)
+// 分页
+const page = reactive({
+    currentPage: 1,
+    total: userControlList.length,
+    pageSize: 1
+})
+// 状态数据
+const getUserRouterList = () => {
+    loadings.value = false
+    userInfo = userControlList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+
+    state.userControlRouterList = userInfo
+}
+getUserRouterList()
+// 搜索的方法
+const searchEvent2 = () => {
+    loadings.value = true
+    // 重新调用
+
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+//
+// 对话框
+const dialogVisible = ref(false)
+const userControlObj = reactive({
+    id: '',
+    accountName: '',
+    userNickname: '',
+    associatedRole: '',
+    department: '',
+    phone: '',
+    email: '',
+    sex: '',
+    password: '',
+    userStatus: '',
+    userDescription: '',
+    createTime: new Date()
+})
+const handleClose = () => {
+    dialogVisible.value = false
+    for (const key in userControlObj) {
+        userControlObj[key] = ''
+    }
+}
+// 修改方法
+const UserControlEdit = (row: UserControlList) => {
+    userControlObj.id = row.id.toString()
+    userControlObj.accountName = row.accountName
+    userControlObj.userNickname = row.userNickname
+    userControlObj.associatedRole = row.associatedRole
+    userControlObj.department = row.department
+    userControlObj.phone = row.phone
+    userControlObj.email = row.email
+    userControlObj.sex = row.sex
+    userControlObj.password = row.password
+
+    userControlObj.userStatus = row.userStatus
+    userControlObj.userDescription = row.userDescription
+    userControlObj.createTime = new Date(row.createTime)
+    dialogVisible.value = true
+}
+// 添加/修改方法
+const onSubmit = () => {
+    loadings.value = true
+    dialogVisible.value = false
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+// 删除
+const delRouteUserControl = (row: UserControlList) => {
+    loadings.value = true
+    setTimeout(() => {
+        getUserRouterList()
+    }, 1000)
+}
+
+// 切换条数
+const handleSizeChange = (val: number) => {
+    page.pageSize = val
+    userInfo = userControlList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+    getUserRouterList()
+}
+// 切换当前页
+const handleCurrentChange = (val: number) => {
+    page.currentPage = val
+    userInfo = userControlList.slice((page.currentPage - 1) * page.pageSize, page.pageSize)
+    getUserRouterList()
+}
+const cascaderList = (val) => {
+    //   let Arrlist = []
+    //   val.forEach((p) => {
+    //     let obj = { ...p }
+    //     if (obj.children || obj.children.length > 0) {
+    //       obj.children = obj.children.map((e) => {})
+    //     }
+    //   })
+    //   return Arrlist
+}
+</script>
+
+<style scoped lang="scss">
+.userControl {
+    border: 0.7px solid var(--wangwang-border);
+    width: 100%;
+    padding: 5px;
+
+    &:hover {
+        box-shadow: 0 0 5px var(--wang-color-primary-lighter);
+    }
+
+    .sercarINput {
+        display: flex;
+    }
+}
+</style>

@@ -1,0 +1,79 @@
+<template>
+    <div class="navTabar">
+        <!-- theme="dark" -->
+        <a-menu v-model:openKeys="state.openKeys" style="height: 100vh;width: 251px;"
+            v-model:selectedKeys="state.selectedKeys" mode="inline" :inline-collapsed="state.collapsed">
+
+            <template v-for="chi in RouterListchi" :key="chi.path">
+                <a-menu-item v-if="!chi.children" @click="getuseRouter(chi.path)" :key="chi.path">
+                    <template #icon>
+                    </template>
+                    <span>{{ chi.meta.title }}</span>
+                </a-menu-item>
+                <template v-if="chi.children">
+                    <a-sub-menu :key="chi.path">
+                        <template #icon>
+                        </template>
+                        <template #title>{{ chi.meta.title }}</template>
+                        <a-menu-item @click="getuseRouter(on.path)" v-for="on in chi.children" :key="on.path">
+                            <template #icon>
+                            </template>
+                            <span>{{ on.meta.title }}</span>
+                        </a-menu-item>
+                    </a-sub-menu>
+                </template>
+            </template>
+        </a-menu>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, toRefs, computed, watch, onMounted } from 'vue';
+import { RouterStore, RouterSession } from '/@/stores/RouterSrore'
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute()
+const Rout = RouterStore()
+
+// 获取缓存路由
+const rouSession = RouterSession()
+const router = useRouter()
+const state = reactive({
+    collapsed: false,
+    selectedKeys: [route.fullPath],
+    openKeys: [],
+    preOpenKeys: ['sub1'],
+});
+// 自动适应跳转
+watch(() => route.fullPath, (newvalue) => {
+    state.selectedKeys = [route.fullPath]
+
+
+})
+onMounted(() => {
+    const propsRouter = rouSession.RouterSessionlist.find(e => e.fullPath === route.fullPath).matched
+    propsRouter.splice(0, 1)
+    // propsRouter.pop()
+    state.openKeys = propsRouter.map(e => e.path)
+})
+// 跳转
+const getuseRouter = (paths: string): void => {
+    router.push(paths)
+}
+
+const RouterListchi = computed(() => {
+    return (<Array<any>>Rout.routesList)
+})
+
+
+</script>
+
+<style scoped lang="scss">
+.navTabar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 11;
+    height: 100vh;
+}
+</style>

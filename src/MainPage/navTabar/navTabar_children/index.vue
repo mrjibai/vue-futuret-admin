@@ -1,0 +1,55 @@
+<template>
+    <template v-for="v in chiObj" :key="v.path">
+        <a-sub-menu v-if="v.children" :key="v.path">
+            <template #icon>
+                <i :class="v.meta.icon"></i>
+            </template>
+            <template #title>{{ v.meta.title }}</template>
+            <template v-for="on in v.children" :key="on.path">
+                <a-menu-item @click="getuseRouter(on.path)" v-if="!on.children">
+                    <template #icon>
+                        <i :class="on.meta.icon"></i>
+                    </template>
+                    <span>{{ on.meta.title }}</span>
+                </a-menu-item>
+                <a-sub-menu v-else>
+                    <template #icon>
+                        <i :class="on.meta.icon"></i>
+                    </template>
+                    <template #title>{{ on.meta.title }}</template>
+                    <navTabar_chilren :RouterChildren="on.children" />
+                </a-sub-menu>
+            </template>
+        </a-sub-menu>
+        <a-menu-item :key="v.path" @click="getuseRouter(v.path)" v-else>
+            <template #icon>
+                <i :class="v.meta.icon"></i>
+            </template>
+            <span>{{ v.meta.title }}</span>
+        </a-menu-item>
+    </template>
+</template>
+
+<script setup lang="ts" name="navTabar_chilren">
+import { RouteRecordRaw, useRouter } from 'vue-router';
+import { computed } from 'vue'
+
+const router = useRouter()
+const props = defineProps<{
+    RouterChildren: Array<RouteRecordRaw>
+}>()
+
+const chiObj = computed(() => {
+    return props.RouterChildren
+})
+
+
+
+// 跳转
+const getuseRouter = (paths: string): void => {
+    router.push(paths)
+}
+
+</script>
+
+<style scoped lang="scss"></style>

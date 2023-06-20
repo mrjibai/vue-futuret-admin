@@ -1,0 +1,54 @@
+:root {
+    // html的样式
+    // 背景颜色
+    --wang-bgcolor: #f5f5f5;
+    // 菜单字体颜色
+    --wang-menu-color: #fffff;
+    // 所有字体颜色
+    --wang-text-color: #000000;
+    // 菜单悬浮颜色
+    --wang-meun-hover-color: #000044;
+
+    // 菜单背景颜色
+    --wang-menu-bgcolor: #f4f4f4;
+
+    --wang-color-primary-lighter: #5c9eea;
+    --wang-color-success-lighter: #f0f9eb;
+    --wang-color-warning-lighter: #fdf6ec;
+    --wang-color-danger-lighter: #fef0f0;
+    --wang-color--parimary-bg: #d6e9fb;
+    --wang-bglefts: #1f84e2;
+    
+    // 首页背景颜色
+    --wang-home-container-bg:rgba(220, 223, 227, 0.3);
+   // 首页大组件背景颜色
+     --wang-home-card-item-bg:white;
+//      // 首页大组件鼠标悬浮背景阴影
+     --wang-home-card-item-hover-boxShdow:0px 0px 20px 0px rgb(188, 179, 179);
+//      // 首页快捷导航工具背景颜色
+     --wang-home-ShortcutTool-bg: #e6edf5;
+     --wang-home-ShortcutTool-bg-hover: #cbd3e0;
+}
+html,
+body,
+#app {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    background-color: var(--wang-bgcolor);
+    font-size: 14px;
+    position: relative;
+    box-sizing: border-box;
+}
+ul {
+    list-style: none;
+}
+* {
+    padding: 0;
+    margin: 0;
+}
