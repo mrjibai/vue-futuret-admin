@@ -20,6 +20,7 @@ import 'vxe-table/lib/style.css'
 const app = createApp(Apps)
 function useTable(app: App) {
     app.use(VXETable)
+
     // 给 vue 实例挂载内部对象，例如：
     // app.config.globalProperties.$XModal = VXETable.modal
     // app.config.globalProperties.$XPrint = VXETable.print
@@ -28,7 +29,7 @@ function useTable(app: App) {
 }
 
 // 自定义指令
-// Direacives(app)
+Direacives(app)
 
 
 // 全局组件

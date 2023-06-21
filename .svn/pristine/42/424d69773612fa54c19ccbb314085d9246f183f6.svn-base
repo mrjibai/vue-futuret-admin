@@ -11,7 +11,7 @@
                 <a-layout-content>
                     <router-view v-slot="{ Component }">
                         <transition name="slide-fade" mode="out-in" :duration="{ enter: 500, leave: 300 }">
-                            <component :is="Component" />
+                            <component :is="Component" :key="Component" />
                         </transition>
                     </router-view>
                 </a-layout-content>
@@ -39,9 +39,7 @@ onMounted(() => {
         color: var(--wang-text-color);
 
         .wangwangSide {
-
             height: 100vh;
-
         }
 
         .ant-layout-content {

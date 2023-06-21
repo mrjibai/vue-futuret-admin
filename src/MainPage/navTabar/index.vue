@@ -93,7 +93,6 @@ const RouterListchi = computed(() => {
     z-index: 11;
     width: 100%;
     max-width: 240px;
-    height: 100vh;
     color: var(--wang-text-color);
 
     :deep(.ant-menu) {
