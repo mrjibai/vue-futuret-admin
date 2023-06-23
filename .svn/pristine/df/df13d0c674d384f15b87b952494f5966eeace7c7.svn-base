@@ -1,0 +1,172 @@
+<template>
+    <div class="navTabar">
+        <!-- theme="dark" -->
+        <a-menu v-model:openKeys="state.openKeys" style="height: 100vh;" mode="inline"
+            v-model:selectedKeys="state.selectedKeys" :inline-collapsed="state.collapsed">
+            <template v-for="chi in RouterListchi" :key="chi.path">
+                <a-menu-item v-if="!chi.children" @click="getuseRouter(chi.path)" :key="chi.path">
+                    <template #icon>
+                        <i :class="chi.meta.icon"></i>
+                    </template>
+                    <span>{{ chi.meta.title }}</span>
+                </a-menu-item>
+                <template v-if="chi.children">
+                    <a-sub-menu :key="chi.path">
+                        <template #icon>
+                            <i :class="chi.meta.icon"></i>
+                        </template>
+                        <template #title>{{ chi.meta.title }}</template>
+                        <template v-for="on in chi.children" :key="on.path">
+                            <a-menu-item @click="getuseRouter(on.path)" v-if="!on.children" :key="on.path">
+                                <template #icon>
+                                    <i :class="on.meta.icon"></i>
+                                </template>
+                                <span>{{ on.meta.title }}</span>
+
+                            </a-menu-item>
+                            <template v-else>
+                                <a-sub-menu :key="on.path">
+                                    <template #icon>
+                                        <i :class="on.meta.icon"></i>
+                                    </template>
+                                    <template #title>{{ on.meta.title }}</template>
+                                    <navTabar_chilren :RouterChildren="on.children" />
+                                </a-sub-menu>
+                            </template>
+
+                        </template>
+                    </a-sub-menu>
+                </template>
+            </template>
+        </a-menu>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { reactive, computed, watch, onMounted, defineAsyncComponent } from 'vue';
+import { RouterStore, RouterSession } from '/@/stores/RouterSrore'
+import { useRoute, useRouter } from 'vue-router';
+
+const route = useRoute()
+const Rout = RouterStore()
+
+// 引入组件
+const navTabar_chilren = defineAsyncComponent(() => import('./navTabar_children/index.vue'))
+
+// 获取缓存路由
+const rouSession = RouterSession()
+const router = useRouter()
+const state = reactive({
+    collapsed: false,
+    selectedKeys: [route.fullPath],
+    openKeys: [],
+    preOpenKeys: ['sub1'],
+});
+// 自动适应跳转
+watch(() => route.fullPath, (newvalue) => {
+    state.selectedKeys = [route.fullPath]
+
+
+})
+onMounted(() => {
+    const propsRouter = rouSession.RouterSessionlist.find(e => e.fullPath === route.fullPath).matched
+    propsRouter.splice(0, 1)
+    state.openKeys = propsRouter.map(e => e.path)
+})
+// 跳转
+const getuseRouter = (paths: string): void => {
+    router.push(paths)
+}
+
+const RouterListchi = computed(() => {
+    return (<Array<any>>Rout.routesList)
+})
+
+
+</script>
+
+<style scoped lang="scss">
+.navTabar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 11;
+    width: 100%;
+    max-width: 240px;
+    color: var(--wang-text-color);
+
+    :deep(.ant-menu) {
+        background-color: var(--wang-menu-bgcolor);
+        color: var(--wang-menu-color);
+        width: 100%;
+
+        .ant-menu-item {
+            color: var(--wang-menu-color);
+
+            &:hover {
+                // filter: brightness(200%);
+                background-color: var(--wang-meun-hover-color);
+                color: var(--wang-menu-color);
+            }
+        }
+
+        .ant-menu-submenu-active {
+            &>.ant-menu-submenu-title {
+                &:hover {
+                    // filter: brightness(200%);
+                    background-color: var(--wang-meun-hover-color) !important;
+                    color: var(--wang-menu-color) !important;
+                }
+            }
+        }
+
+        .ant-menu-submenu {
+            &>.ant-menu-submenu-title {
+                &:hover {
+                    // filter: brightness(200%);
+                    background-color: var(--wang-meun-hover-color) !important;
+                    color: var(--wang-menu-color) !important;
+                }
+            }
+        }
+
+        .ant-menu-submenu,
+        .ant-menu-item-selected {
+            color: var(--wang-menu-color);
+        }
+
+        .ant-menu-item-active {
+            &:hover {
+                // filter: brightness(200%);
+                background-color: var(--wang-meun-hover-color) !important;
+                color: var(--wang-menu-color) !important;
+            }
+        }
+
+
+    }
+
+    :deep(.css-dev-only-do-not-override-i3mqvl.ant-menu-light) {
+        .ant-menu-item-selected {
+            background-color: var(--wang-menu-active) !important;
+            color: var(--wang-menu-activetext);
+
+            &:hover {
+                // filter: brightness(200%);
+                background-color: var(--wang-meun-hover-color);
+                color: var(--wang-menu-activetext);
+            }
+
+            &>.ant-menu-submenu-title {
+
+                .ant-menu-title-content {
+                    color: var(--wang-menu-activetext);
+                }
+            }
+        }
+    }
+
+
+
+}
+</style>
