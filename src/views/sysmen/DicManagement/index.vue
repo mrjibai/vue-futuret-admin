@@ -67,9 +67,11 @@
                             <a-col :xs="24" :sm="12" :md="12" :lg="12" :xl="12">
                                 <a-form-item :prop="`list[${k}.label]`">
                                     <template #label>
-                                        <a-button type="primary" circle size="small" @click="onAddRow" v-if="k === 0">
+                                        <a-button type="primary" shape="circle" size="small" @click="onAddRow"
+                                            v-if="k === 0">
+                                            +
                                         </a-button>
-                                        <a-button type="danger" circle size="small" @click="onDelRow(k)" v-else>
+                                        <a-button type="danger" shape="circle" size="small" @click="onDelRow(k)" v-else>
                                         </a-button>
                                         <span class="ml10">字段</span>
                                     </template>

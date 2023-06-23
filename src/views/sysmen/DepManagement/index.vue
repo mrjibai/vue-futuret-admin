@@ -3,7 +3,7 @@
     <vxe-toolbar>
       <template #buttons>
         <div class="sercarINput">
-          <a-input v-model="SerInput.filterName" type="search" placeholder="请输入字典名称" @keyup="searchEvent2"></a-input>
+          <a-input v-model="SerInput.filterName" type="search" placeholder="请输入部门名称" @keyup="searchEvent2"></a-input>
           <a-button type="primary" ghost @click="searchEvent2">查询</a-button>
           <a-button type="primary" @click="AddDialogVisible">新增部门</a-button>
         </div>
@@ -31,12 +31,12 @@
 
         <vxe-column field="" title="操作" width="15%">
           <template #default="{ row }">
-            <a-button link type="primary" @click="DicManagementEdit(row)">新增</a-button>
-            <a-button link type="primary" @click="DicManagementEdit(row)">修改</a-button>
+            <a-button type="link" @click="DicManagementEdit(row)">新增</a-button>
+            <a-button type="link" @click="DicManagementEdit(row)">修改</a-button>
             <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delDicManagement(row)" confirm-button-text="确认"
               cancel-button-text="取消">
               <template #reference>
-                <a-button link type="primary">删除</a-button>
+                <a-button type="link">删除</a-button>
               </template>
             </a-popconfirm>
           </template>
@@ -181,8 +181,7 @@ const handleSizeChange = (val: number) => {
 // 切换当前页
 const handleCurrentChange = (val: number) => {
   page.currentPage = val
-
-  getDepManagement
+  getDepManagement()
 }
 const handleClose = () => {
   dialogVisible.value = false

@@ -1,6 +1,6 @@
 <template>
   <div class="menus">
-    <vxe-toolbar ref="xTree">
+    <vxe-toolbar ref="xTree" custom>
       <template #buttons>
         <div class="sercarINput">
           <a-input v-model:value="SerInput.filterName" type="search" placeholder="请输入菜单名称，搜索"
@@ -11,29 +11,40 @@
       </template>
     </vxe-toolbar>
     <a-spin :spinning="loadings">
-      <a-table :columns="columns" :bordered="false" :rowHoverDelay="0" :data-source="state.MenusRouterList">
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.key === 'Name'">
-            {{ record.meta.title }}
+      <vxe-table :border='false' ref="xTable1" :row-config="{ isHover: true }" align="left" max-height="1000"
+        :tree-config="{}" :data="state.MenusRouterList">
+        <vxe-column field="name" title="菜单名称" tree-node>
+          <template #default="{ row }">
+            {{ row.meta.title }}
           </template>
-          <template v-if="column.key === 'component'">
-            {{ record.component }}
+        </vxe-column>
+        <vxe-column field="path" title="路由" width="15%"></vxe-column>
+        <vxe-column field="component" title="组件路径"></vxe-column>
+        <vxe-column field="roles" title="权限">
+          <template #default="{ row }">
+            {{ row.meta.roles.toString() }}
           </template>
-          <template v-if="column.key === 'roles'">
-            {{ record.meta.roles }}
+        </vxe-column>
+        <vxe-column field="sort" title="排序">
+          <template #default="{ row }">
+            {{ row.meta.sort.toString() }}
           </template>
-          <template v-if="column.key === 'type'">
-            <a-tag :title="record.meta.type" color="#87d068"> {{ record.meta.type }}</a-tag>
+        </vxe-column>
+        <vxe-column field="type" title="类型">
+          <template #default="{ row }">
+            <a-tag :title="row.meta.type" color="green">{{ row.meta.type }}</a-tag>
           </template>
-          <template v-if="column.key === 'caozuo'">
-            <a-button type="link" @click="MenisEdit(record)">新增</a-button>
-            <a-button type="link" @click="MenisEdit(record)">修改</a-button>
-            <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delRouteMens(record)" ok-text="确认" cancel-text="取消">
+        </vxe-column>
+        <vxe-column field="" title="操作" width="220">
+          <template #default="{ row }">
+            <a-button type="link" @click="EditDialogVisible">新增</a-button>
+            <a-button type="link" @click="MenisEdit(row)">修改</a-button>
+            <a-popconfirm title="你确认要删除这条数据吗 ?" @confirm="delRouteMens(row)" ok-text="确认" cancel-text="取消">
               <a-button type="link">删除</a-button>
             </a-popconfirm>
           </template>
-        </template>
-      </a-table>
+        </vxe-column>
+      </vxe-table>
     </a-spin>
   </div>
 
@@ -124,7 +135,6 @@
 <script setup lang="ts" name="roles">
 import { reactive, ref, onMounted, nextTick } from 'vue'
 import { RouterStore } from '/@/stores/RouterSrore'
-import { VxeTableInstance } from 'vxe-table'
 import { RouteRecordRaw } from 'vue-router'
 import iconlist from '/@/assets/icons/fontsicon/iconfont.json'
 const useRoultSess = RouterStore()
@@ -143,42 +153,12 @@ nextTick(() => {
   // 将表格和工具栏进行关联
   const $table = xTable1.value
   const $toolbar = xTree.value
+  console.log(xTree.value);
+
   if ($table && $toolbar) {
     $table.connect($toolbar)
   }
 })
-const columns = [{
-  title: '菜单名称',
-  dataIndex: 'meta.title',
-  key: 'Name',
-},
-{
-  title: '路由',
-  dataIndex: 'path',
-  key: 'path',
-},
-{
-  title: '组件路径 ',
-  dataIndex: 'component',
-  key: 'component',
-},
-{
-  title: '权限',
-  dataIndex: 'roles',
-  key: 'roles',
-},
-{
-  title: '类型',
-  dataIndex: 'meta.type',
-  key: 'type',
-},
-{
-  title: '操作',
-  dataIndex: '',
-  key: 'caozuo',
-}
-]
-
 // 分页
 const cascaderList = (routerChiled: any) => {
   let Arrlist: any[] = JSON.parse(JSON.stringify(routerChiled))
@@ -234,8 +214,6 @@ const MenisEdit = (row: RouteRecordRaw): void => {
   MEnsObj.type = row!.meta!.type!.toString()
   dialogVisible.value = true
   state.Tips = '编辑菜单'
-
-
 }
 
 
@@ -255,7 +233,7 @@ const onSubmit = (): void => {
 const dialogVisible = ref<Boolean>(false)
 
 // 菜单的数据
-const getMenusRouterList = () => {
+const getMenusRouterList = (): void => {
   loadings.value = false
   state.MenusRouterList = useRoultSess.routesList ?? []
 }

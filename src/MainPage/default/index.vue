@@ -9,9 +9,9 @@
                     <HeaderTabar />
                 </a-layout-header>
                 <a-layout-content>
-                    <router-view v-slot="{ Component }">
+                    <router-view v-slot="{ Component, route }">
                         <transition name="slide-fade" mode="out-in" :duration="{ enter: 500, leave: 300 }">
-                            <component :is="Component" />
+                            <component :is="Component" :key="route.fullPath" />
                         </transition>
                     </router-view>
                 </a-layout-content>
@@ -21,11 +21,12 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, defineAsyncComponent } from 'vue';
+import { onMounted, defineAsyncComponent, computed, ComputedRef, onUpdated } from 'vue';
 const navTabar = defineAsyncComponent(() => import('/@/MainPage/navTabar/index.vue'))
 const HeaderTabar = defineAsyncComponent(() => import('/@/MainPage/HeaderTabar/index.vue'))
 onMounted(() => {
 })
+
 </script>
 
 <style scoped lang="scss">
