@@ -1,0 +1,15 @@
+.ant-card {
+    border: 1px solid var(--wangwang-border);
+    color: var(--wangwang-text-color);
+    background-color: var(--wang-bgcolor);
+
+    .ant-card-head {
+        color: var(--wangwang-text-color);
+        background-color: var(--wang-bgcolor);
+    }
+
+    .ant-card-body {
+        color: var(--wangwang-text-color);
+        background-color: var(--wang-bgcolor);
+    }
+}

@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import { useRoute, useRouter } from "vue-router";
-const route = useRoute()
-const router = useRouter()
+
 /**
  * 打开新的数据展示
  */
@@ -18,14 +16,6 @@ export const DataViewState = defineStore("DataViewState", {
         },
         setKeyRoute(keyR: number) {
             this.ISkey_routeK = keyR
-        },
-        // 刷新当前页面
-        live_reloads() {
-            router.push({
-                path: route.path,
-                query: route.query
-            })
-            this.setKeyRoute(new Date().getTime())
         }
     }
 })
