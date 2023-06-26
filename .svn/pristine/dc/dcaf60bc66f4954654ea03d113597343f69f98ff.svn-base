@@ -14,8 +14,7 @@
     </div>
     <div class="rightsUSer">
       <ul class="rigUserBtns">
-        <li class="Usericon" @click="fontiS = true">
-          <i :class="drw.checked ? 'iconfont icon-ziti icon' : 'iconfont icon-ziti-copy icon'"></i>
+        <li class="Usericon"><i :class="drw.checked ? 'iconfont icon-ziti icon' : 'iconfont icon-ziti-copy icon'"></i>
         </li>
         <li class="Usericon"><i
             :class="drw.checked ? 'iconfont icon-tongzhi icon' : 'iconfont icon-tongzhi-copy icon'"></i></li>
@@ -43,22 +42,11 @@
           </template>
         </a-dropdown>
       </div>
+
     </div>
   </div>
   <wangwangRoute />
   <Wang_Drawers />
-  <a-modal v-model:open="fontiS" title="字体设置">
-    <template #footer>
-
-    </template>
-    <p>
-      <a-select v-model:value="fontsize" style="width: 100px" @change="handleChange">
-        <a-select-option value="大号">大号</a-select-option>
-        <a-select-option value="默认">默认</a-select-option>
-        <a-select-option value="小号">小号</a-select-option>
-      </a-select>
-    </p>
-  </a-modal>
 </template>
 
 <script setup lang="ts" name="HeaderTabar">
@@ -76,25 +64,6 @@ const rouSTore = RouterStore()
 const router = useRouter()
 // 皮肤设置状态
 const drw = drawerStore()
-// 字号设置大小
-const fontiS = ref<Boolean>(false)
-
-const fontsize = ref<string>('默认')
-
-const handleChange = (value: string): void => {
-  const HTmle: HTMLElement = document.documentElement
-  switch (value) {
-    case '大号':
-      HTmle.style.setProperty('--wangwang-FontSize', '18px')
-      break;
-    case '默认':
-      HTmle.style.setProperty('--wangwang-FontSize', '14px')
-      break;
-    case '小号':
-      HTmle.style.setProperty('--wangwang-FontSize', '12px')
-      break;
-  }
-}
 
 // 用户权限设置状态
 const UserAdminCommon = UserStoredefinedStore()
@@ -224,7 +193,6 @@ const juroute = (): void => {
   margin-top: 2px;
   display: grid;
   grid-template-columns: 78% 22%;
-  background-color: var(--wang-Top-bg-color);
 
   &>div {
     display: flex;
@@ -234,24 +202,24 @@ const juroute = (): void => {
   .leftspoabs {
     display: flex;
     align-items: center;
-    color: var(--wang-Top-text-color);
+    color: var(--wang-text-color);
 
     .anticon {
       margin-top: 1px;
     }
 
     .ant-breadcrumb {
-      color: var(--wang-Top-text-color);
+      color: var(--wang-text-color);
 
 
       .iconfont {
-        color: var(--wang-Top-text-color);
+        background-color: var(--wang-text-color);
       }
 
       li {
 
         a {
-          color: var(--wang-Top-text-color);
+          color: var(--wang-text-color);
         }
       }
     }
@@ -284,7 +252,7 @@ const juroute = (): void => {
         transition: all 0.2s;
 
         .icon {
-          color: var(--wang-Top-text-color);
+          color: var(--wang-text-color);
           font-size: var(--wangwang-FontSize);
         }
 
@@ -293,7 +261,7 @@ const juroute = (): void => {
         }
 
         &:hover {
-          background-color: var(--wang-Top-hover-color);
+          background-color: var(--wang-meun-hover-color);
         }
 
         &:active {
@@ -303,7 +271,7 @@ const juroute = (): void => {
     }
 
     .dropdmon {
-      color: var(--wang-Top-text-color);
+      color: var(--wang-text-color);
 
       .imgAvavr {
         height: 30px;

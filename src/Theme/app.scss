@@ -2,15 +2,22 @@
     // html的样式
     // 背景颜色
     --wang-bgcolor: #f5f5f5;
-    // 菜单字体颜色
-    --wang-menu-color: #fff;
     // 所有字体颜色
     --wang-text-color: #000;
-    // 菜单悬浮颜色
-    --wang-meun-hover-color: rgb(190, 186, 186);
+    // 顶栏字体颜色
+    --wang-Top-text-color: #000;
+    // 顶栏背景颜色
+    --wang-Top-bg-color: #f5f5f5;
+    // 顶栏悬浮颜色
+    --wang-Top-hover-color: rgb(190, 186, 186);
+
+    // 菜单字体颜色
+    --wang-menu-color: #fff;
+
 
     // 菜单背景颜色
-    --wang-menu-bgcolor: #545c64;
+    --wang-menu-bgcolor: #65686a;
+
 
     // 缓存路由颜色
     --wang_router-color: #fff;
@@ -19,8 +26,9 @@
     --wangwang-border: rgba(0, 0, 0, 0.1);
 
     // 菜单选中颜色
-    --wang-menu-active: rgba(67, 62, 62, 0.8);
-    --wang-menu-activetext: #0792f6;
+    --wang-menu-active: rgba(210, 203, 203, 0.6);
+    --wang-menu-activetext: #b6d9f3;
+    // --wang-menu-activetext: var(--wang-text-color);
 
     // 主题抽屉栏颜色
     --wangwang-drwer-bgcolor: #fff;
@@ -64,9 +72,9 @@ body,
     -webkit-font-smoothing: antialiased;
     -webkit-tap-highlight-color: transparent;
     background-color: var(--wang-bgcolor);
-    font-size: 14px;
+    font-size: var(--wangwang-FontSize);
     position: relative;
-
+    --vxe-font-size: var(--wangwang-FontSize);
 }
 
 ul {
@@ -84,19 +92,22 @@ ul {
 .vxe-table {
     background-color: var(--wang-bgcolor);
     color: var(--wang-text-color);
+    font-size: var(--wangwang-FontSize);
 
     .vxe-table--header-wrapper {
         background-color: var(--wang-bgcolor);
         color: var(--wang-text-color);
+        font-size: var(--wangwang-FontSize);
 
         .vxe-header--row {
             border-bottom: 1px solid var(--wangwang-border);
             border-color: var(--wangwang-border);
-
+            font-size: var(--wangwang-FontSize);
 
             .vxe-header--column {
                 border-bottom: 1px solid var(--wangwang-border);
                 background-image: linear-gradient(var(--wang-bgcolor)) !important;
+                font-size: var(--wangwang-FontSize);
             }
         }
     }
@@ -106,10 +117,12 @@ ul {
         background-color: var(--wang-bgcolor);
         color: var(--wang-text-color);
         border: 1px solid var(--wangwang-border);
+        font-size: var(--wangwang-FontSize);
 
         .vxe-body--column {
             border-bottom: 1px solid var(--wangwang-border);
             background-image: linear-gradient(var(--wang-bgcolor)) !important;
+            font-size: var(--wangwang-FontSize);
         }
     }
 

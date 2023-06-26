@@ -1,24 +1,16 @@
 :root[theme='light'] {
     // html的样式
     // 背景颜色
-    --wang-bgcolor: #333333;
-
+    --wang-bgcolor: #151313;
+    // 菜单字体颜色
+    --wang-menu-color: #fffff;
     // 所有字体颜色
     --wang-text-color: #fff;
-
-    // 顶栏字体颜色
-    --wang-Top-text-color: #fff;
-    // 顶栏背景颜色
-    --wang-Top-bg-color: #333333;
-    // 顶栏悬浮颜色
-    --wang-Top-hover-color: rgb(190, 186, 186);
-
-    // 菜单字体颜色
-    --wang-menu-color: #ffff;
-
+    // 菜单悬浮颜色
+    --wang-meun-hover-color: rgb(190, 186, 186);
 
     // 菜单背景颜色
-    --wang-menu-bgcolor: #454545;
+    --wang-menu-bgcolor: #292424;
 
 
     // 缓存路由颜色

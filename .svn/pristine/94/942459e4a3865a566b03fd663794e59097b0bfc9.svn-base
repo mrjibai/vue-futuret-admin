@@ -31,7 +31,7 @@
                                     <a href="javascript:;" @click="clears">全部关闭</a>
                                 </a-menu-item>
                                 <a-menu-item>
-                                    <a href="javascript:;" @click="fullscreen(i)">当前页全屏</a>
+                                    <a href="javascript:;" @click="fullscreen">当前页全屏</a>
                                 </a-menu-item>
                             </a-menu>
                         </template>
@@ -101,9 +101,8 @@ const clears = (): void => {
     })
     router.replace(listRouter.value[listRouter.value.length - 1].path)
 }
-const fullscreen = (row: RouteRecordRaw) => {
+const fullscreen = () => {
     dataVS.setKeyCompont('RouterLaMain')
-    router.push(row.path)
 }
 
 // 缓存路由
