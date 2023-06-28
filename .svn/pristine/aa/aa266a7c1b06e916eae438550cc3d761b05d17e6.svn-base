@@ -21,9 +21,3 @@
         color: var(--wang-text-color);
     }
 }
-
-.zs-color-picker-panel[data-v-87d63fa8] {
-    right: 0;
-}
-
-// .ant-drawer-body {}
