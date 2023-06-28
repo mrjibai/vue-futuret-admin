@@ -1,0 +1,55 @@
+@import './media.scss';
+
+@media screen and (max-width:$lg) {
+    .login {
+        position: relative;
+        grid-template-columns: 100% !important;
+
+        .bglogin {
+            .setitle {
+                top: 0% !important;
+                left: 12% !important;
+                width: 30% !important;
+                height: 18% !important;
+            }
+        }
+
+        .formlofgin {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateX(-50%) translateY(-50%);
+
+            .loginsan {
+                background-color: var(--wang-bgcolor);
+                width: 100% !important;
+            }
+        }
+    }
+
+}
+
+@media screen and (max-width:$xs) {
+    .login {
+        position: relative;
+        grid-template-columns: 100% !important;
+
+        .bglogin {
+            display: none;
+        }
+
+        .formlofgin {
+            position: inherit;
+            height: 100vh !important;
+
+            .loginsan {
+                width: 100% !important;
+                height: 100% !important;
+                aspect-ratio: auto !important;
+
+
+            }
+        }
+    }
+
+}

@@ -1,7 +1,7 @@
 :root[theme='light'] {
     // html的样式
     // 背景颜色
-    --wang-bgcolor: #1c1515;
+    --wang-bgcolor: #333333;
 
     // 所有字体颜色
     --wang-text-color: #fff;
@@ -9,7 +9,7 @@
     // 顶栏字体颜色
     --wang-Top-text-color: #fff;
     // 顶栏背景颜色
-    --wang-Top-bg-color: #211d1d;
+    --wang-Top-bg-color: #333333;
     // 顶栏悬浮颜色
     --wang-Top-hover-color: rgb(190, 186, 186);
 
@@ -18,7 +18,8 @@
 
 
     // 菜单背景颜色
-    --wang-menu-bgcolor: #232222;
+    --wang-menu-bgcolor: #454545;
+
 
     // 缓存路由颜色
     --wang_router-color: rgba(255, 255, 255, 0.1);
@@ -40,7 +41,7 @@
     //      // 首页大组件鼠标悬浮背景阴影
     --wang-home-card-item-hover-boxShdow: 0px 0px 20px 0px rgb(188, 179, 179);
     //      // 首页快捷导航工具背景颜色
-    --wang-home-ShortcutTool-bg: #242525;
+    --wang-home-ShortcutTool-bg: #a4a7aa;
     --wang-home-ShortcutTool-bg-hover: #cbd3e0;
 
     .css-dev-only-do-not-override-i3mqvl.ant-breadcrumb .ant-breadcrumb-separator {
@@ -55,12 +56,6 @@
 
     .a-divider {
         color: var(--wang-text-color);
-    }
-
-    .ant-alert {
-        background-color: #2b2a2a;
-        border-color: #050505;
-        color: white;
     }
 
     .rightsUSer {

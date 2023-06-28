@@ -1,0 +1,9 @@
+@import './media.scss';
+
+@media screen and (max-width:$xs) {
+    .ant-layout-sider {
+        display: none !important;
+    }
+
+
+}

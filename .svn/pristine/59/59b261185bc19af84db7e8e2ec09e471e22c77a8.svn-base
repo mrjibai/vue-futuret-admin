@@ -16,7 +16,7 @@
                 <span class="light"></span>
                 <span class="light"></span>
                 <span class="light"></span>
-                <h3 class="login_title">Vue-futuret-Admin 欢迎您到来 ！</h3>
+                <h3 class="login_title">Vue-Wangwang 欢迎您到来 ！</h3>
                 <div class="qresmall" @click="keyloginboolqr = !keyloginboolqr">
                     <img src="../../assets/qrcode-302.png" alt="" style="width: 100%;height: 100%;" v-if="keyloginboolqr">
                     <a-space v-else>

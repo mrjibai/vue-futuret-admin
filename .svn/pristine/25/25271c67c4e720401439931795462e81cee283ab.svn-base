@@ -1,0 +1,24 @@
+@import './media.scss';
+
+@media screen and (max-width:$xs) {
+    .HeaderTabar {
+        position: relative;
+
+        .leftspoabs {
+            display: none !important;
+        }
+
+        .rightsUSer {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .wangwang_ulTaView {
+        .scop_wawang {
+            max-width: 100vw !important;
+        }
+    }
+}

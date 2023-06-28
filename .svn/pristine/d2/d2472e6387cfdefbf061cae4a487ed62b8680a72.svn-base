@@ -36,7 +36,7 @@
             <a-menu @click="hangCommend">
               <a-menu-item key="/home">首页</a-menu-item>
               <a-menu-item key="">个人中心</a-menu-item>
-              <a-menu-item key="https://gitee.com/mr-yichen/Vue-futuret-Admin">我的仓库</a-menu-item>
+              <a-menu-item key="https://gitee.com/mr-yichen/source_backend_enterprise_project">我的仓库</a-menu-item>
               <a-menu-item key="404">404</a-menu-item>
               <a-menu-item key="/login">退出登录</a-menu-item>
             </a-menu>
