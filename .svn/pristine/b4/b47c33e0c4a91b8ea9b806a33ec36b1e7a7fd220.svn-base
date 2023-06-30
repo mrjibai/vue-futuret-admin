@@ -1,6 +1,7 @@
 <template>
     <div class="MainPage">
         <a-layout class="contenPages">
+
             <navTabar />
             <a-layout>
                 <a-layout-header>
@@ -8,7 +9,7 @@
                 </a-layout-header>
                 <a-layout-content>
                     <router-view v-slot="{ Component, route }">
-                        <transition name="slide-right" mode="out-in" :duration="{ enter: 500, leave: 300 }">
+                        <transition name="slide-fade" mode="out-in" :duration="{ enter: 500, leave: 300 }">
                             <component :is="Component" :key="ISkey_routeK" />
                         </transition>
                     </router-view>
@@ -33,14 +34,15 @@ onMounted(() => {
 
 <style scoped lang="scss">
 .MainPage {
-    width: 98vw;
+    width: 100vw;
     box-sizing: border-box;
 
     .contenPages {
         width: 100%;
         background-color: var(--wang-bgcolor);
         color: var(--wang-text-color);
-        position: relative;
+
+
 
         .ant-layout-content {
             box-sizing: border-box;
