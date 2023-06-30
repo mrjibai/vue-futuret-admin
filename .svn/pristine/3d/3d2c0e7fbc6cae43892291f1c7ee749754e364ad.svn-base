@@ -1,0 +1,139 @@
+<template>
+    <div class="Digital_scroll">
+        <a-card title="数字滚动演示" :bordered="false" :bodyStyle="styleB" :headStyle="styleB">
+            <template #extra></template>
+            <a-alert :message="messgaeText" type="success" style="margin-bottom: 10px;" />
+            <a-row class="scroll_ve" :gutter="20">
+                <a-col :span="6">
+                    <div class="items primary">
+                        <p>今日访问人数</p>
+                        <p>
+                            <span id="Numercount1"></span>
+                        </p>
+                        <p>在场人数</p>
+                        <p>
+                            <span id="Numercount2"></span>
+                        </p>
+                    </div>
+
+                </a-col>
+                <a-col :span="6">
+                    <div class="items success">
+                        <p>实验室总数</p>
+                        <p>
+                            <span id="Numercount3"></span>
+                        </p>
+                        <p>使用中</p>
+                        <p>
+                            <span id="Numercount4"></span>
+                        </p>
+                    </div>
+
+                </a-col>
+                <a-col :span="6">
+                    <div class="items warning">
+                        <p>申请人数（月）</p>
+                        <p>
+                            <span id="Numercount5"></span>
+                        </p>
+                        <p>通过</p>
+                        <p>
+                            <span id="Numercount6"></span>
+                        </p>
+                    </div>
+                </a-col>
+                <a-col :span="6">
+                    <div class="items danger">
+                        <p>销售</p>
+                        <p>
+                            <span id="Numercount7"></span>
+                        </p>
+                        <p>销售数</p>
+                        <p>
+                            <span id="Numercount8"></span>
+                        </p>
+                    </div>
+                </a-col>
+            </a-row>
+
+        </a-card>
+        <a-button @click="reset">
+            重置滚动
+        </a-button>
+    </div>
+</template>
+
+<script setup lang="ts" name="Digital_scroll">
+import { CountUp } from 'countup.js';
+import { ref, onMounted } from 'vue';
+const messgaeText = ref<string>('感谢优秀的`countup.js`，项目地址：https://github.com/inorganik/countUp.js')
+let numAnim = ref([]) as any
+const styleB =
+{
+    backgroundColor: 'var(--wang-bgcolor)',
+    border: '1px solid var(--wangwang-border)',
+    color: 'var(--wang-text-color)',
+}
+const rollfun = (Refvalue: HTMLElement, endValue: number): void => {
+    numAnim.value = new CountUp((Refvalue), endValue, { duration: 2 })
+}
+
+const reset = (): void => {
+    trgHtmlMonutd()
+}
+
+const trgaeStart = (): void => {
+    numAnim.value.start()
+}
+
+const trgHtmlMonutd = () => {
+    let scrollHtml = new Map<number, HTMLElement>()
+    for (let i = 0; i < 8; i++) {
+        scrollHtml.set(i + 1, (<HTMLElement>document.getElementById(`Numercount${i + 1}`)))
+    }
+    for (const [key, dom] of scrollHtml) {
+        rollfun(dom, key * Math.ceil((Math.random()) * 100))
+        trgaeStart()
+    }
+}
+onMounted(() => {
+    trgHtmlMonutd()
+})
+</script>
+
+<style scoped lang="scss">
+.Digital_scroll {
+    background-color: var(--wang-bgcolor);
+    color: var(--wang-text-color);
+
+    .scroll_ve {
+        .items {
+            height: 120px;
+            border: 1px solid var(--wangwang-border);
+            padding: 15px;
+            color: #fff;
+            border-radius: 5px;
+
+            p {
+                margin: 0;
+            }
+        }
+
+        .primary {
+            background-color: var(--wang-color-primary-lighter);
+        }
+
+        .success {
+            background-color: var(--wang-color-success-lighter);
+        }
+
+        .warning {
+            background-color: var(--wang-color-warning-lighter);
+        }
+
+        .danger {
+            background-color: var(--wang-color-danger-lighter);
+        }
+    }
+}
+</style>
