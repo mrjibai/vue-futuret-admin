@@ -10,7 +10,6 @@
             </span>
             <a-switch v-model:checked="checked" @change="handleThemeChange" />
         </div>
-
         <a-divider>顶栏设置</a-divider>
         <div class="drawerItem">
             <span>
@@ -24,7 +23,6 @@
             </span>
             <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.TopfontColor"></color-picker>
         </div>
-
         <a-divider>菜单设置</a-divider>
         <div class="drawerItem">
             <span>
@@ -50,16 +48,6 @@
             </span>
             <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.menuselectfontcolor"></color-picker>
         </div>
-
-        <a-divider>其他设置</a-divider>
-        <div class="drawerItem">
-            <span>
-                tagView栏
-            </span>
-            <a-select v-model:value="themeConfigSetting.tagViewValue" :options="tagViewoption" style="width: 120px"
-                @change="tagViewchange">
-            </a-select>
-        </div>
     </a-drawer>
 </template>
 
@@ -81,22 +69,7 @@ const { ThemeConfig } = storeToRefs(DataView)
 const themeConfigSetting = computed(() => {
     return ThemeConfig.value
 })
-const tagViewoption = computed(() => {
-    return [
-        {
-            label: '经典',
-            value: 'listgroup'
-        },
-        {
-            label: '默认',
-            value: 'lisr'
-        },
-        {
-            label: '标准',
-            value: 'listStyleprominent'
-        }
-    ]
-})
+
 watch(() => draW.opendrawer, (newvalue) => {
     if (newvalue) {
         document.documentElement.style.overflow = 'hidden'
@@ -113,10 +86,6 @@ const TopsetBGs = (data: object): void => {
     document.documentElement.style.setProperty('--wang-menu-color', themeConfigSetting.value.menufontColor)
     document.documentElement.style.setProperty('--wang-menu-active', themeConfigSetting.value.menuSelectedColor)
     document.documentElement.style.setProperty('--wang-menu-activetext', themeConfigSetting.value.menuselectfontcolor)
-    setThemeConfig()
-}
-
-const tagViewchange = (): void => {
     setThemeConfig()
 }
 

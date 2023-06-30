@@ -3,8 +3,7 @@
     <div class="wangwang_ulTaView">
         <div class="scop_wawang">
             <ul class="Tates">
-                <li @click="getNavgater(i.path)" class="list-item" :class="isRouters(i.path)" v-for=" i  in  listRouter"
-                    :key="i.name">
+                <li @click="getNavgater(i.path)" :class="isRouters(i.path)" v-for=" i  in  listRouter" :key="i.name">
                     <a-dropdown trigger="contextmenu" v-if="i.path !== '/home'">
                         <div>
                             {{ i.meta.title }}
@@ -49,13 +48,12 @@
 <script setup  name="wangwangRoute" lang="ts">
 import { useRoute, useRouter, RouteRecordRaw } from 'vue-router'
 import { Session } from '/@/units/Store'
-import { DataViewState } from '/@/stores/RouterView'
+
 import { UseStateCode } from '/@/Hooks/useState'
 import { RouterSession } from '/@/stores/RouterSrore'
 import { CloseOutlined, RedoOutlined } from '@ant-design/icons-vue'
-import { storeToRefs } from 'pinia'
-const DataView = DataViewState()
-const { ThemeConfig } = storeToRefs(DataView)
+
+
 const router = useRouter()
 const route = useRoute()
 
@@ -67,9 +65,9 @@ const getNavgater = (path: string): void => {
 }
 const isRouters = (routepath: string): string => {
     if (routepath === route.fullPath) {
-        return `${ThemeConfig.value.tagViewValue} actives`
+        return 'lisr actives'
     }
-    return ThemeConfig.value.tagViewValue
+    return 'lisr'
 }
 
 const delRouterSession = (row: any): void => {
@@ -116,25 +114,39 @@ const {
         box-sizing: border-box;
         padding-top: 4px;
 
-        .list-item {
+        .lisr {
             flex-shrink: 0;
             justify-content: center;
+            padding: 0 20px;
             display: flex;
             color: var(--wang-text-color);
             align-items: center;
             height: 25px;
             transition: all 0.4s;
             cursor: pointer;
+            border-radius: 20px 0;
+            margin: 0 2px;
             background-color: var(--wang_router-color);
 
+            .tetxsiocn {
+                margin-left: 10px;
+
+                &:hover {
+                    background-color: var(--wang-color-primary-lighter);
+                    color: white;
+                    border-radius: 50%;
+                }
+            }
+
+            &:hover {
+                background-color: var(--wang-color--parimary-bg);
+            }
         }
 
         .actives {
             background-color: var(--wang-color--parimary-bg);
             color: var(--wang-color-primary-lighter);
         }
-
-
     }
 }
 </style>

@@ -1,0 +1,15 @@
+//  默认样式
+
+.lisr {
+    padding: 0 20px;
+    border-radius: 20px 0;
+    margin: 0 2px;
+}
+
+// 经典
+.listgroup {
+    border-radius: 2px;
+    padding: 0 15px;
+    margin: 0 1px;
+    border: 1px solid var(--wang-Top-hover-color);
+}

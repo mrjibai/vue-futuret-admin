@@ -1,0 +1,75 @@
+//  默认样式
+
+.lisr {
+    padding: 0 20px;
+    border-radius: 20px 0;
+    margin: 0 2px;
+
+    // 图标删除
+    .tetxsiocn {
+        margin-left: 10px;
+
+        &:hover {
+            background-color: var(--wang-color-primary-lighter);
+            color: white;
+            border-radius: 50%;
+        }
+    }
+
+    &:hover {
+        background-color: var(--wang-color--parimary-bg) !important;
+    }
+}
+
+// 经典
+.listgroup {
+    border-radius: 2px;
+    padding: 0 15px;
+    margin: 0 1px;
+    border: 1px solid var(--wang-Top-hover-color);
+
+    // 图标删除
+    .tetxsiocn {
+        margin-left: 10px;
+
+        &:hover {
+            background-color: var(--wang-color-primary-lighter);
+            color: white;
+            border-radius: 50%;
+        }
+    }
+
+    &:hover {
+        background-color: var(--wang-color--parimary-bg) !important;
+    }
+}
+
+// 风格凸显
+.listStyleprominent {
+    padding: 0 20px;
+    margin: 0px;
+    border-radius: 0px;
+
+
+    // 图标删除
+    .tetxsiocn {
+        margin-left: 10px;
+
+        &:hover {
+            background-color: var(--wang-color-primary-lighter);
+            color: white;
+            border-radius: 50%;
+        }
+    }
+
+    &:hover {
+        background-color: transparent !important;
+        color: var(--wang-color-primary-lighter) !important;
+    }
+
+    &~.actives {
+        color: var(--wang-color-primary-lighter) !important;
+        background-color: #f4f4f4 !important;
+        opacity: 0.8;
+    }
+}

@@ -90,10 +90,6 @@ const tagViewoption = computed(() => {
         {
             label: '默认',
             value: 'lisr'
-        },
-        {
-            label: '标准',
-            value: 'listStyleprominent'
         }
     ]
 })

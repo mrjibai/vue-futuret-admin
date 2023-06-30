@@ -6,22 +6,20 @@
             <template v-for="chi in RouterListchi" :key="chi.path">
                 <a-menu-item v-if="!chi.children" @click="getuseRouter(chi.path)" :key="chi.path">
                     <template #icon>
-                        <SvgIcon :name="chi.meta.icon" />
+                        <i :class="chi.meta.icon"></i>
                     </template>
-                    <span>
-                        {{ chi.meta.title }}
-                    </span>
+                    <span>{{ chi.meta.title }}</span>
                 </a-menu-item>
                 <template v-if="chi.children">
                     <a-sub-menu :key="chi.path">
                         <template #icon>
-                            <SvgIcon :name="chi.meta.icon" />
+                            <i :class="chi.meta.icon"></i>
                         </template>
                         <template #title>{{ chi.meta.title }}</template>
                         <template v-for="on in chi.children" :key="on.path">
                             <a-menu-item @click="getuseRouter(on.path)" v-if="!on.children" :key="on.path">
                                 <template #icon>
-                                    <SvgIcon :name="on.meta.icon" />
+                                    <i :class="on.meta.icon"></i>
                                 </template>
                                 <span>{{ on.meta.title }}</span>
 
@@ -29,7 +27,7 @@
                             <template v-else>
                                 <a-sub-menu :key="on.path">
                                     <template #icon>
-                                        <SvgIcon :name="on.meta.icon" />
+                                        <i :class="on.meta.icon"></i>
                                     </template>
                                     <template #title>{{ on.meta.title }}</template>
                                     <navTabar_chilren :RouterChildren="on.children" />
@@ -96,7 +94,7 @@ const RouterListchi = computed(() => {
     max-width: 240px;
     max-height: 100vh;
     overflow-y: scroll;
-
+    color: var(--wang-text-color);
 
     :deep(.ant-menu) {
         background-color: var(--wang-menu-bgcolor);

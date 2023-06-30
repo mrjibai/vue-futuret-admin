@@ -119,22 +119,36 @@ const {
         .list-item {
             flex-shrink: 0;
             justify-content: center;
+
             display: flex;
             color: var(--wang-text-color);
             align-items: center;
             height: 25px;
             transition: all 0.4s;
             cursor: pointer;
+
+
             background-color: var(--wang_router-color);
 
+            .tetxsiocn {
+                margin-left: 10px;
+
+                &:hover {
+                    background-color: var(--wang-color-primary-lighter);
+                    color: white;
+                    border-radius: 50%;
+                }
+            }
+
+            &:hover {
+                background-color: var(--wang-color--parimary-bg);
+            }
         }
 
         .actives {
             background-color: var(--wang-color--parimary-bg);
             color: var(--wang-color-primary-lighter);
         }
-
-
     }
 }
 </style>
