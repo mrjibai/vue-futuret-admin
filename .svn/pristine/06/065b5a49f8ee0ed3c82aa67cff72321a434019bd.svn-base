@@ -1,0 +1,157 @@
+<template>
+    <a-drawer v-model:open="draW.opendrawer" class="custom-class" root-class-name="root-class-name"
+        :headerStyle="{ color: 'var(--wang-text-color)' }" :maskStyle="{ width: '100vw', height: '100vh' }"
+        style="color: var(--wang-text-color);background-color: var(--wangwang-drwer-bgcolor)" title="主题配置" placement="right"
+        @after-open-change="afterOpenChange" width="300">
+        <a-divider>全局</a-divider>
+        <div class="drawerItem">
+            <span>
+                夜间模式
+            </span>
+            <a-switch v-model:checked="checked" @change="handleThemeChange" />
+        </div>
+
+        <a-divider>顶栏设置</a-divider>
+        <div class="drawerItem">
+            <span>
+                背景颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.TopbgColor"></color-picker>
+        </div>
+        <div class="drawerItem">
+            <span>
+                字体颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.TopfontColor"></color-picker>
+        </div>
+
+        <a-divider>菜单设置</a-divider>
+        <div class="drawerItem">
+            <span>
+                背景颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.menubgColor"></color-picker>
+        </div>
+        <div class="drawerItem">
+            <span>
+                字体颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.menufontColor"></color-picker>
+        </div>
+        <div class="drawerItem">
+            <span>
+                选中背景颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.menuSelectedColor"></color-picker>
+        </div>
+        <div class="drawerItem">
+            <span>
+                选中字体颜色
+            </span>
+            <color-picker @finish="TopsetBGs" v-model:rgba="themeConfigSetting.menuselectfontcolor"></color-picker>
+        </div>
+
+        <a-divider>其他设置</a-divider>
+        <div class="drawerItem">
+            <span>
+                tagView栏
+            </span>
+            <a-select v-model:value="themeConfigSetting.tagViewValue" :options="tagViewoption" style="width: 120px"
+                @change="tagViewchange">
+            </a-select>
+        </div>
+    </a-drawer>
+</template>
+
+<script setup lang="ts">
+import { computed, ref, watch } from 'vue';
+import { drawerStore } from '/@/stores/drawer'
+import { storeToRefs } from 'pinia'
+import { DataViewState } from '/@/stores/RouterView'
+import { Local } from '/@/units/Store';
+const draW = drawerStore()
+
+const checked = ref<Boolean>(false)
+const afterOpenChange = (bool: boolean) => {
+};
+
+const DataView = DataViewState()
+const { ThemeConfig } = storeToRefs(DataView)
+
+const themeConfigSetting = computed(() => {
+    return ThemeConfig.value
+})
+const tagViewoption = computed(() => {
+    return [
+        {
+            label: '经典',
+            value: 'listgroup'
+        },
+        {
+            label: '默认',
+            value: 'lisr'
+        },
+        {
+            label: '标准',
+            value: 'listStyleprominent'
+        }
+    ]
+})
+watch(() => draW.opendrawer, (newvalue) => {
+    if (newvalue) {
+        document.documentElement.style.overflow = 'hidden'
+    } else {
+        document.documentElement.style.overflow = 'auto'
+    }
+})
+// 设置顶栏 |菜单
+const TopsetBGs = (data: object): void => {
+    document.documentElement.style.setProperty('--wang-Top-bg-color', themeConfigSetting.value.TopbgColor)
+    document.documentElement.style.setProperty('--wang-Top-text-color', themeConfigSetting.value.TopfontColor)
+    // 菜单部分
+    document.documentElement.style.setProperty('--wang-menu-bgcolor', themeConfigSetting.value.menubgColor)
+    document.documentElement.style.setProperty('--wang-menu-color', themeConfigSetting.value.menufontColor)
+    document.documentElement.style.setProperty('--wang-menu-active', themeConfigSetting.value.menuSelectedColor)
+    document.documentElement.style.setProperty('--wang-menu-activetext', themeConfigSetting.value.menuselectfontcolor)
+    setThemeConfig()
+}
+
+const tagViewchange = (): void => {
+    setThemeConfig()
+}
+
+// 切换主题
+const handleThemeChange = (val: boolean) => {
+    draW.setchecked(val)
+    if (val) {
+        document.documentElement.setAttribute('theme', 'light')
+    } else {
+        document.documentElement.removeAttribute('theme')
+    }
+}
+
+const setThemeConfig = (): void => {
+    DataView.setThemofisettings(themeConfigSetting.value)
+    Local.set('ThemeConfigStyle', document.documentElement.style.cssText)
+    Local.set('ThemeConfig', themeConfigSetting.value)
+}
+
+</script>
+
+<style  lang="scss" scoped>
+.ant-divider {
+    margin: 0;
+}
+
+
+
+
+
+
+.drawerItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 0;
+}
+</style>
