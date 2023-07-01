@@ -22,6 +22,7 @@
     "qs": "^6.11.1",
     "vite-plugin-vue-setup-extend": "^0.4.0",
     "vue": "^3.2.47",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6",
     "vxe-table": "^4.4.2",
     "xe-utils": "^3.5.11"
