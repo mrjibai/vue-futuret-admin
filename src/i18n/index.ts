@@ -18,6 +18,31 @@ type EmptyObjectType<T = any> = {
     [key: string]: T;
 };
 
+// //引入同级目录下文件
+// const modules = import.meta.globEager(
+//     "./[[:lower:]][[:lower:]]_[[:upper:]][[:upper:]].ts"
+// );
+// function getLangAll(): any {
+//     let message: any = {};
+//     getLangFiles(modules, message);
+//     return message;
+// }
+// function getLangFiles(mList: any, msg: any) {
+//     for (let path in mList) {
+//         if (mList[path].default) {
+//             let pathName = path.substr(path.lastIndexOf("/") + 1, 5);
+//             if (msg[pathName]) {
+//                 msg[pathName] = {
+//                     ...mList[pathName],
+//                     ...mList[path].default,
+//                 };
+//             } else {
+//                 msg[pathName] = mList[path].default;
+//             }
+//         }
+//     }
+// }
+
 
 const messages: any = {}
 const itemize: any = { en: [], 'zh-cn': [] };
