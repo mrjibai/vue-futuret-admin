@@ -1,6 +1,6 @@
 <template>
     <div>
-        <a-button type="primary" @click="opens">打开新页面</a-button>
+        <a-button type="primary" @click="opens">{{ $t('message.dataView.messagebutton') }}</a-button>
     </div>
 </template>
 
