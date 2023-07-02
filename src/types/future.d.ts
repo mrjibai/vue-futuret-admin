@@ -6,5 +6,6 @@ declare module "*.vue" {
 declare module 'nprogress'
 declare module 'colorpicker-v3'
 
+declare module 'file-saver'
 
-
+declare module 'luckyexcel'

@@ -14,8 +14,9 @@
                         <p>
                             <span id="Numercount2"></span>
                         </p>
-                        <SvgIcon name="iconfont icon-jinridaiban" />
+                        <i class="iconfont icon-jinridaiban"></i>
                     </div>
+
                 </a-col>
                 <a-col :span="6">
                     <div class="items success">
@@ -27,7 +28,7 @@
                         <p>
                             <span id="Numercount4"></span>
                         </p>
-                        <SvgIcon name="iconfont icon-AIshiyanshi" />
+                        <i class="iconfont icon-AIshiyanshi"></i>
                     </div>
 
                 </a-col>
@@ -41,7 +42,7 @@
                         <p>
                             <span id="Numercount6"></span>
                         </p>
-                        <SvgIcon name="iconfont icon-shenqing" />
+                        <i class="iconfont icon-shenqing"></i>
                     </div>
                 </a-col>
                 <a-col :span="6">
@@ -54,7 +55,7 @@
                         <p>
                             <span id="Numercount8"></span>
                         </p>
-                        <SvgIcon name="iconfont icon-ditumap29" />
+                        <i class="iconfont icon-ditumap29"></i>
                     </div>
                 </a-col>
             </a-row>
@@ -118,21 +119,17 @@ onMounted(() => {
             color: #fff;
             border-radius: 5px;
             position: relative;
-
-            &:hover i {
-                transform: translateX(-10px) translateY(-10px) rotate(-30deg);
+            &:hover i{
+                transform: translateX(-10px) translateY(-10px) rotate(-30deg) ;
             }
-
             p {
                 margin: 0;
             }
-
             p:nth-child(2) {
                 span {
                     font-size: 22px;
                 }
             }
-
             i {
                 position: absolute;
                 right: -10px;
@@ -142,7 +139,6 @@ onMounted(() => {
                 transform: rotate(-30deg);
                 transition: all .3s ease;
             }
-
             .icon-jinridaiban {
                 color: #FFCB47;
                 opacity: 1;

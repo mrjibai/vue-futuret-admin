@@ -1,0 +1,92 @@
+import { createI18n } from 'vue-i18n'
+import { DataViewState } from '/@/stores/RouterView';
+import { storeToRefs } from 'pinia'
+// 自己的语言配置
+// import enLocale from './lang/en'
+// import zhLocale from './lang/zh'
+// // 语言配置整合
+// const messages = {
+//     en: {
+//         ...enLocale,
+//     },
+//     'zh-cn': {
+//         ...zhLocale,
+//     }
+// }
+// 申明 对象
+type EmptyObjectType<T = any> = {
+    [key: string]: T;
+};
+
+// //引入同级目录下文件
+// const modules = import.meta.globEager(
+//     "./[[:lower:]][[:lower:]]_[[:upper:]][[:upper:]].ts"
+// );
+// function getLangAll(): any {
+//     let message: any = {};
+//     getLangFiles(modules, message);
+//     return message;
+// }
+// function getLangFiles(mList: any, msg: any) {
+//     for (let path in mList) {
+//         if (mList[path].default) {
+//             let pathName = path.substr(path.lastIndexOf("/") + 1, 5);
+//             if (msg[pathName]) {
+//                 msg[pathName] = {
+//                     ...mList[pathName],
+//                     ...mList[path].default,
+//                 };
+//             } else {
+//                 msg[pathName] = mList[path].default;
+//             }
+//         }
+//     }
+// }
+
+
+const messages: any = {}
+const itemize: any = { en: [], 'zh-cn': [] };
+const modules: Record<string, any> = import.meta.glob('./**/*.ts', { eager: true });
+
+// 对自动引入的 modules 进行分类 en、zh-cn、zh-tw
+// https://vitejs.cn/vite3-cn/guide/features.html#glob-import
+for (const path in modules) {
+    const key = path.match(/(\S+)\/(\S+).ts/);
+    if (itemize[key![2]]) itemize[key![2]].push(modules[path].default);
+    else itemize[key![2]] = modules[path];
+}
+
+// 合并数组对象（非标准数组对象，数组中对象的每项 key、value 都不同）
+function mergeArrObjs(list: any, key: string) {
+    let obj = {};
+    list[key].forEach((i: EmptyObjectType) => {
+        obj = Object.assign({}, obj, i);
+    });
+    return obj;
+}
+
+// 处理最终格式
+for (const key in itemize) {
+    messages[key] = {
+        name: key,
+        message: mergeArrObjs(itemize, key),
+    };
+}
+
+
+const DatAView = DataViewState()
+const { ThemeConfig } = storeToRefs(DatAView)
+// 创建 i18n
+const i18n = createI18n({
+    legacy: false,
+    silentTranslationWarn: true,
+    missingWarn: false,
+    silentFallbackWarn: true,
+    fallbackWarn: false,
+    // globalInjection: true,  // 全局模式，可以直接使用 $t
+    locale: ThemeConfig.value.internationalization,
+    messages: messages
+})
+
+
+export default i18n

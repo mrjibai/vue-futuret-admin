@@ -1,0 +1,45 @@
+<template>
+    <FuCard :title="$t('message.excel.title')">
+        <a-alert type="success" style="margin-bottom: 10px;">
+            <template v-slot:message>
+                {{ $t('message.excel.messageAlert') }}
+            </template>
+        </a-alert>
+        <div class="edit">
+            <luckexcel />
+        </div>
+    </FuCard>
+</template>
+
+<script setup lang="ts" name="excel">
+import { onMounted } from 'vue';
+import FuCard from '/@/components/FuCard/index.vue'
+import luckexcel from './luckexcel.vue';
+// const init = () => {
+//     const options = {
+//         container: 'luckysheet', // luckysheet为容器id
+//         // title: 'luckysheet', // 表 头名
+//         lang: 'zh' // 中文
+//     };
+//     (<any>window).luckysheet.create(options)
+// }
+// onMounted(() => {
+//     init()
+// })
+</script>
+
+<style scoped lang="scss">
+.edit {
+    position: relative;
+    width: 100%;
+    height: 68vh;
+
+    :deep(.luckysheet_info_detail) {
+        display: none !important;
+    }
+
+    :deep(.luckysheet-scrollbar-ltr) {
+        z-index: 100;
+    }
+}
+</style>

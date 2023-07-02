@@ -7,11 +7,13 @@
                     <HeaderTabar />
                 </a-layout-header>
                 <a-layout-content>
-                    <router-view v-slot="{ Component, route }">
-                        <transition name="slide-right" mode="out-in" :duration="{ enter: 500, leave: 300 }">
-                            <component :is="Component" :key="ISkey_routeK" />
-                        </transition>
-                    </router-view>
+                    <keep-alive :include="['Digital_scroll']">
+                        <router-view v-slot="{ Component, route }">
+                            <transition name="slide-right" mode="out-in" :duration="{ enter: 500, leave: 300 }">
+                                    <component :is="Component" :key="ISkey_routeK" />
+                            </transition>
+                        </router-view>
+                    </keep-alive>
                 </a-layout-content>
             </a-layout>
         </a-layout>
@@ -28,6 +30,7 @@ const keepAliveRef = DataViewState()
 const { ISkey_routeK } = storeToRefs(keepAliveRef)
 onMounted(() => {
 })
+
 </script>
 
 <style scoped lang="scss">
