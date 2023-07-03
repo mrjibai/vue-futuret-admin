@@ -29,26 +29,24 @@
                 </div>
             </div>
             <a-row :gutter="20">
-                <a-col :xl="6" :lg="8" :sm="12" :sx="24" class="content-item" v-for="item in filterDataList" :key="item.title">
+                <a-col :xl="6" :lg="8" :sm="12" :sx="24" class="content-item" v-for="i in 10" :key="i">
                     <div class="content">
                         <div class="img-box">
-                            <img :src="item.img"
+                            <img src="http://news.sznews.com/pic/2020-08/14/9d9c9a60-f0af-41aa-b617-683b07c87642.jpg"
                                 alt="">
                         </div>
                         <div class="contents">
-                            <div class="title">{{item.title}}</div>
-                            <div class="footer">
-                                <div class="desc gray-font">
-                                    <span>评论 {{item.commentNum}}</span>
-                                    <span>收藏 {{item.collectNum}}</span>
+                            <div class="title">嘉陵江2020年第1号洪水”在嘉陵江支流涪江形成</div>
+                            <div class="desc gray-font">
+                                <span>评论 6.63</span>
+                                <span>收藏 22.77</span>
+                            </div>
+                            <div class="price-desc">
+                                <div class="price">
+                                    <span class="price-icon">￥</span>
+                                    <span class="price-money">0.81</span>
                                 </div>
-                                <div class="price-desc">
-                                    <div class="price">
-                                        <span class="price-icon">￥</span>
-                                        <span class="price-money">{{item.price}}</span>
-                                    </div>
-                                    <div class="sale-count gray-font">月销<span>{{item.salesNum}}</span>笔</div>
-                                </div>
+                                <div class="sale-count gray-font">月销<span>10.05</span>笔</div>
                             </div>
                         </div>
                     </div>
@@ -65,7 +63,6 @@
 import { reactive, ref, onMounted, onBeforeUnmount } from 'vue';
 import type { Ref } from 'vue';
 import { filter_element } from './mock'
-import {filterDataList} from '/@/mock/index'
 import type { ToolBarItem, ToolBarList } from '/@/typings/Views';
 // mask
 let isLoading = ref<boolean>(false)
@@ -74,8 +71,8 @@ let lodingTimer = ref<number | null>(null)
 // filter_tools
 const filter_tools: Ref<ToolBarItem[]> = ref(Object.values(filter_element.filter_tools))
 console.log(filter_tools);
-const changeFilter = (item: ToolBarList, item2: ToolBarItem, index: number) => {
-    item.list!.map((item: ToolBarItem) => {
+const changeFilter = (item: ToolBarItem, item2: ToolBarList, index: number) => {
+    item.list!.map((item: ToolBarList) => {
         item.checked = false
     })
     item2.checked = true
@@ -90,13 +87,9 @@ const changeFilter = (item: ToolBarList, item2: ToolBarItem, index: number) => {
         lodingTimer.value = null
     }, 500);
 }
-const onClickCollapse = (item: ToolBarList, flag: boolean) => {
+const onClickCollapse = (item: ToolBarItem, flag: boolean) => {
     item.collapse = flag
 }
-
-// filter_content
-
-
 // pager
 const current1 = ref<number>(1);
 const onChange = (pageNumber: number) => {
@@ -105,8 +98,6 @@ const onChange = (pageNumber: number) => {
 
 // collapse func
 let domWidthArrs = reactive<Array<number>>([])
-let Filter_element = ref<HTMLDivElement | null>(null)
-
 onMounted(() => {
     setFilterToolsCollapse()
 })
@@ -114,12 +105,14 @@ onBeforeUnmount(() => {
     window.removeEventListener('resize', setCollapse)
 
 })
+let Filter_element = ref<HTMLDivElement | null>(null)
+
 const setCollapse = () => {
     let dom: HTMLDivElement = Filter_element.value as HTMLDivElement
     let filterDomWidth = (<HTMLElement>dom.querySelector('.filter-tools-list')).offsetWidth
     domWidthArrs.forEach((width: number, index: number) => {
         if (Math.ceil(filterDomWidth) <= width) {
-            Object.keys(filter_tools.value).forEach((key:string, index2: number) => {
+            Object.keys(filter_tools.value).forEach((key, index2: number) => {
                 if (index2 === index) {
                     filter_tools.value[key].isShowCollapse = true
                 }
@@ -145,6 +138,10 @@ const setFilterToolsCollapse = () => {
     setCollapse()
     window.addEventListener('resize', setCollapse)
 }
+
+
+
+
 </script>
 
 <style scoped lang="scss">
@@ -244,9 +241,7 @@ const setFilterToolsCollapse = () => {
     .content {
         border: 1px solid #f1f2f3;
         transition: all .3s ease;
-        height: 360px;
-        display: flex;
-        flex-direction: column;
+
         &:hover {
             border: 1px solid var(--wang-menu-activetext);
 
@@ -275,15 +270,7 @@ const setFilterToolsCollapse = () => {
 
         .contents {
             padding: 15px;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            .footer {
-                flex: 1;
-                display: flex;
-                flex-direction: column;
-                justify-content: flex-end;
-            }
+
             .desc {
                 margin-top: 10px;
                 margin-bottom: 8px;

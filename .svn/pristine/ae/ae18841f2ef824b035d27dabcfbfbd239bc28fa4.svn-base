@@ -1,5 +1,4 @@
 import type { CountUpOptions } from 'countup.js'
-import { number } from 'echarts'
 // 菜单页面的搜索
 declare type inputMenus = {
     filterName: String | null
@@ -90,27 +89,13 @@ declare type CountUpOptions = CountUpOptions
 
 declare type window = any
 
-
-// 过滤筛选组件 筛选工具列表
-declare type ToolBarList = {
-    title?: string,
-    collapse?: boolean,
-    isShowCollapse?: boolean,
-    list?: Array<ToolBarList>,
-}
-
-// 过滤筛选组件 筛选工具项
 declare type ToolBarItem = {
     title?: string,
-    checked?: boolean
+    list?: Array<ToolBarList>,
+    collapse?: boolean,
+    isShowCollapse?: boolean
 }
-
-// 过滤筛选组件 列表数据
-declare type FilterDataList = {
-    img: string,
-    title: string,
-    commentNum: string | number,
-    collectNum: string | number,
-    price: string,
-    salesNum: string | number
+declare type ToolBarList = {
+    title?: string,
+    checked?: boolean
 }

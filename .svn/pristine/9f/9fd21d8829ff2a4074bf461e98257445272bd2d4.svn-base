@@ -4,8 +4,7 @@ export const filter_element = {
             title: '权限',
             list: [
                 {
-                    title: '全部',
-                    checked:true
+                    title: '全部'
                 },
                 {
                     title: '普通用户'
@@ -19,8 +18,7 @@ export const filter_element = {
             title: '布局',
             list: [
                 {
-                    title: '全部',
-                    checked:true
+                    title: '全部'
                 },
                 {
                     title: '默认'
@@ -40,8 +38,7 @@ export const filter_element = {
             title: '配置',
             list: [
                 {
-                    title: '全部',
-                    checked:true
+                    title: '全部'
                 },
                 {
                     title: '开启 Breadcrumb'
