@@ -88,3 +88,14 @@ declare type CountUpOptions = CountUpOptions
 
 
 declare type window = any
+
+declare type ToolBarItem = {
+    title?: string,
+    list?: Array<ToolBarList>,
+    collapse?: boolean,
+    isShowCollapse?: boolean
+}
+declare type ToolBarList = {
+    title?: string,
+    checked?: boolean
+}

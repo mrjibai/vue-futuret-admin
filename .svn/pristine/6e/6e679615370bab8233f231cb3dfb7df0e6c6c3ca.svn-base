@@ -1,0 +1,69 @@
+export default {
+    filter_element: {
+        filter_tools: {
+            authority: {
+                title: '权限',
+                list: {
+                    title1: {
+                        name: '全部'
+                    },
+                    title2: {
+                        name: '普通用户'
+                    },
+                    title3: {
+                        name: '管理员'
+                    },
+                }
+            },
+            layout: {
+                title: '布局',
+                list: {
+                    title1: {
+                        name: '全部'
+                    },
+                    title2: {
+                        name: '默认'
+                    },
+                    title3: {
+                        name: '经典'
+                    },
+                    title4: {
+                        name: '横向'
+                    },
+                    title5: {
+                        name: '分栏'
+                    }
+                }
+            },
+            config: {
+                title: '配置',
+                list: {
+                    title1: {
+                        name: '全部'
+                    },
+                    title2: {
+                        name: '开启 Breadcrumb'
+                    },
+                    title3: {
+                        name: '开启 Tags-View'
+                    },
+                    title4: {
+                        name: '固定 Header'
+                    },
+                    title5: {
+                        name: '侧边栏 Logo'
+                    },
+                    title6: {
+                        name: '开启折叠 NavMenu'
+                    },
+                    title7: {
+                        name: '开启一个 NavMenu 展开'
+                    },
+                    title8: {
+                        name: '登录用户头像'
+                    },
+                }
+            },
+        }
+    }
+}

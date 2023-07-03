@@ -5,22 +5,20 @@
                 <div class="mask-box" v-if="isLoading"></div>
             </Transition>
             <div class="filter-tools" v-for="item in filter_tools" :key="item.title">
-                <div class="filter-tools-flex" :style="{ 'height': item?.collapse ? 'auto' : '50px' }">
+                <div class="filter-tools-flex" :style="{'height':item?.collapse ? 'auto' : '50px'}">
                     <div class="title">
-                        {{ item.title }}
+                        {{ $t(item.title) }}
                     </div>
                     <div class="filter-tools-list">
-                        <div class="filter-tools-item" @click="changeFilter(item, item2, index)"
-                            :class="item2.checked ? 'active-color' : ''" v-for="(item2, index) in item.list"
-                            :key="item2.title">
-                            {{ item2.title }}
+                        <div class="filter-tools-item" @click="changeFilter(item,item2,index)" :class="item2.checked ? 'active-color' : ''" v-for="(item2,index) in item.list" :key="item2.title">
+                            {{  $t(item2.title) }}
                         </div>
                         <div class="collapse-more" v-if="item?.isShowCollapse">
-                            <div class="down" v-if="!item?.collapse" @click="onClickCollapse(item, !item?.collapse)">
+                            <div class="down" v-if="!item?.collapse" @click="onClickCollapse(item,!item?.collapse)">
                                 <span>展开</span>
                                 <i></i>
                             </div>
-                            <div class="up" v-else @click="onClickCollapse(item, !item?.collapse)">
+                            <div class="up" v-else @click="onClickCollapse(item,!item?.collapse)">
                                 <span>收起</span>
                                 <i></i>
                             </div>
@@ -32,23 +30,22 @@
                 <a-col :xl="6" :lg="8" :sm="12" :sx="24" class="content-item" v-for="i in 10" :key="i">
                     <div class="content">
                         <div class="img-box">
-                            <img src="http://news.sznews.com/pic/2020-08/14/9d9c9a60-f0af-41aa-b617-683b07c87642.jpg"
-                                alt="">
+                        <img src="http://news.sznews.com/pic/2020-08/14/9d9c9a60-f0af-41aa-b617-683b07c87642.jpg" alt="">
+                    </div>
+                    <div class="contents">
+                        <div class="title">嘉陵江2020年第1号洪水”在嘉陵江支流涪江形成</div>
+                    <div class="desc gray-font">
+                        <span>评论 6.63</span>
+                        <span>收藏 22.77</span>
+                    </div>
+                    <div class="price-desc">
+                        <div class="price">
+                            <span class="price-icon">￥</span>
+                            <span class="price-money">0.81</span>
                         </div>
-                        <div class="contents">
-                            <div class="title">嘉陵江2020年第1号洪水”在嘉陵江支流涪江形成</div>
-                            <div class="desc gray-font">
-                                <span>评论 6.63</span>
-                                <span>收藏 22.77</span>
-                            </div>
-                            <div class="price-desc">
-                                <div class="price">
-                                    <span class="price-icon">￥</span>
-                                    <span class="price-money">0.81</span>
-                                </div>
-                                <div class="sale-count gray-font">月销<span>10.05</span>笔</div>
-                            </div>
-                        </div>
+                        <div class="sale-count gray-font">月销<span>10.05</span>笔</div>
+                    </div>
+                    </div>
                     </div>
                 </a-col>
             </a-row>
@@ -61,25 +58,35 @@
 
 <script setup lang="ts" name="Filter_element">
 import { reactive, ref, onMounted, onBeforeUnmount } from 'vue';
-import type { Ref } from 'vue';
-import { filter_element } from './mock'
-import type { ToolBarItem, ToolBarList } from '/@/typings/Views';
+import langInfo from './lang'
+
 // mask
 let isLoading = ref<boolean>(false)
-let lodingTimer = ref<number | null>(null)
+let  lodingTimer = ref<number|null>(null)
 
 // filter_tools
-const filter_tools: Ref<ToolBarItem[]> = ref(Object.values(filter_element.filter_tools))
-console.log(filter_tools);
-const changeFilter = (item: ToolBarItem, item2: ToolBarList, index: number) => {
-    item.list!.map((item: ToolBarList) => {
+let { filter_tools } =  langInfo
+filter_tools=reactive(filter_tools)
+console.log(filter_tools)
+type ToolBarItem ={
+    title?:string,
+    list?:Array<ToolBarList>,
+    collapse?:boolean,
+    isShowCollapse?:boolean
+}
+type ToolBarList={
+    title?:string,
+    checked?:boolean
+}
+const changeFilter = (item:ToolBarItem,item2:ToolBarList,index:number) => {
+    item.list.map((item:ToolBarList) => {
         item.checked = false
     })
     item2.checked = true
-    if (lodingTimer.value) {
-        clearTimeout(lodingTimer.value)
-        lodingTimer.value = null
-        return
+    if(lodingTimer.value) {
+         clearTimeout(lodingTimer.value)
+         lodingTimer.value = null
+         return
     }
     isLoading.value = true
     lodingTimer.value = setTimeout(() => {
@@ -87,7 +94,7 @@ const changeFilter = (item: ToolBarItem, item2: ToolBarList, index: number) => {
         lodingTimer.value = null
     }, 500);
 }
-const onClickCollapse = (item: ToolBarItem, flag: boolean) => {
+const onClickCollapse =(item:ToolBarItem,flag:boolean) => {
     item.collapse = flag
 }
 // pager
@@ -102,41 +109,42 @@ onMounted(() => {
     setFilterToolsCollapse()
 })
 onBeforeUnmount(() => {
-    window.removeEventListener('resize', setCollapse)
-
+    window.removeEventListener('resize',setCollapse)
+    
 })
 let Filter_element = ref<HTMLDivElement | null>(null)
 
 const setCollapse = () => {
-    let dom: HTMLDivElement = Filter_element.value as HTMLDivElement
-    let filterDomWidth = (<HTMLElement>dom.querySelector('.filter-tools-list')).offsetWidth
-    domWidthArrs.forEach((width: number, index: number) => {
-        if (Math.ceil(filterDomWidth) <= width) {
-            Object.keys(filter_tools.value).forEach((key, index2: number) => {
-                if (index2 === index) {
-                    filter_tools.value[key].isShowCollapse = true
+    let dom:HTMLDivElement = Filter_element.value as HTMLDivElement
+    let filterDomWidth = dom.querySelector('.filter-tools-list').offsetWidth
+    domWidthArrs.forEach((width:number,index:number) => {
+        if(Math.ceil(filterDomWidth) <= width) {
+            console.log(index)
+              Object.keys(filter_tools).forEach((key,index2:number) => {
+                if(index2 === index) {
+                    filter_tools[key].isShowCollapse = true
                 }
-            })
-        } else {
-            Object.keys(filter_tools.value).forEach((key, index2: number) => {
-                filter_tools.value[key].isShowCollapse = false
+              })
+        }else {
+            Object.keys(filter_tools).forEach((key,index2:number) => {
+                filter_tools[key].isShowCollapse = false
             })
         }
     })
 }
 const setFilterToolsCollapse = () => {
-    let dom: HTMLDivElement = Filter_element.value as HTMLDivElement
+    let dom:HTMLDivElement = Filter_element.value as HTMLDivElement
     let filters = dom.querySelectorAll('.filter-tools-list')
     filters.forEach(item => {
         let doms = item.querySelectorAll('.filter-tools-item')
         let widths = 0
-        doms.forEach((item: any) => {
+        doms.forEach((item) => {
             widths += item.offsetWidth
         })
         domWidthArrs.push(widths)
     })
     setCollapse()
-    window.addEventListener('resize', setCollapse)
+    window.addEventListener('resize',setCollapse)
 }
 
 
@@ -146,24 +154,21 @@ const setFilterToolsCollapse = () => {
 
 <style scoped lang="scss">
 .Filter_element {
-
-    .ant-card {
-        :deep(.ant-card-body) {
+    
+    .ant-card  {
+        :deep(.ant-card-body){
             background-color: var(--wang-Top-bg-color);
         }
     }
-
     .filter-tools {
         font-size: 14px;
         border-bottom: 1px solid #f1f2f3;
         padding-right: 24px;
         position: relative;
-
         .filter-tools-flex {
             height: 50px;
             display: flex;
             overflow: hidden;
-
             .title {
                 position: relative;
                 width: 64px;
@@ -172,7 +177,6 @@ const setFilterToolsCollapse = () => {
                 font-weight: 700;
                 display: flex;
                 color: #909399;
-
                 &::after {
                     content: "";
                     position: absolute;
@@ -185,35 +189,31 @@ const setFilterToolsCollapse = () => {
                     top: 50%;
                 }
             }
-
             .filter-tools-list {
-                flex: 1;
+                flex:1;
                 display: flex;
                 flex-wrap: wrap;
-
                 .filter-tools-item {
-                    color: #8d8d91;
+                    color:#8d8d91;
                     padding: 0 15px;
                     height: 50px;
                     display: flex;
                     align-items: center;
-
                     &.active-color {
                         color: var(--wang-menu-activetext);
                     }
                 }
-
+                
                 .collapse-more {
-                    background-color: #fff;
-                    font-size: 12px;
-                    position: absolute;
-                    right: 0;
-                    top: 16px;
-                    color: #a5a5a5;
-
-                    &:hover {
-                        color: #8d8d91;
-                    }
+                        background-color: #fff;
+                        font-size: 12px;
+                        position: absolute;
+                        right: 0;
+                        top: 16px;
+                        color: #a5a5a5;
+                        &:hover {
+                            color: #8d8d91;
+                        }
                 }
             }
         }
@@ -223,7 +223,6 @@ const setFilterToolsCollapse = () => {
         margin-top: 20px;
         position: relative;
     }
-
     .mask-box {
         position: absolute;
         left: 0;
@@ -231,20 +230,16 @@ const setFilterToolsCollapse = () => {
         right: 0;
         bottom: 0;
         z-index: 9;
-
+        
     }
-
     .ant-col {
         margin-bottom: 20px;
     }
-
     .content {
         border: 1px solid #f1f2f3;
         transition: all .3s ease;
-
         &:hover {
             border: 1px solid var(--wang-menu-activetext);
-
             .contents {
                 .title {
                     color: var(--wang-menu-activetext);
@@ -252,35 +247,28 @@ const setFilterToolsCollapse = () => {
                 }
             }
         }
-
         .img-box {
             height: 215px;
             overflow: hidden;
-
             img {
                 height: 100%;
                 width: 100%;
                 transition: all .3s ease;
-
                 &:hover {
                     transform: scale(1.05);
                 }
             }
         }
-
         .contents {
             padding: 15px;
-
             .desc {
                 margin-top: 10px;
                 margin-bottom: 8px;
-
                 span {
                     display: inline-block;
                     margin-right: 12px;
                 }
             }
-
             .title {
                 text-overflow: ellipsis;
                 overflow: hidden;
@@ -289,29 +277,25 @@ const setFilterToolsCollapse = () => {
                 display: -webkit-box;
                 color: #666;
                 transition: all .3s ease;
-
                 &:hover {
                     text-decoration: underline;
                 }
             }
-
+            
             .gray-font {
                 font-size: 12px;
                 color: #8d8d91;
             }
-
             .price-desc {
                 display: flex;
                 justify-content: space-between;
                 align-items: flex-end;
-
+                
                 .price {
                     color: #FF5000;
-
                     .price-icon {
                         font-size: 12px;
                     }
-
                     .price-money {
                         font-size: 22px;
                     }
@@ -329,13 +313,13 @@ const setFilterToolsCollapse = () => {
 
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
-    background-color: #fff;
+  opacity: 0;
+  background-color: #fff;
 }
 
 .fade-enter-to,
 .fade-leave-from {
-    opacity: 0.2;
-    background-color: #fff;
+  opacity: 0.2;
+  background-color: #fff;
 }
 </style>

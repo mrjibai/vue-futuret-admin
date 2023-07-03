@@ -103,7 +103,6 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 import { rolelist } from '/@/mock/index'
-import { RouteRecordRaw } from 'vue-router'
 import { RouterStore } from '/@/stores/RouterSrore'
 const useRoultSess = RouterStore()
 // 定义搜索

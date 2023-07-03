@@ -1,0 +1,53 @@
+type LangType = {
+    filter_tools: {
+        authority?: {
+            title?: string,
+            list?:Object,
+            collapse?:boolean,
+            isShowCollapse?:boolean
+        },
+        layout?: {
+            title?: string,
+            list?: Object,
+            collapse?:boolean,
+            isShowCollapse?:boolean
+        },
+        config?: {
+            title?: string,
+            list?: Object,
+            collapse?:boolean,
+            isShowCollapse?:boolean
+        },
+    }
+}
+
+const lang: LangType = {
+    filter_tools: {
+    }
+}
+
+import filter_element_langs from '/@/i18n/pages/Filter_element/zh-cn'
+
+const { filter_tools } = filter_element_langs.filter_element
+
+for (const key in filter_tools) {
+    lang.filter_tools[key] = {}
+}
+
+for (const key in filter_tools) {
+    lang.filter_tools[key].list = []
+    lang.filter_tools[key].collapse = false
+    lang.filter_tools[key].isShowCollapse = false
+    lang.filter_tools[key].title = `message.filter_element.filter_tools.${key}.title`
+    for (const key2 in filter_tools[key].list) {
+        const obj = {
+            title: `message.filter_element.filter_tools.${key}.list.${key2}.name`,
+            checked: false
+        }
+        lang.filter_tools[key].list.push(obj)
+    }
+    if(lang.filter_tools[key].list.length>0) {
+        lang.filter_tools[key].list[0].checked = true
+    }
+}
+export default lang
