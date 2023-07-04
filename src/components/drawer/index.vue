@@ -1,8 +1,11 @@
 <template>
     <a-drawer v-model:open="draW.opendrawer" class="custom-class" root-class-name="root-class-name"
         :headerStyle="{ color: 'var(--wang-text-color)' }" :maskStyle="{ width: '100vw', height: '100vh' }"
-        style="color: var(--wang-text-color);background-color: var(--wangwang-drwer-bgcolor)" title="主题配置" placement="right"
+        style="color: var(--wang-text-color);background-color: var(--wangwang-drwer-bgcolor)" placement="right"
         @after-open-change="afterOpenChange" width="300">
+        <template v-slot:title>
+            <span style="color: var(--wang-text-color);"> 主题配置</span>
+        </template>
         <a-divider>全局</a-divider>
         <div class="drawerItem">
             <span>
@@ -80,6 +83,7 @@ import { drawerStore } from '/@/stores/drawer'
 import { storeToRefs } from 'pinia'
 import { DataViewState } from '/@/stores/RouterView'
 import { Local } from '/@/units/Store';
+import { layoutOption } from '/@/typings/Views';
 const draW = drawerStore()
 
 const checked = ref<Boolean>(false)
@@ -189,8 +193,16 @@ defineExpose({
 }
 
 
+// 右侧边栏
+.css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-title {
+    color: var(--wang-text-color);
+}
 
 
+.css-dev-only-do-not-override-i3mqvl.ant-divider-horizontal.ant-divider-with-text {
+    color: var(--wang-text-color);
+    border-block-start: 0 var(--wangwang-border)
+}
 
 
 .drawerItem {

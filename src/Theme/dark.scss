@@ -55,9 +55,14 @@
         }
     }
 
-    .a-divider {
-        color: var(--wang-text-color);
+    :deep(.ant-divider) {
+        color: var(--wang-text-color) !important;
+
+        .ant-divider-inner-text {
+            color: var(--wang-text-color) !important;
+        }
     }
+
 
     .ant-alert {
         background-color: #2b2a2a;
@@ -80,18 +85,9 @@
         }
     }
 
-    // 右侧边栏
-    .css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-title {
-        color: var(--wang-text-color);
-    }
-
+    //  右边侧栏
     .css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-close {
         color: var(--wang-text-color);
-    }
-
-    .css-dev-only-do-not-override-i3mqvl.ant-divider-horizontal.ant-divider-with-text {
-        color: var(--wang-text-color);
-        border-block-start: 0 var(--wangwang-border)
     }
 
     .vxe-table {
