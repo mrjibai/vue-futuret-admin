@@ -142,10 +142,8 @@ const RouterListchi = computed(() => {
                 }
             }
 
+            .ant-menu-submenu,
             .ant-menu-item-selected {
-                &>.ant-menu-submenu-title {
-                    color: var(--wang-menu-color) !important;
-                }
 
                 &>.ant-menu-item-icon {
                     color: var(--wang-menu-activetext) !important;
@@ -154,7 +152,6 @@ const RouterListchi = computed(() => {
                 &>.ant-menu-title-content {
                     color: var(--wang-menu-activetext) !important;
                 }
-
             }
 
             .ant-menu-item-active {

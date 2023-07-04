@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="./favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>
+    Vue-futuret-Admin
+  </title>
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/css/pluginsCss.css' />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/plugins.css' />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/css/luckysheet.css' />
+  <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/luckysheet/dist/assets/iconfont/iconfont.css' />
+  <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/plugins/js/plugin.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/luckysheet/dist/luckysheet.umd.js"></script>
+  <script type="module" crossorigin src="./assets/index-40899037.js"></script>
+  <link rel="stylesheet" href="./assets/index-ae8d30f0.css">
+</head>
+
+<body>
+  <div id="app"></div>
+  
+</body>
+
+</html>

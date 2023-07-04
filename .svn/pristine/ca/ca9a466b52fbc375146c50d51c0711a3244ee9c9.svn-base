@@ -16,7 +16,7 @@
 
 
     // 菜单背景颜色
-    --wang-menu-bgcolor: #464d54;
+    --wang-menu-bgcolor: #65686a;
 
 
     // 缓存路由颜色
