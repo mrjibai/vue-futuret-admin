@@ -1,0 +1,1 @@
+import{d as s,u as p,o as _,f as c,w as t,r as o,g as u,h as m,e as d}from"./index-669009e1.js";const y=s({__name:"404",setup(f){const n=p();return(i,e)=>{const a=o("a-button"),r=o("a-empty");return _(),c(r,{description:"没有此路由"},{default:t(()=>[u(a,{type:"primary",onClick:e[0]||(e[0]=l=>d(n).go(-1))},{default:t(()=>[m("返回")]),_:1})]),_:1})}}});export{y as default};
