@@ -65,15 +65,7 @@ function hasRoute(to: any): Boolean {
  */
 router.afterEach((to: any, from) => {
   NProgress.done() //结束
-  const obj: fuudarta = {
-    path: to.path,
-    fullPath: to.fullPath,
-    meta: to.meta,
-    query: to.query,
-    params: to.params,
-  }
   let list = Session.get('RouterslistSeeion') || []
-  // let list = RouSeeion.RouterSessionlist
   if (to.name === 'login') return
   if (list.length > 0) {
     if (list.some((e: any) => e.fullPath === to.fullPath)) {
@@ -81,10 +73,9 @@ router.afterEach((to: any, from) => {
       Session.set<fuudarta[]>('RouterslistSeeion', [...list])
       return
     }
-
-    RouSeeion.setSessionRouters([...list, obj])
+    RouSeeion.setSessionRouters([...list, to])
     let cache: any = [];
-    let json_str = JSON.stringify([...list, obj], (key, value) => {
+    let json_str = JSON.stringify([...list, to], function (key, value) {
       if (typeof value === 'object' && value !== null) {
         if (cache.indexOf(value) !== -1) {
           return;
@@ -98,8 +89,8 @@ router.afterEach((to: any, from) => {
     Session.set('RouterslistSeeion', listCodes)
 
   } else {
-    RouSeeion.setSessionRouters([obj])
-    Session.set<fuudarta[]>('RouterslistSeeion', [obj])
+    RouSeeion.setSessionRouters([to])
+    Session.set<fuudarta[]>('RouterslistSeeion', [to])
   }
 
 })

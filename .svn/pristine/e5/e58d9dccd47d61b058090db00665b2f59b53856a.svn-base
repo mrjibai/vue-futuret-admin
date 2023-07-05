@@ -62,7 +62,7 @@ const Rout = RouterStore()
 // 获取缓存路由
 const rouSession = RouterSession()
 const router = useRouter()
-const state = reactive<any>({
+const state = reactive({
     selectedKeys: [route.fullPath],
     openKeys: [],
     preOpenKeys: ['sub1'],
@@ -103,12 +103,9 @@ const closeModeblie = (): void => {
     isMobileNav.value = false
 }
 onMounted(() => {
-    let paths: any = route.fullPath.split('/').map(e => {
-        if (e && e !== '') {
-            return '/' + e
-        }
-    })
-    state.openKeys = paths.map((e: string | undefined) => e)
+    const propsRouter = rouSession.RouterSessionlist.find(e => e.fullPath === route.fullPath).matched
+    propsRouter.splice(0, 1)
+    state.openKeys = propsRouter.map((e: any) => e.path)
     window.addEventListener('resize', (vs) => {
         state.clientWidth = document.body.clientWidth
     })
