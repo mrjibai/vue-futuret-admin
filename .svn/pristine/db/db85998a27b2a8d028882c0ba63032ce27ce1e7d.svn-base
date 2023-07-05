@@ -1,0 +1,411 @@
+:root[theme='light'] {
+    // html的样式
+    // 背景颜色
+    --wang-bgcolor: #151313;
+
+    // 所有字体颜色
+    --wang-text-color: #fff;
+
+
+    // 菜单字体颜色
+    --wang-menu-color: #ffff !important;
+
+
+    // 菜单背景颜色
+    --wang-menu-bgcolor: #232222 !important;
+
+    // 缓存路由颜色
+    --wang_router-color: rgba(255, 255, 255, 0.1);
+
+    // 菜单选中颜色
+    --wang-menu-active: rgba(0, 0, 0, 1) !important;
+    --wang-menu-activetext: #0792f6 !important;
+
+    // 边框颜色
+    --wangwang-border: rgba(152, 146, 146, 0.4);
+
+    // 主题抽屉栏颜色
+    --wangwang-drwer-bgcolor: #1b1a1a !important;
+
+    // 首页背景颜色
+    --wang-home-container-bg: rgba(0, 0, 0, 0.7) !important;
+    // 首页大组件背景颜色
+    --wang-home-card-item-bg: var(--wang-bgcolor);
+    //      // 首页大组件鼠标悬浮背景阴影
+    --wang-home-card-item-hover-boxShdow: 0px 0px 20px 0px rgb(188, 179, 179);
+    //      // 首页快捷导航工具背景颜色
+    --wang-home-ShortcutTool-bg: #242525;
+    --wang-home-ShortcutTool-bg-hover: #cbd3e0;
+
+    /*   主题变色 */
+    // 顶栏字体颜色
+    --wang-Top-text-color: #fff !important;
+    // 顶栏背景颜色
+    --wang-Top-bg-color: #211d1d !important;
+    // 顶栏悬浮颜色
+    --wang-Top-hover-color: rgb(190, 186, 186) !important;
+
+    .css-dev-only-do-not-override-i3mqvl.ant-breadcrumb .ant-breadcrumb-separator {
+        color: var(--wang-text-color) !important;
+    }
+
+    :deep(.css-dev-only-do-not-override-i3mqvl.ant-breadcrumb) {
+        .ant-breadcrumb-separator {
+            color: var(--wang-text-color) !important;
+        }
+    }
+
+    :deep(.ant-divider) {
+        color: var(--wang-text-color) !important;
+
+        .ant-divider-inner-text {
+            color: var(--wang-text-color) !important;
+        }
+    }
+
+
+    .ant-alert {
+        background-color: #2b2a2a;
+        border-color: #050505;
+        color: white;
+    }
+
+    .rightsUSer {
+        display: flex;
+        align-items: center;
+
+        .rigUserBtns {
+            display: flex;
+            align-items: center;
+            height: 100%;
+        }
+
+        .dropdmon {
+            color: var(--wang-text-color);
+        }
+    }
+
+    //  右边侧栏
+    .css-dev-only-do-not-override-i3mqvl.ant-drawer .ant-drawer-close {
+        color: var(--wang-text-color);
+    }
+
+    .vxe-table {
+        border: 1px solid var(--wangwang-border);
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .vxe-table--header-wrapper {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+
+            .vxe-header--row {
+                border-bottom: 1px solid var(--wangwang-border);
+                border-color: var(--wangwang-border);
+
+
+                .vxe-header--column {
+                    border-bottom: 1px solid var(--wangwang-border);
+                    background-image: linear-gradient(var(--wang-bgcolor)) !important;
+                }
+            }
+        }
+
+        .vxe-table--body-wrapper {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+
+        .vxe-body--row {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+            border: 1px solid var(--wangwang-border);
+
+            .vxe-body--column {
+                border-bottom: 1px solid var(--wangwang-border);
+                background-image: linear-gradient(var(--wang-bgcolor)) !important;
+            }
+        }
+
+    }
+
+    .ant-table-content {
+        border: 1px solid var(--wangwang-border);
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .ant-table-thead {
+            .ant-table-cell {
+                background-color: var(--wang-bgcolor);
+                color: var(--wang-text-color);
+                border-bottom: 1px solid var(--wangwang-border) !important;
+
+                &::before {
+                    display: inline;
+                    position: inherit;
+                    background-color: var(--wang-bgcolor) !important;
+                }
+            }
+
+        }
+
+        .ant-table-tbody {
+
+
+            .ant-table-row {
+
+
+                &:hover {
+                    background-image: linear-gradient(var(--wang-bgcolor)) !important;
+                    background-color: var(--wang-bgcolor);
+
+
+                }
+
+                .ant-table-cell-row-hover {
+                    background-image: linear-gradient(var(--wang-bgcolor)) !important;
+                    background-color: var(--wang-bgcolor) !important;
+                    background: transparent !important;
+                }
+
+                .ant-table-cell {
+                    border-top: 1px solid var(--wangwang-border) !important;
+                }
+
+
+
+                &:last-child {
+                    &>td {
+                        border-bottom: 1px solid var(--wangwang-border) !important;
+                    }
+                }
+
+
+            }
+
+
+        }
+    }
+
+    .vxe-toolbar {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+    }
+
+    .el-input {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .el-input__wrapper {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+            border: 1px solid var(--wangwang-border);
+
+            .el-input__inner {
+                background-color: var(--wang-bgcolor);
+                color: var(--wang-text-color);
+            }
+        }
+
+    }
+
+    input {
+        background-color: var(--wang-bgcolor) !important;
+        color: var(--wang-text-color) !important;
+
+        &::-webkit-input-placeholder {
+            /* WebKit browsers */
+            color: var(--wang-text-color);
+        }
+
+        &:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: var(--wang-text-color);
+        }
+
+        &::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: var(--wang-text-color);
+        }
+
+        &:-ms-input-placeholder {
+            /* Internet Explorer 10+ */
+            color: var(--wang-text-color);
+        }
+    }
+
+    textarea {
+        background-color: var(--wang-bgcolor) !important;
+        color: var(--wang-text-color) !important;
+
+        &::-webkit-textarea-placeholder {
+            /* WebKit browsers */
+            color: var(--wang-text-color);
+        }
+
+        &:-moz-placeholder {
+            /* Mozilla Firefox 4 to 18 */
+            color: var(--wang-text-color);
+        }
+
+        &::-moz-placeholder {
+            /* Mozilla Firefox 19+ */
+            color: var(--wang-text-color);
+        }
+
+        &:-ms-textarea-placeholder {
+            /* Internet Explorer 10+ */
+            color: var(--wang-text-color);
+        }
+    }
+
+    .ant-radio-group {
+        span {
+            background-color: var(--wang-menu-active);
+            color: var(--wang-text-color);
+        }
+    }
+
+    .css-dev-only-do-not-override-i3mqvl.ant-input-affix-wrapper {
+        background-color: var(--wang-bgcolor) !important;
+        color: var(--wang-text-color) !important;
+
+        .ant-input-prefix {
+            span {
+                color: var(--wang-text-color) !important;
+            }
+        }
+    }
+
+    .ant-input-number {
+        span {
+            background-color: var(--wang-menu-active);
+            color: var(--wang-text-color);
+        }
+    }
+
+    .el-select-dropdown {
+        .el-scrollbar {
+            .el-select-dropdown__wrap {
+                .el-select-dropdown__list {
+                    background-color: var(--wang-menu-active);
+                    color: var(--wang-text-color);
+
+                    .el-select-dropdown__item {
+                        &:hover {
+                            background-color: var(--wang-meun-hover-color);
+                            color: var(--wang-text-color);
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+
+    .el-pagination {
+        .el-pagination__sizes {
+
+            .el-select {
+
+                .el-tooltip__trigger {
+
+                    .el-input--suffix {
+
+                        .el-input__wrapper {
+
+                            box-shadow: 0 0 0 1px var(--wangwang-border) inset;
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .ant-pagination {
+        .ant-pagination-total-text {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+
+        .ant-pagination-item-link {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+
+        .ant-pagination-item {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+            box-shadow: 0 0 0 1px var(--wangwang-border) inset;
+        }
+    }
+
+    .ant-select {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .ant-select-selector {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+    }
+
+    .ant-modal-content {
+        background-color: var(--wang-bgcolor);
+        color: var(--wang-text-color);
+
+        .ant-modal-title {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+    }
+
+    .ant-form {
+        .ant-form-item {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+
+            .ant-form-item-label {
+
+                label {
+                    background-color: var(--wang-bgcolor);
+                    color: var(--wang-text-color);
+                }
+            }
+        }
+    }
+
+    .ant-checkbox-wrapper {
+
+        span {
+            background-color: var(--wang-bgcolor);
+            color: var(--wang-text-color);
+        }
+    }
+
+    .btn-prev {
+        background-color: var(--wang-bgcolor);
+    }
+
+    .el-pager {
+        background-color: var(--wang-bgcolor);
+        --el-pagination-bg-color: null;
+    }
+
+    .btn-next {
+        background-color: var(--wang-bgcolor);
+    }
+
+    .menus {
+        &:hover {
+            box-shadow: 0 0 0px;
+        }
+    }
+
+    .roles {
+        &:hover {
+            box-shadow: 0 0 0px;
+        }
+    }
+}

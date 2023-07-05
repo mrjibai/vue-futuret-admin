@@ -1,0 +1,1 @@
+const P=()=>{let t=navigator.userAgent,o=/(?:Windows Phone)/.test(t),n=/(?:SymbianOS)/.test(t)||o,e=/(?:Android)/.test(t),a=/(?:Firefox)/.test(t),i=/(?:iPad|PlayBook)/.test(t)||e&&!/(?:Mobile)/.test(t)||a&&/(?:Tablet)/.test(t),s=/(?:iPhone)/.test(t)&&!i;return{isTablet:i,isPhone:s,isAndroid:e,isPc:!s&&!e&&!n}};export{P as i};
