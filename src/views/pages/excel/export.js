@@ -37,7 +37,7 @@ const exportExcel = function (luckysheet, value) {
     return buffer
 }
 
-var setMerge = function (luckyMerge = {}, worksheet) {
+let setMerge = function (luckyMerge = {}, worksheet) {
     const mergearr = Object.values(luckyMerge)
     mergearr.forEach(function (elem) {
         // elem格式：{r: 0, c: 0, rs: 1, cs: 2}
@@ -51,7 +51,7 @@ var setMerge = function (luckyMerge = {}, worksheet) {
     })
 }
 
-var setBorder = function (luckyBorderInfo, worksheet) {
+let setBorder = function (luckyBorderInfo, worksheet) {
     if (!Array.isArray(luckyBorderInfo)) return
     // console.log('luckyBorderInfo', luckyBorderInfo)
     luckyBorderInfo.forEach(function (elem) {
@@ -88,7 +88,7 @@ var setBorder = function (luckyBorderInfo, worksheet) {
         // worksheet.getCell(rang.row_focus + 1, rang.column_focus + 1).border = border
     })
 }
-var setStyleAndValue = function (cellArr, worksheet) {
+let setStyleAndValue = function (cellArr, worksheet) {
     if (!Array.isArray(cellArr)) return
     cellArr.forEach(function (row, rowid) {
         row.every(function (cell, columnid) {
@@ -135,7 +135,7 @@ var setStyleAndValue = function (cellArr, worksheet) {
     })
 }
 
-var fillConvert = function (bg) {
+let fillConvert = function (bg) {
     if (!bg) {
         return {}
     }
@@ -148,7 +148,7 @@ var fillConvert = function (bg) {
     return fill
 }
 
-var fontConvert = function (
+let fontConvert = function (
     ff = 0,
     fc = '#000000',
     bl = 0,
@@ -192,7 +192,7 @@ var fontConvert = function (
     return font
 }
 
-var alignmentConvert = function (
+let alignmentConvert = function (
     vt = 'default',
     ht = 'default',
     tb = 'default',
@@ -238,7 +238,7 @@ var alignmentConvert = function (
     return alignment
 }
 
-var borderConvert = function (borderType, style = 1, color = '#000') {
+let borderConvert = function (borderType, style = 1, color = '#000') {
     // 对应luckysheet的config中borderinfo的的参数
     if (!borderType) {
         return {}

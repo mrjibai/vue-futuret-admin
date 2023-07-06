@@ -15,7 +15,7 @@
     <div v-show="isMaskShow" id="tip">loading....</div>
 </template>
 
-<script setup>
+<script setup name="luckyexcel">
 import { ref, onMounted } from 'vue'
 import { exportExcel } from './export'
 import LuckyExcel from 'luckyexcel'
