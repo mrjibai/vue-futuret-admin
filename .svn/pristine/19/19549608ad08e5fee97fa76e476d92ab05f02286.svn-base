@@ -210,7 +210,7 @@ export default function DOMFdirective(app: App) {
                 rgba: 'rgb(0,128,128,0.4)'
             }
         ]
-        if (value) {
+        if(value) {
             const item = colorArrs.find(item => item.color === value)
             color = item ? item.rgba : color
         }
