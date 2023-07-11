@@ -5,18 +5,3 @@
 @import './media/index.scss';
 @import './sessiontagsView.scss';
 @import './transition.scss';
-
-
-.wave-animation {
-    position: absolute;
-    border-radius: 50%;
-    transform: scale(0);
-    animation: ripple 800ms linear;
-}
-
-@keyframes ripple {
-    to {
-        transform: scale(4);
-        opacity: 0;
-    }
-}
