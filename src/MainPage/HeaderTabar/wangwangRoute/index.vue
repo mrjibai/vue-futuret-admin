@@ -99,7 +99,7 @@ const {
     position: relative;
 
     .scop_wawang {
-        max-width: 80vw;
+        max-width: 100%;
         overflow: hidden;
         transition: all 0.3s;
 
