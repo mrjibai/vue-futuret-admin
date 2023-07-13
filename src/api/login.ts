@@ -19,7 +19,7 @@ export const getLogin = (username: string, password: string): Promise<any> => {
                 password
             }
         }).then(res => {
-            resolve(res)
+            resolve(res.data)
         }).catch(err => {
             reject(err)
         })
