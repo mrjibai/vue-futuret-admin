@@ -10,7 +10,7 @@
                     <router-view v-slot="{ Component, route }">
                         <transition name="slide-right" mode="out-in" :duration="{ enter: 500, leave: 300 }">
                             <keep-alive>
-                                <component :is="Component" :key="ISkey_routeK" />
+                                <component :is="Component"  />
                             </keep-alive>
                         </transition>
                     </router-view>

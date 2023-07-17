@@ -68,13 +68,9 @@
 
 <script setup lang="ts" name="Digital_scroll">
 import { CountUp } from 'countup.js';
-import { ref, onMounted } from 'vue';
-import { RestStore } from '/@/stores/rest'
-import { storeToRefs } from 'pinia';
+import { ref, onMounted, onActivated } from 'vue';
 const messgaeText = ref<string>('感谢优秀的`countup.js`，项目地址：https://github.com/inorganik/countUp.js')
-// let numAnim = ref([]) as any
-const rest = RestStore()
-const { numAnim } = storeToRefs(rest)
+let numAnim = ref([]) as any
 const styleB =
 {
     backgroundColor: 'var(--wang-bgcolor)',
@@ -94,29 +90,20 @@ const trgaeStart = (): void => {
 }
 
 const trgHtmlMonutd = () => {
-    let scrollHtml = domeOr()
+    let scrollHtml = new Map<number, HTMLElement>()
+    for (let i = 0; i < 8; i++) {
+        scrollHtml.set(i + 1, (<HTMLElement>document.getElementById(`Numercount${i + 1}`)))
+    }
     for (const [key, dom] of scrollHtml) {
         rollfun(dom, key * Math.ceil((Math.random()) * 100))
         trgaeStart()
     }
 }
-
-const domeOr = (): Map<number, HTMLElement> => {
-    let scrollHtml = new Map<number, HTMLElement>()
-    for (let i = 0; i < 8; i++) {
-        scrollHtml.set(i + 1, (<HTMLElement>document.getElementById(`Numercount${i + 1}`)))
-    }
-    return scrollHtml
-}
-onMounted(async () => {
-    if (numAnim.value && numAnim.value.length === 0) {
-        trgHtmlMonutd()
-    } else {
-        let scrollHtml = domeOr()
-        for await (const [key, dom] of scrollHtml) {
-            dom.innerHTML = key * (Math.ceil((Math.random()) * 100)) + ''
-        }
-    }
+onMounted(() => {
+    trgHtmlMonutd()   
+})
+onActivated(() => {
+    console.log('onActivated')
 })
 </script>
 
