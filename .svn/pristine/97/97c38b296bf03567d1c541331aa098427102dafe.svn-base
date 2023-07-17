@@ -1,0 +1,82 @@
+<template>
+    <div class="file_operating" ref="file_operating">
+        <FuCard title="文件操作">
+            <div class="anniu">
+                <a-button @click="uploadFile" type="primary" :icon="h(UploadOutlined)">上传文件</a-button>
+                <a-dropdown v-model:open="dropdownVisible">
+                    <a-button :icon="h(DownloadOutlined)">下载文件</a-button>
+                    <template #overlay>
+                        <a-menu @click="handleMenuClick">
+                            <a-menu-item @click="downloadFile(item)" v-for="(item, index) in dropdownListArr"
+                                :key="index">{{
+                                    item.filename }}</a-menu-item>
+                        </a-menu>
+                    </template>
+                </a-dropdown>
+                <a-button @click="saveFile" type="default" :icon="h(CheckCircleOutlined)">保存文件</a-button>
+            </div>
+        </FuCard>
+    </div>
+</template>
+
+<script setup lang="ts" name="file_operating">
+import { h, ref } from 'vue'
+import { CheckCircleOutlined, UploadOutlined, DownloadOutlined } from '@ant-design/icons-vue'
+import { VXETable } from 'vxe-table'
+import dropdownListArr from './fileList'
+import type { DropdownListItem } from '/@/typings/Views'
+
+
+let file_operating = ref<HTMLElement | null>(null)
+
+const uploadFile = () => {
+    let div = file_operating?.value
+    let input = div?.querySelector('#fileUploadInput') as HTMLInputElement
+    if (!input) {
+        input = document.createElement('input')
+        input.type = 'file'
+        input.style.display = 'none'
+        input.id = 'fileUploadInput'
+        file_operating?.value?.append(input)
+    }
+    input.click()
+    input.onchange = uploadFileFunc
+}
+
+const uploadFileFunc = (e: any) => {
+    let file = e.target?.files[0]
+}
+
+const downloadFile = async (item: DropdownListItem) => {
+    const content = await item.htmlStr
+    const filename = item.filename
+    VXETable.saveFile({
+        filename,
+        type: 'html',
+        content,
+    })
+}
+
+const saveFile = () => {
+
+}
+
+
+let dropdownVisible = ref<boolean>(false)
+
+const handleMenuClick = () => {
+
+}
+
+</script>
+
+<style scoped lang="scss">
+.anniu {
+    display: flex;
+    flex-flow: row wrap;
+
+    .ant-btn {
+        margin: 0 10px;
+    }
+}
+</style>
