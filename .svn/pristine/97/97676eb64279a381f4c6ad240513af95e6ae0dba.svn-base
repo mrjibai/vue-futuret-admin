@@ -7,26 +7,26 @@ function getAssetsImages(name: string) {
 export default [
   {
     filename: '3D 盒子',
-    htmlStr: http.get(getAssetsImages('3DBox.html')),
+    htmlStr: await http.get(getAssetsImages('3DBox.html')),
   },
   {
     filename: '按钮hover发光特效',
-    htmlStr: http.get(getAssetsImages('HoverBtn.html'))
+    htmlStr: await http.get(getAssetsImages('HoverBtn.html'))
   },
   {
     filename: '登录表单',
-    htmlStr: http.get(getAssetsImages('LoginForm.html'))
+    htmlStr: await http.get(getAssetsImages('LoginForm.html'))
   },
   {
     filename: '模拟工厂',
-    htmlStr: http.get(getAssetsImages('Factory.html'))
+    htmlStr: await http.get(getAssetsImages('Factory.html'))
   },
   {
     filename: 'CSS 导航条',
-    htmlStr: http.get(getAssetsImages('CSSNav.html'))
+    htmlStr: await http.get(getAssetsImages('CSSNav.html'))
   },
   {
     filename: 'CSS 拟态',
-    htmlStr: http.get(getAssetsImages('CSSNiTai.html'))
+    htmlStr: await http.get(getAssetsImages('CSSNiTai.html'))
   },
 ]
