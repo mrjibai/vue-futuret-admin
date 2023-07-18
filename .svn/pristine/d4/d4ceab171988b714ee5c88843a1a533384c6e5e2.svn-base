@@ -21,10 +21,9 @@ gitee <a href="https://gitee.com/mr-yichen/Vue-futuret-Admin">https://gitee.com/
 github <a href="https://github.com/mrjibai/vue-futuret-admin">https://github.com/mrjibai/vue-futuret-admin</a>
 
 ### ❤感谢巨人
-
-<div>
-  <img src="https://blog.vuejs.org/logo.svg" width='100px' hegit="auto" />
-  <img src="https://www.antdv.com/assets/logo.1ef800a8.svg" width='100px' hegit="auto" />
+<div style="display:flex">
+ <img src="https://blog.vuejs.org/logo.svg" style='width:100px;height:auto' />
+ <img src="https://www.antdv.com/assets/logo.1ef800a8.svg" style='width:100px;height:auto' />
 </div>
 
 
