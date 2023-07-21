@@ -8,10 +8,8 @@
                 </a-layout-header>
                 <a-layout-content>
                     <router-view v-slot="{ Component, route }">
-                        <transition name="slide-right" mode="out-in" :duration="{ enter: 500, leave: 300 }">
-                            <!-- <keep-alive> -->
+                        <transition name="slide-right" mode="out-in" :duration="{ enter: 200, leave: 300 }">
                             <component :is="Component" :key="ISkey_routeK" />
-                            <!-- </keep-alive> -->
                         </transition>
                     </router-view>
                 </a-layout-content>
