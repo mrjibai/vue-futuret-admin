@@ -22,7 +22,6 @@
                     <a-space v-else>
                         <wallet-two-tone style="font-size: 50px;" />
                     </a-space>
-
                 </div>
                 <div class="loginsuer">
                     <a-tabs v-model:activeKey="activeKey" v-if="keyloginboolqr">
@@ -112,8 +111,8 @@ const keyloginboolqr = ref(true)
             border: 2px solid #79bbff;
             overflow: hidden;
             aspect-ratio: 1 / 1;
-            width: 70%;
-            height: 70%;
+            width: 60%;
+            height: 60%;
             position: relative;
 
             .light {

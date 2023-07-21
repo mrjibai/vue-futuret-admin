@@ -91,6 +91,7 @@ const routerfinsh = (isNopwr: Boolean | undefined | any) => {
         .btnsumits {
             width: 100%;
             border-radius: 10px;
+            height: 40px;
         }
     }
 }

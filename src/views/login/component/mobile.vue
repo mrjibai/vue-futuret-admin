@@ -44,5 +44,6 @@ const onFinish = (paramsFomrs: any): void => {
 .btnsumits {
     width: 100%;
     border-radius: 15px;
+    height: 40px;
 }
 </style>
