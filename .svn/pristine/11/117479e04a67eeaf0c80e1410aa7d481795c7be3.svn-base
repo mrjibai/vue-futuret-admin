@@ -1,3 +1,20 @@
+declare module "*.vue" {
+    import { DefineComponent } from "vue"
+    const component: DefineComponent<{}, {}, any>
+    export default component
+}
+declare module 'nprogress'
+declare module 'colorpicker-v3'
+
+declare module 'file-saver'
+
+declare module 'luckyexcel'
+
+declare module '@wangeditor/editor-for-vue'
+
+declare module 'vue-i18n'
+
+
 import { RouteRecordRaw } from 'vue-router';
 /**
  * 全局声明文件
@@ -11,9 +28,11 @@ declare module '*.ts';
 declare module '*.js';
 declare module '*.svg';
 
-declare module 'nprogress'
 
-
+// declare module '*.json' {
+//     const value: any;
+//     export default value;
+// }
 // 声明文件，*.vue 后缀的文件交给 vue 模块来处理
 
 declare module "*.vue" {
