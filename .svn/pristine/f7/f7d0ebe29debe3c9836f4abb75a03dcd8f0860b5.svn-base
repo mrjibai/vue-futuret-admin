@@ -1,0 +1,73 @@
+<template>
+    <div>
+        <FutureTableTroor ref="xToolbar">
+            <template v-slot:buttons>
+                <a-button type="primary" ghost>提示</a-button>
+            </template>
+        </FutureTableTroor>
+        <KeepAlive>
+            <FutureTable ref="xTable1" :data="data" :options="options" :rowCofig="{
+                highlight: false
+            }" ids="id">
+                <template v-slot:caozuo>
+                    <a-button>编辑</a-button>
+                    <a-button>添加</a-button>
+                </template>
+            </FutureTable>
+        </KeepAlive>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { ref, nextTick, onMounted } from 'vue';
+// import type { ComponentInternalInstance } from 'vue'
+import type { Ref } from 'vue';
+const xTable1: Ref<any | null | undefined> = ref()
+const xToolbar: Ref<any | null | undefined> = ref()
+const data = [{
+    id: 66,
+    names: '张三',
+    age: 18,
+    sex: '女',
+    address: '中国第一龙江市',
+}]
+const options = {
+    column: [
+        {
+            prop: 'names',
+            title: '姓名'
+        },
+        {
+            prop: 'age',
+            title: '年龄'
+        },
+        {
+            prop: 'sex',
+            title: '性别'
+        },
+        {
+            prop: 'address',
+            title: '地址'
+        },
+        {
+            prop: 'caozuo',
+            title: '操作'
+        }
+    ]
+}
+// 关联
+nextTick(() => {
+    // 将表格和工具栏进行关联
+    const $table = xTable1.value;
+    const $toolbar = xToolbar.value;
+    $table.connect($toolbar);
+});
+
+
+
+onMounted(() => {
+})
+
+</script>
+
+<style scoped lang="scss"></style>
