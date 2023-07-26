@@ -108,16 +108,10 @@ const hangSelects = (rows: any) => {
     }
     checkstr.value.push(rows?.[props.ids as any]);
 };
-const setToor = (rows: any) => {
-    Toores.value = rows;
-    optionsList.value = optionsList.value.filter((e) =>
-        rows.includes(e.title)
-    );
-}
 
 const connect = (Rors: any) => {
     // Toores.value = Rors
-    Rors.connecCore(props.options.column, setToor);
+    Rors.connecCore(props.options.column);
 };
 
 defineExpose({

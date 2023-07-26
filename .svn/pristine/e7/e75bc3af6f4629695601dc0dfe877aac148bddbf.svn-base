@@ -31,7 +31,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
 
 
 const xDown3 = ref()
@@ -43,12 +43,9 @@ const checkAll = ref(false)
 const isIndeterminate = ref(false)
 const checkedCities = ref<any>([])
 const cities = ref<any>([])
-const state = reactive<any>({
-    contensUpdate: null
-})
-const connecCore = (dataRorws: any, setToor: Function) => {
+
+const connecCore = (dataRorws: any) => {
     cities.value = dataRorws
-    state.contensUpdate = setToor
     checkedCities.value = dataRorws.map((e: any) => e.title)
 }
 
@@ -59,7 +56,6 @@ const handleCheckAllChange = (val: any) => {
 }
 
 const handleCheckedCitiesChange = (value: any) => {
-    state.contensUpdate(value)
     const checkedCount = value.length
     checkAll.value = checkedCount === cities.value.length
     isIndeterminate.value = checkedCount > 0 && checkedCount < cities.value.length
@@ -104,10 +100,9 @@ defineExpose({
     }
 
     :deep(.vxe-pulldown--panel) {
-        left: -2vw;
+        left: -8vw;
         border: 1px solid rgba(0, 0, 0, 0.1);
         border-radius: 0.2vw;
-        width: 120px;
     }
 
 }
