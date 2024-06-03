@@ -11,7 +11,7 @@
 
 ### ❤️预览
 
-https://mr-yichen.gitee.io/vue-futuret-admin-preview
+https://mrjibai.github.io/vue-futuret-admin-preview/#/login
 
 
 ###  🏙️代码仓库
