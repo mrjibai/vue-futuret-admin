@@ -1,5 +1,5 @@
 <div align="center"> 
-<img src="https://mr-yichen.gitee.io/vue-futuret-admin-preview/assets/Snipastebg-96592a3f.png" width='100px' hegit="auto" />
+<img src="https://docs.github.com/assets/cb-345/images/site/favicon.png" width='100px' hegit="auto" />
 </div>
 <div align="center">vue-futuret-Admin</div>
 
