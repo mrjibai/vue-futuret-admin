@@ -1,0 +1,16 @@
+<svg width="967" height="953" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="#d3f7af" id="canvas_background" height="955" width="969" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+
+ <g>
+  <title>Layer 1</title>
+  <text stroke="#000" transform="rotate(33 246.04638671874997,345.8316650390625) matrix(5.66625452041626,0,0,5.771941661834716,-874.03409378549,-781.2627081811735) " xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="24" id="svg_2" y="204.852774" x="174.003779" stroke-width="0" fill="#00ffff">VUE</text>
+  <text stroke="#000" transform="rotate(-33 728.1901245117186,331.93148803710943) matrix(4.3552147310514355,0,0,5.689619264513121,-1728.241288950788,-969.3740122088856) " xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="24" id="svg_3" y="238.268606" x="529.97874" stroke-opacity="null" stroke-width="0" fill="#ffff00">HTML</text>
+  <text stroke="#000" transform="matrix(4.723615054870475,0,0,5.086549128184219,-1324.8907465629397,-1741.7693891416752) " xml:space="preserve" text-anchor="start" font-family="'League Gothic', sans-serif" font-size="24" id="svg_4" y="462.874068" x="315.048197" stroke-opacity="null" stroke-width="0" fill="#ff0000">JAVASCRIPT</text>
+ </g>
+</svg>
