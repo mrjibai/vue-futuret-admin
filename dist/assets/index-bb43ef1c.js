@@ -1,1 +1,0 @@
-import{d as o,r as t,o as n,a as s,h as c,f as r}from"./index-6ed7d116.js";const _={class:"item"},d=o({__name:"index",setup(i){const e="温馨提示： 此权限页面为后端接口测试，此处为展示页面";return(l,m)=>{const a=t("a-alert");return n(),s("div",null,[c("div",_,[r(a,{message:e,type:"warning","show-icon":""})])])}}});export{d as default};
